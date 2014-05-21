@@ -1,0 +1,12 @@
+[user]
+	name = Yves Chevallier
+	email = me@yves-chevallier.com
+[core]
+	editor = vim
+[merge]
+	tool = vimdiff
+[color]
+	ui = auto
+[alias]
+    tree = log --graph --decorate --pretty=oneline --abbrev-commit
+    log = log --oneline --decorate --all --graph
