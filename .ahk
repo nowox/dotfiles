@@ -43,6 +43,18 @@ If leader = n
     Run, http://
 Return
 
+; Move windows to next monitor
+; ----------------------------
+^!s::
+    WinGet, mm, MinMax, A
+    WinRestore, A
+    WinGetPos, X, Y,,,A
+    WinMove, A,, Mod(X+A_ScreenWidth, 2*A_ScreenWidth) , Y
+    if(mm = 1) {
+        WinMaximize, A
+    }
+return
+
 
 ; WINDOWS KEY + H TOGGLES HIDDEN FILES
 #h::
