@@ -5,7 +5,6 @@
 	editor = vim
 [core]
 	ignorecase = false
-	autocrlf = true
 	whitespace = cr-at-eol
 [diff]
 	tool = vimdiff
