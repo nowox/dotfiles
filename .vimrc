@@ -53,7 +53,7 @@ Plugin 'tpope/vim-surround'            " Easy delete, change on surroundings in 
 Plugin 'vim-scripts/Align'             " Alignment at equal sign
 Plugin 'vim-scripts/Txtfmt-The-Vim-Highlighter'
 Plugin 'vim-scripts/ccase.vim'
-
+Plugin 'mihaifm/bufstop'               " Easy way to switch buffers
 Plugin 'vim-scripts/loremipsum'        " Insert Lipsum text
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'vim-scripts/a.vim'             " Alternate quickly between .c <--> .h
@@ -232,12 +232,12 @@ inoremap <C-a> <esc>ggVG
 nnoremap <C-a> ggVG
 
 " Ctrl-tab is next buffer
-noremap  <C-Tab> :bNext<cr>
+nnoremap <C-Tab> :bNext<cr>
 inoremap <C-Tab> <C-O>:bNext<cr>
 cnoremap <C-Tab> <C-C>:bNext<cr>
 onoremap <C-Tab> <C-C>:bNext<cr>
 
-noremap  <C-S-Tab> :bprevious<cr>
+nnoremap  <C-S-Tab> :bprevious<cr>
 inoremap <C-S-Tab> <C-O>:bprevious<cr>
 cnoremap <C-S-Tab> <C-C>:bprevious<cr>
 onoremap <C-S-Tab> <C-C>:bprevious<cr>
@@ -319,6 +319,9 @@ vnoremap <BS> d
 " Backspace in Normal mode deletes a char
 nnoremap <BS> X
 
+" Shortcuts that put vim into insert mode
+nnoremap <end> i<end>
+
 " Visual mode selection in terminal mode
 vnoremap <Left> <esc><left>
 vnoremap <Right> <esc><right>
@@ -328,10 +331,24 @@ nnoremap <s-left> vh
 nnoremap <s-right> vl
 nnoremap <s-up> vk
 nnoremap <s-down> vj
+
+inoremap <s-left> <esc>vh
+inoremap <s-right> <esc>vl
+inoremap <s-up> <esc>vk
+inoremap <s-down> <esc>vj
+
 vnoremap <s-left> h
 vnoremap <s-right> l
 vnoremap <s-up> k
 vnoremap <s-down> j
+nnoremap <s-end> v$
+nnoremap <s-home> v0
+
+inoremap <s-end> <esc>v$
+inoremap <s-home> <esc>v0
+
+vnoremap <end> $
+vnoremap <home> 0
 
 " jk is back to normal mode
 inoremap jk <esc><right>
@@ -383,6 +400,16 @@ nnoremap <silent> <2-LeftMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\
 
 " Tag completion
 inoremap <c-t> <c-x><c-]>
+
+" Buffer switch
+nnoremap <c-g> :bn<cr>
+inoremap <c-g> <c-o>:bn<cr>
+vnoremap <c-g> <c-c>:bn<cr>
+
+nnoremap <c-f> :bp<cr>
+inoremap <c-f> <c-o>:bp<cr>
+vnoremap <c-f> <c-c>:bp<cr>
+ 
 "---------------------------------
 " F Function mapping             |
 "---------------------------------
@@ -445,6 +472,10 @@ noremap <leader>V :source ~/.vimrc<cr>
 
 " Close current buffer
 map <leader>bd :Bclose<cr>
+
+" Buffer mapping
+noremap <leader>bn :bn<cr>
+noremap <leader>bp :bp<cr>
 
 " Useful mapping
 map <leader>tn :tabnew<cr>
