@@ -15,8 +15,10 @@ let s:is_macvim  = has('gui_macvim')
 
 if s:is_windows && !s:is_cygwin
     cd ~/
-    set shell=c:\windows\system32\cmd.exe
+"    set shell=c:\windows\system32\cmd.exe
     set runtimepath^=~/.vim
+    set shell=bash.exe
+    set shellslash
 endif
 
 " Start Vundle the package manager
@@ -33,6 +35,8 @@ Plugin 'mozilla/doctorjs'
 Plugin 'godlygeek/tabular'             " Align to = for example
 Plugin 'bling/vim-airline'             " Best status line ever (needs Powerline Consolas font)
 Plugin 'ervandew/supertab'
+Plugin 'xolox/vim-shell'
+Plugin 'xolox/vim-misc'
 Plugin 'fisadev/vim-ctrlp-cmdpalette'  " Command palette for ctrlp
 Plugin 'flazz/vim-colorschemes'        " A lot of colorschemes (including hybrid)
 Plugin 'honza/vim-snippets'            " Snippets files for various programming languages
@@ -52,20 +56,17 @@ Plugin 'tpope/vim-surround'            " Easy delete, change on surroundings in 
 Plugin 'vim-scripts/Align'             " Alignment at equal sign
 Plugin 'vim-scripts/Txtfmt-The-Vim-Highlighter'
 Plugin 'vim-scripts/ccase.vim'
-
 Plugin 'vim-scripts/loremipsum'        " Insert Lipsum text
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'vim-scripts/a.vim'             " Alternate quickly between .c <--> .h
 Plugin 'vim-scripts/ZoomWin'           " <c-w>o full screen split
 Plugin 'milkypostman/vim-togglelist'   " Allow to toggle quickfix and location list window
 
-
 call vundle#end()
 
 " Reenable filetypes
 filetype plugin on                     " Enable Plugins
 filetype indent on                     " Enable Automatic Indent
-
 
 
 let mapleader = ","                    " Use a more convenient leader key
@@ -92,8 +93,8 @@ if s:is_windows
     behave mswin
     set guifont=Powerline_Consolas:h9:cANSI
     "set guifont=Consolas\ for\ Powerline\ FixedD:h9
-    winpos 0 0                             " Always start vim form the top left corner of the screen
-    win 120 75                             " Windows size
+    "winpos 0 0                             " Always start vim form the top left corner of the screen
+    "win 120 75                             " Windows size
     set guioptions=                        " No menu, no toolbar, no scrollbars
 else
     set guifont=Powerline\ Consolas\ 10
@@ -102,8 +103,7 @@ endif
 syntax on                              " Enable Syntax
 colorscheme hybrid                     " My colorscheme
 set ttyfast                            " Send more chars to redraw in CTERM
-
-set fillchars=vert:│                         " Separator for status window
+set fillchars=vert:│                   " Separator for status window
 
 " Interface (behavior)
 set history=1000                       " Remember more commands and search history
@@ -170,17 +170,6 @@ set splitright                         " New vertical split always at the right 
 set splitbelow                         " New horizontal split always at the bottom of the current window
 
 " Backup behaviour
-"set backupskip=/tmp/*,/private/tmp/*   " Do not backup anything for files like this
-"set writebackup                        " Make a backup before overwriting a file
-"if has("unix")
-"" Cygwin/Linux specific code
-"set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-"set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-"else
-"" Native-Windows specific code
-"set backupdir=%TMr%
-"set directory=%TMP%
-"endif
 set nobackup                           " Disable backup
 set noswapfile                         " Disable swap because sometime swapfile is in readonly
 
@@ -196,6 +185,7 @@ set showbreak=⌐
 
 " Auto complete setting
 set completeopt=menuone,longest
+
 " ---------------------------------------------------------
 " Keyboard mapping (shortcuts)
 " remap (recursive map)
@@ -392,10 +382,10 @@ nnoremap <F7> :call NextColor(1)<CR>
 nnoremap <S-F7> :call NextColor(-1)<CR>
 nnoremap <A-F7> :call NextColor(0)<CR>
 
-" Insert Lopsum Text
-noremap  <silent> <F9> :Loremipsum 200<CR>
-vnoremap <silent> <F9> <C-C>:Loremipsum 200<CR>
-inoremap <silent> <F9> <C-O>:Loremipsum 200<CR>
+" Toggle FullScreen
+noremap  <silent> <F9> :set nonu!<CR>
+vnoremap <silent> <F9> <C-C>:set nonu!<CR>
+inoremap <silent> <F9> <C-O>:set nonu!<CR>
 
 " Close quickfix window
 noremap  <silent> <F10> :ccl<CR>
@@ -403,9 +393,7 @@ vnoremap <silent> <F10> <C-C>:ccl<CR>
 inoremap <silent> <F10> <C-O>:ccl<CR>
 
 " Toggle numbers
-noremap  <silent> <F11> :set nonu!<CR>
-vnoremap <silent> <F11> <C-C>:set nonu!<CR>
-inoremap <silent> <F11> <C-O>:set nonu!<CR>
+map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
 
 " Remove trailing spaces
 noremap  <silent> <F12> :FixWhitespace<CR>
