@@ -1,59 +1,47 @@
-; IMPORTANT INFO ABOUT GETTING STARTED: Lines that start with a
-; semicolon, such as this one, are comments.  They are not executed.
+;      ___  _____  ____  _  _
+;   ()/ __)(  _  )(_  _)( \( )()
+;    ( (__  )(_)(  _)(_  )  (
+; ()()\___)(_____)(____)(_)\_)()()
+; My Own Autohotkeys script
 
-; This script has a special filename and path because it is automatically
-; launched when you run the program directly.  Also, any text file whose
-; name ends in .ahk is associated with the program, which means that it
-; can be launched simply by double-clicking it.  You can have as many .ahk
-; files as you want, located in any folder.  You can also run more than
-; one .ahk file simultaneously and each will get its own tray icon.
-
-; SAMPLE HOTKEYS: Below are two sample hotkeys.  The first is Win+Z and it
-; launches a web site in the default browser.  The second is Control+Alt+N
-; and it launches a new Notepad window (or activates an existing one).  To
-; try out these hotkeys, run AutoHotkey again, which will load this file.
-
-; Movements
-; A Move quarter 1
-; B Move quarter 2
-; C Move quarter 3
-; D Move quarter 4
-; E Move left
-; F Move right
-; G Maximize
-; H Minimize
-; I Half top
-; J Half bot
-; H Rearrange windows to make them aligned in their quarters
-; K
-
-; Windows Application
-; A New instance of active application
-; B Activate most recent instance
-; C Maximize first screen chrome use existing instance if any
-
-i = 0
-SetTitleMatchMode, 2
-
-; Win+<char> quick mapping
+; Win+<char> quick mappings
+; -------------------------
 #v::Run gvim
-#c::Run chrome
+#t::Run cyg
 
-#w::
-    Input, c, B L1 T1,,h,v,s
-    if ErrorLevel = Max
+; Reload AHK Script
+; -----------------
+#a::
+    Reload
+    Return
+
+; Google Chrome
+; -------------
+; <WIN><Leader>c  Run Chrome
+;       * Create a new instance if no one not exists
+;       * Create a new tab to an existing instance
+; <WIN><Leader>cn Run a new instance
+;       * Create a new chrome instance
+#c::
+Input, leader, T0.5 L1 B
+If ErrorLevel = Timeout
+{
+    If !WinExist("ahk_class Chrome_WidgetWin_1")
     {
-        return
+        Run, http://
+            WinWaitActive
     }
-    MsgBox, %c%
+    IfWinNotActive, ahk_class Chrome_WidgetWin_1
+    {
+        WinActivate
+            WinWaitActive
+    }
+    Send ^T!d{Del}
+    Return
+}
+If leader = n
+    Run, http://
 Return
-
-^!n::
-IfWinExist Untitled - Notepad
-	WinActivate
-else
-	Run Notepad
-return
 
 
 ; WINDOWS KEY + H TOGGLES HIDDEN FILES
@@ -81,31 +69,6 @@ Clipboard := ClipSaved
 ClipSaved =
 return
 #IfWinActive
-
-;Windows Key + Right Arrow
-
-;Windows +  Left Arrow
-#Left::
-Move("Left")
-Return
-
-;Windows +  Up Arrow
-#Up::
-Move("Up")
-Return
-
-;Windows +  Down Arrow
-#Down::
-Move("Down")
-Return
-
-
-;Ctrl-Alt-S
-^!s::
-
-WinGetTitle, Title, A
-MsgBox, The active window is "%Title%".
-Return
 
 Move(direction)
 {
@@ -152,7 +115,6 @@ Move(direction)
 
 		WinMove, A,, newWinX, newWinY
 	}
-
 	Return
 
 GetXYForExists:
@@ -441,3 +403,4 @@ DoesMonitorExist(newWinX, newWinY, monCount)
 }
 
 Return
+

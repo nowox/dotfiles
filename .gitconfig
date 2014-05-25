@@ -1,12 +1,17 @@
 [user]
+	email = ychevallier@etel.ch
 	name = Yves Chevallier
-	email = me@yves-chevallier.com
-[core]
+[code]
 	editor = vim
-[merge]
+[core]
+	ignorecase = false
+	autocrlf = true
+	whitespace = cr-at-eol
+[diff]
 	tool = vimdiff
-[color]
-	ui = auto
 [alias]
     tree = log --graph --decorate --pretty=oneline --abbrev-commit
-    log = log --oneline --decorate --all --graph
+    co = checkout
+    ci = commit
+    st = status
+    br = branch
