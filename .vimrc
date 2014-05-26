@@ -40,7 +40,7 @@ Plugin 'dbakker/vim-projectroot'       " Set default path to root project by det
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'airblade/vim-gitgutter'        " Show changed
 Plugin 'kana/vim-fakeclip'             " Allow to use clipboard under cygwin
-Plugin 'kien/ctrlp.vim'                " Sublime's <C-P> feature
+Plugin 'kien/ctrlp.vim'                " Sublime's <c-P> feature
 Plugin 'majutsushi/tagbar'             " File tags browsing
 Plugin 'mileszs/ack.vim'               " Use the Perl module App::Ack
 Plugin 'scrooloose/nerdcommenter'      " Un/Comment lines
@@ -217,41 +217,29 @@ set completeopt=menuone,longest
 " Modern editor standard mapping |
 "---------------------------------
 
-" Save Ctrl-S
-noremap  <C-S>		:update!<CR>
-vnoremap <C-S>		<C-C>:update!<CR>
-inoremap <C-S>		<C-O>:update!<CR>
 
-" Replace Ctrl-H
-noremap   <C-H>     :%s/<C-R><C-W>//g<left><left>
-inoremap  <C-H>     <esc>:%s/<C-R><C-W>//g<left><left>
-vnoremap  <C-H>     gv:%s/<C-R><C-W>//g<left><left>
-
-" Select all
-inoremap <C-a> <esc>ggVG
-nnoremap <C-a> ggVG
 
 " Ctrl-tab is next buffer
-nnoremap <C-Tab> :bNext<cr>
-inoremap <C-Tab> <C-O>:bNext<cr>
-cnoremap <C-Tab> <C-C>:bNext<cr>
-onoremap <C-Tab> <C-C>:bNext<cr>
+nnoremap <c-Tab> :bNext<cr>
+inoremap <c-Tab> <c-O>:bNext<cr>
+cnoremap <c-Tab> <c-C>:bNext<cr>
+onoremap <c-Tab> <c-C>:bNext<cr>
 
-nnoremap  <C-S-Tab> :bprevious<cr>
-inoremap <C-S-Tab> <C-O>:bprevious<cr>
-cnoremap <C-S-Tab> <C-C>:bprevious<cr>
-onoremap <C-S-Tab> <C-C>:bprevious<cr>
+nnoremap  <c-S-Tab> :bprevious<cr>
+inoremap <c-S-Tab> <c-O>:bprevious<cr>
+cnoremap <c-S-Tab> <c-C>:bprevious<cr>
+onoremap <c-S-Tab> <c-C>:bprevious<cr>
 
 " Ctrl-F4 and Ctrl-W closes the window
-noremap <C-F4> <C-W>c
-inoremap <C-F4> <C-O><C-W>c
-cnoremap <C-F4> <C-C><C-W>c
-onoremap <C-F4> <C-C><C-W>c
+noremap <c-F4> <c-W>c
+inoremap <c-F4> <c-O><c-W>c
+cnoremap <c-F4> <c-C><c-W>c
+onoremap <c-F4> <c-C><c-W>c
 
-"noremap <C-W> <C-W>c
-"inoremap <C-W> <C-O><C-W>c
-"cnoremap <C-W> <C-C><C-W>c
-"onoremap <C-W> <C-C><C-W>c
+"noremap <c-W> <c-W>c
+"inoremap <c-W> <c-O><c-W>c
+"cnoremap <c-W> <c-C><c-W>c
+"onoremap <c-W> <c-C><c-W>c
 
 " Tabbing visual selection in VIM
 vmap <Tab>   >gv
@@ -262,49 +250,38 @@ if !has('gui')
     nmap <2-LeftMouse> viw<right>
 endif
 
-" Cut with Ctrl-x
-vnoremap <C-X>   "+x
-vnoremap <S-Del> "+x
-
-" Copy with Ctrl-c or Ctrl insert
-vnoremap <C-C>      "+y
-vnoremap <C-Insert> "+y
 
 " Copy a word if no selection with Ctrl-c
-inoremap <silent> <C-C> <esc>mPviw"+y`Pa
-nnoremap <silent> <C-C> <esc>mPviw"+y`P
+inoremap <silent> <c-C> <esc>mPviw"+y`Pa
+nnoremap <silent> <c-C> <esc>mPviw"+y`P
 
 " Paste with Ctrl-v or shift-insert
-noremap  <C-V>          "+gP
+noremap  <c-V>          "+gP
 noremap  <S-Insert>	    "+gP
-cnoremap <C-V>          <C-R>+
-cnoremap <S-Insert>	    <C-R>+
+cnoremap <c-V>          <c-R>+
+cnoremap <S-Insert>	    <c-R>+
 
 " Pasting blockwise and linewise selections is not possible in Insert and
 " Visual mode without the +virtualedit feature.  They are pasted as if they
 " were characterwise instead.
 " Uses the paste.vim autoload script.
-exe 'inoremap <script> <C-V> <C-G>u' . paste#paste_cmd['i']
-exe 'vnoremap <script> <C-V> ' . paste#paste_cmd['v']
+exe 'inoremap <script> <c-V> <c-G>u' . paste#paste_cmd['i']
+exe 'vnoremap <script> <c-V> ' . paste#paste_cmd['v']
 
 "---------------------------------
 " Inspired from SublimeText      |
 "---------------------------------
 
 " Vim-CtrlP-CmdPalette to immitate Sublime's Ctrl-O
-noremap  <C-S-P>    :CtrlPCmdPalette<cr>
-inoremap <C-S-P>    <C-O>:CtrlPCmdPalette<cr>
-vnoremap <C-S-P>    <C-C>:CtrlPCmdPalette<cr>
+noremap  <c-S-P>    :CtrlPCmdPalette<cr>
+inoremap <c-S-P>    <c-O>:CtrlPCmdPalette<cr>
+vnoremap <c-S-P>    <c-C>:CtrlPCmdPalette<cr>
 
-" Vim-CtrlP Buffer explorer with Ctrl-B
-noremap  <C-B>    :CtrlPBuffer<cr>
-inoremap <C-B>    <C-O>:CtrlPBuffer<cr>
-vnoremap <C-B>    <C-C>:CtrlPBuffer<cr>
 
 "---------------------------------
 " Vim advanced mapping           |
 "---------------------------------
-" <C-6> Alternate file
+" <c-6> Alternate file
 
 " Correct cursor movement for long lines
 noremap j gj
@@ -323,6 +300,7 @@ nnoremap <BS> X
 nnoremap <end> i<end>
 
 " Visual mode selection in terminal mode
+if s:is_cygwin
 vnoremap <Left> <esc><left>
 vnoremap <Right> <esc><right>
 vnoremap <Up> <esc><up>
@@ -349,50 +327,33 @@ inoremap <s-home> <esc>v0
 
 vnoremap <end> $
 vnoremap <home> 0
+endif
 
 " jk is back to normal mode
 inoremap jk <esc><right>
 
-" Change word under cursor
-inoremap <C-D> <C-C>"_ciw
-nnoremap <C-D> "_ciw
-
-" Search with <space>
-map <space> /
 map <c-space> ?
 
 " Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
-
-" Go back to marker position (swiss french keyboard)
-nnoremap ' `
-
-" Use Q for formatting the current paragraph (or selection)
-vmap Q gq
-nmap Q gqap
+map <c-j> <c-W>j
+map <c-k> <c-W>k
+map <c-h> <c-W>h
+map <c-l> <c-W>l
 
 " In the case sudo is needed
 cmap w!! w !sudo tee % >/dev/null
 
-" New tab on <C-W>T
+" New tab on <c-W>T
 nnoremap <c-w>T :tabnew<cr>
 
-" Add empty line above and after the current line
-nnoremap <c-k> m`O<esc>``
-nnoremap <c-j> m`o<esc>``
-inoremap <c-j> <esc>m`o<esc>``a
-inoremap <c-k> <esc>m`O<esc>``a
 
 " Dupplicate current line above or below
 nnoremap <silent> [<space> :pu! _<cr>:']+1<cr>
 nnoremap <silent> ]<space> :pu _<cr>:'[-1<cr>
 
 " Switch to previous active buffer
-nnoremap <silent> <C-L> :e #<cr>
-inoremap <silent> <C-L> <esc>mO<C-C>:e #<cr>
+nnoremap <silent> <c-l> :e #<cr>
+inoremap <silent> <c-l> <esc>mO<c-C>:e #<cr>
 
 " Current word highlight
 noremap * mP*N`P
@@ -401,38 +362,102 @@ nnoremap <silent> <2-LeftMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\
 " Tag completion
 inoremap <c-t> <c-x><c-]>
 
-" Buffer switch
+"---------------------------------
+" Single char mapping            |
+"---------------------------------
+
+" Search with <space>
+map <space> /
+
+" Use Q for formatting the current paragraph (or selection)
+vnoremap Q gq
+noremap  Q gqap
+
+" Go back to marker position (the swiss french keyboard sucks)
+noremap ' `
+
+" Terminal redraw
+noremap § :redraw<cr>
+
+"---------------------------------
+" Control + Char mapping         |
+"---------------------------------
+
+" <c-a> Select all (like every modern editor)
+inoremap           <c-a>   <esc>ggVG
+nnoremap           <c-a>        ggVG
+
+" <c-b> Vim-ctrlP Buffer explorer with Ctrl-B
+noremap            <c-b>        :CtrlPBuffer<cr>
+inoremap           <c-b>   <c-o>:CtrlPBuffer<cr>
+vnoremap           <c-b>   <c-c>:CtrlPBuffer<cr>
+
+" <c-c> Copy with Ctrl-c or Ctrl insert
+vnoremap           <c-c>   "+y
+
+" <c-d> Replace word under cursor (Delete A word)
+inoremap <silent>  <c-d>   <c-c>"_ciw
+nnoremap <silent>  <c-d>   "_ciw
+
+" <c-e> Decrement the next number on the line
+nnoremap <silent> <c-e> :<c-u>call AddSubtract("\<c-x>", '')<CR>
+
+" <c-f> Buffer switch (Next/Previous buffer)
+nnoremap <c-f> :bp<cr>
+inoremap <c-f> <c-o>:bp<cr>
+vnoremap <c-f> <c-c>:bp<cr>
+
+" <c-g> Buffer switch (Previous buffer)
 nnoremap <c-g> :bn<cr>
 inoremap <c-g> <c-o>:bn<cr>
 vnoremap <c-g> <c-c>:bn<cr>
 
-nnoremap <c-f> :bp<cr>
-inoremap <c-f> <c-o>:bp<cr>
-vnoremap <c-f> <c-c>:bp<cr>
- 
+" <c-h> Replacement
+noremap   <c-h>     :%s/<c-R><c-W>//g<left><left>
+inoremap  <c-h>     <esc>:%s/<c-R><c-W>//g<left><left>
+vnoremap  <c-h>     gv:%s/<c-R><c-W>//g<left><left>
+
+" Add empty line above and after the current line
+nnoremap <silent> <c-j> m`o<esc>``
+inoremap <silent> <c-j> <esc>m`o<esc>``a
+
+nnoremap <silent> <c-k> m`O<esc>``
+inoremap <silent> <c-k> <esc>m`O<esc>``a
+
+" Save Ctrl-S
+noremap            <c-s>    :update!<CR>
+vnoremap           <c-s>    <c-C>:update!<CR>
+inoremap           <c-s>    <c-O>:update!<CR>
+
+" Cut with Ctrl-x
+vnoremap <c-X>   "+x
+
+" Increment the next number on the line
+nnoremap <silent> <c-y> :<c-u>call AddSubtract("\<c-a>", '')<CR>
+
 "---------------------------------
 " F Function mapping             |
 "---------------------------------
 
 " Toggle Menu bar
-nnoremap <C-F1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<CR>
+nnoremap <c-F1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<CR>
 
 " File explorer (NERD Tree)
 noremap  <silent> <F2> :NERDTreeToggle<CR>
-inoremap <silent> <F2> <C-O>:NERDTreeToggle<CR>
+inoremap <silent> <F2> <c-O>:NERDTreeToggle<CR>
 
 " Taglist pane
 noremap  <silent> <F3> :TlistToggle<CR>
-vnoremap <silent> <F3> <C-C>:TlistToggle<CR>
-inoremap <silent> <F3> <C-O>:TlistToggle<CR>
+vnoremap <silent> <F3> <c-C>:TlistToggle<CR>
+inoremap <silent> <F3> <c-O>:TlistToggle<CR>
 
 " Tagbar
 noremap  <silent> <F4> :TagbarToggle<CR>
-vnoremap <silent> <F4> <C-C>:TagbarToggle<CR>
-inoremap <silent> <F4> <C-O>:TagbarToggle<CR>
+vnoremap <silent> <F4> <c-C>:TagbarToggle<CR>
+inoremap <silent> <F4> <c-O>:TagbarToggle<CR>
 
 nnoremap <F6> :call ToggleFlag('guioptions','mrT')<cr>
-inoremap <F6> <C-C>:call ToggleFlag('guioptions','mrT')<cr>
+inoremap <F6> <c-C>:call ToggleFlag('guioptions','mrT')<cr>
 
 " Change colorscheme
 nnoremap <F7> :call NextColor(1)<CR>
@@ -441,23 +466,23 @@ nnoremap <A-F7> :call NextColor(0)<CR>
 
 " Insert Lopsum Text
 noremap  <silent> <F9> :Loremipsum 200<CR>
-vnoremap <silent> <F9> <C-C>:Loremipsum 200<CR>
-inoremap <silent> <F9> <C-O>:Loremipsum 200<CR>
+vnoremap <silent> <F9> <c-C>:Loremipsum 200<CR>
+inoremap <silent> <F9> <c-O>:Loremipsum 200<CR>
 
 " Close quickfix window
 noremap  <silent> <F10> :ccl<CR>
-vnoremap <silent> <F10> <C-C>:ccl<CR>
-inoremap <silent> <F10> <C-O>:ccl<CR>
+vnoremap <silent> <F10> <c-C>:ccl<CR>
+inoremap <silent> <F10> <c-O>:ccl<CR>
 
 " Toggle numbers
 noremap  <silent> <F11> :set nonu!<CR>
-vnoremap <silent> <F11> <C-C>:set nonu!<CR>
-inoremap <silent> <F11> <C-O>:set nonu!<CR>
+vnoremap <silent> <F11> <c-C>:set nonu!<CR>
+inoremap <silent> <F11> <c-O>:set nonu!<CR>
 
 " Remove trailing spaces
 noremap  <silent> <F12> :FixWhitespace<CR>
-vnoremap <silent> <F12> <C-C>:FixWhitespace<CR>
-inoremap <silent> <F12> <C-O>:FixWhitespace<CR>
+vnoremap <silent> <F12> <c-C>:FixWhitespace<CR>
+inoremap <silent> <F12> <c-O>:FixWhitespace<CR>
 
 "---------------------------------
 " Leader mapping                 |
@@ -494,17 +519,17 @@ nmap <leader>d :bprevious<CR>:bdelete #<CR>
 nnoremap <leader>. :CtrlPTag<cr>
 
 " Ack search
-noremap <leader>a  :Ack! <C-R><C-W><cr>
-noremap <leader>A  :Ack! <C-R><C-W><cr>
+noremap <leader>a  :Ack! <c-R><c-W><cr>
+noremap <leader>A  :Ack! <c-R><c-W><cr>
 
 " Use CTRL-Q to do what CTRL-V used to do
-noremap <C-Q> <C-V>
+noremap <c-q> <c-v>
 
 " Leader Shortcuts
 nmap <leader>w :w!<cr>
 
 " Remap interrupt search command
-noremap <C-U> <C-C>
+noremap <c-u> <c-c>
 
 " GitGutter
 noremap <leader>gh  :GitGutterLineHighlightsToggle<cr>
@@ -549,7 +574,7 @@ let g:EasyMotion_do_special_mapping = 1
 " CtrlP
 " -----
 let g:ctrlp_working_path_mode = 'a'   " Change current directory if file is outside
-let g:ctrlp_match_window = 'bottom,order:ttb'
+let g:ctrlp_match_window = 'bottom,order:ttb,min:5,max:30,result:30'
 let g:ctrlp_cache_dir = '~/.cache/ctrlp'
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_cmd = 'CtrlPMixed'
@@ -557,7 +582,6 @@ let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:20,results:20'
 let g:ctrlp_show_hidden = 1  " Match dotfiles
 let g:ctrlp_max_files = 2000
 let g:ctrlp_max_depth = 20
-let g:ctrlp_max_height = 30
 let g:ctrlp_follow_symblinks = 1
 let g:ctrlp_custom_ignore = {
             \ 'dir':  '\v[\/]\.(git|hg|svn)$',
@@ -597,8 +621,8 @@ let g:calendar_google_task = 1
 " Vim Multiple cursor
 " -------------------
 let g:multi_cursor_use_default_mapping=0
-let g:multi_cursor_next_key  = '<C-m>'
-let g:multi_cursor_start_key = '<C-m>'
+let g:multi_cursor_next_key  = '<c-m>'
+let g:multi_cursor_start_key = '<c-m>'
 let g:multi_cursor_quit_key  = '<Esc>'
 
 " Ultisnips
@@ -690,6 +714,15 @@ endfunction
 
 " Run :FixWhitespace to remove end of line white space
 command! -range=% FixWhitespace call <SID>FixWhitespace(<line1>,<line2>)
+
+" Add/Substract value to a number
+" -------------------------------
+function! AddSubtract(char, back)
+  let pattern = &nrformats =~ 'alpha' ? '[[:alpha:][:digit:]]' : '[[:digit:]]'
+  call search(pattern, 'cw' . a:back)
+  execute 'normal! ' . v:count1 . a:char
+  silent! call repeat#set(":\<C-u>call AddSubtract('" .a:char. "', '" .a:back. "')\<CR>")
+endfunction
 
 " Automatic adjust quickfix window height
 " ---------------------------------------
