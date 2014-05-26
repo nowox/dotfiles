@@ -4,9 +4,9 @@
 " ()()\___)(_____)(____)(_)\_)()()
 " My Own Ultimate .vimrc
 
-" First a very basic configuration
-set nocompatible                       " be Vi iMproved
-filetype off                           " Required for Vundle
+"---------------------------------
+" Plateform selection            |
+"---------------------------------
 
 " On which OS are we are ?
 let s:is_windows = has('win32') || has('win64')
@@ -19,7 +19,12 @@ if s:is_windows && !s:is_cygwin
     set runtimepath^=~/.vim
 endif
 
+"---------------------------------
+" Plugins                        |
+"---------------------------------
+
 " Start Vundle the package manager
+filetype off                           " Required for Vundle
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
@@ -60,51 +65,54 @@ Plugin 'vim-scripts/a.vim'             " Alternate quickly between .c <--> .h
 Plugin 'vim-scripts/ZoomWin'           " <c-w>o full screen split
 Plugin 'milkypostman/vim-togglelist'   " Allow to toggle quickfix and location list window
 
-
 call vundle#end()
+
+"---------------------------------
+" Most important settings        |
+"---------------------------------
+
+" Not on Vi anymore
+set nocompatible                       " be Vi iMproved
 
 " Reenable filetypes
 filetype plugin on                     " Enable Plugins
 filetype indent on                     " Enable Automatic Indent
 
-
-
+" Remap leader
 let mapleader = ","                    " Use a more convenient leader key
 
+"---------------------------------
+" Graphical interface            |
+"---------------------------------
+if s:is_windows
+  behave mswin
+  set guifont=Powerline_Consolas:h9:cANSI
+  winpos 0 0                           " Always start vim form the top left corner of the screen
+  win 120 75                           " Windows size
+  set guioptions=                      " No menu, no toolbar, no scrollbars
+else
+  set guifont=Powerline\ Consolas\ 10
+endif
+
+syntax on                              " Enable Syntax
+colorscheme hybrid                     " My colorscheme
+
+"---------------------------------
+" Standard settings              |
+"---------------------------------
 
 " Encoding and filetypes
+set encoding=utf-8
 set ffs=unix,dos,mac                   " Default type UNIX then DOS then MAC
-
-if has("multi_byte")
-    set encoding=utf-8
-    setglobal fileencoding=utf-8
-    set fileencodings=ucs-bom,utf-8,latin1
-    if &termencoding == ""
-        let &termencoding = &encoding
-    endif
+setglobal fileencoding=utf-8
+set fileencodings=ucs-bom,utf-8,latin1
+if &termencoding == ""
+    let &termencoding = &encoding
 endif
 
 " Mouse configuration
 set mouse=a                            " Use mouse in All modes
 set mousefocus                         " Activate windows on mouseover
-
-" Graphical Interface
-if s:is_windows
-    behave mswin
-    set guifont=Powerline_Consolas:h9:cANSI
-    "set guifont=Consolas\ for\ Powerline\ FixedD:h9
-    winpos 0 0                             " Always start vim form the top left corner of the screen
-    win 120 75                             " Windows size
-    set guioptions=                        " No menu, no toolbar, no scrollbars
-else
-    set guifont=Powerline\ Consolas\ 10
-endif
-
-syntax on                              " Enable Syntax
-colorscheme hybrid                     " My colorscheme
-set ttyfast                            " Send more chars to redraw in CTERM
-
-set fillchars=vert:│                         " Separator for status window
 
 " Interface (behavior)
 set history=1000                       " Remember more commands and search history
@@ -121,10 +129,14 @@ set whichwrap+=<,>,h,l                 " Allow to use arrow keys to move in Visu
 set virtualedit=all                    " Allow to place cursor at any location
 set cursorline                         " Highlight current line
 set writeany                           " Allow writing to any file with no need for "!" override
-set laststatus=2                       " Always the status of the last window
 set backspace=eol,start,indent         " Allow backspacing over CR autoindent and start of insert
 
-" No annoying sound on errors
+" Performances
+set ttyfast                            " Send more chars to redraw in CTERM
+set lazyredraw                         " Buffer screen updates instead of updating al the time
+let loaded_matchparen = 1
+
+" Alerts
 set noerrorbells
 set novisualbell
 set t_vb=
@@ -171,25 +183,17 @@ set splitright                         " New vertical split always at the right 
 set splitbelow                         " New horizontal split always at the bottom of the current window
 
 " Backup behaviour
-"set backupskip=/tmp/*,/private/tmp/*   " Do not backup anything for files like this
-"set writebackup                        " Make a backup before overwriting a file
-"if has("unix")
-"" Cygwin/Linux specific code
-"set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-"set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-"else
-"" Native-Windows specific code
-"set backupdir=%TMr%
-"set directory=%TMP%
-"endif
 set nobackup                           " Disable backup
 set noswapfile                         " Disable swap because sometime swapfile is in readonly
 
+" Status line
+set fillchars=vert:│                   " Separator for status window
+set laststatus=2                       " Always the status of the last window
+set showcmd                            " Show commands being typed in the bottom right corner
 
 " Display unprintable chars
 set list
 set listchars=tab:▸\ "
-"set listchars+=eol:¬
 set listchars+=extends:›
 set listchars+=precedes:‹
 set listchars+=nbsp:˽
@@ -197,86 +201,18 @@ set showbreak=⌐
 
 " Auto complete setting
 set completeopt=menuone,longest
-" ---------------------------------------------------------
-" Keyboard mapping (shortcuts)
-" remap (recursive map)
-" map   (no recursive map)
-"
-" Commands                        Mode
-" --------                        ----
-" nmap, nnoremap, nunmap          Normal mode
-" imap, inoremap, iunmap          Insert and Replace mode
-" vmap, vnoremap, vunmap          Visual and Select mode
-" xmap, xnoremap, xunmap          Visual mode
-" smap, snoremap, sunmap          Select mode
-" cmap, cnoremap, cunmap          Command-line mode
-" omap, onoremap, ounmap          Operator pending mode
-" ---------------------------------------------------------
 
 "---------------------------------
-" Modern editor standard mapping |
+" Mouse mapping                  |
 "---------------------------------
 
-
-
-" Ctrl-tab is next buffer
-nnoremap <c-Tab> :bNext<cr>
-inoremap <c-Tab> <c-O>:bNext<cr>
-cnoremap <c-Tab> <c-C>:bNext<cr>
-onoremap <c-Tab> <c-C>:bNext<cr>
-
-nnoremap  <c-S-Tab> :bprevious<cr>
-inoremap <c-S-Tab> <c-O>:bprevious<cr>
-cnoremap <c-S-Tab> <c-C>:bprevious<cr>
-onoremap <c-S-Tab> <c-C>:bprevious<cr>
-
-" Ctrl-F4 and Ctrl-W closes the window
-noremap <c-F4> <c-W>c
-inoremap <c-F4> <c-O><c-W>c
-cnoremap <c-F4> <c-C><c-W>c
-onoremap <c-F4> <c-C><c-W>c
-
-"noremap <c-W> <c-W>c
-"inoremap <c-W> <c-O><c-W>c
-"cnoremap <c-W> <c-C><c-W>c
-"onoremap <c-W> <c-C><c-W>c
-
-" Tabbing visual selection in VIM
-vmap <Tab>   >gv
-vmap <S-Tab> <gv
-
-" Allow to select a word with a double click in cygwin
+" <2-LeftMouse> Allow to select a word with a double click in cygwin
 if !has('gui')
-    nmap <2-LeftMouse> viw<right>
+    inoremap <2-LeftMouse> <esc>viw<right>
 endif
 
-
-" Copy a word if no selection with Ctrl-c
-inoremap <silent> <c-C> <esc>mPviw"+y`Pa
-nnoremap <silent> <c-C> <esc>mPviw"+y`P
-
-" Paste with Ctrl-v or shift-insert
-noremap  <c-V>          "+gP
-noremap  <S-Insert>	    "+gP
-cnoremap <c-V>          <c-R>+
-cnoremap <S-Insert>	    <c-R>+
-
-" Pasting blockwise and linewise selections is not possible in Insert and
-" Visual mode without the +virtualedit feature.  They are pasted as if they
-" were characterwise instead.
-" Uses the paste.vim autoload script.
-exe 'inoremap <script> <c-V> <c-G>u' . paste#paste_cmd['i']
-exe 'vnoremap <script> <c-V> ' . paste#paste_cmd['v']
-
-"---------------------------------
-" Inspired from SublimeText      |
-"---------------------------------
-
-" Vim-CtrlP-CmdPalette to immitate Sublime's Ctrl-O
-noremap  <c-S-P>    :CtrlPCmdPalette<cr>
-inoremap <c-S-P>    <c-O>:CtrlPCmdPalette<cr>
-vnoremap <c-S-P>    <c-C>:CtrlPCmdPalette<cr>
-
+" <2-LeftMouse> Highlight the word under cursor
+nnoremap <silent> <2-LeftMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
 
 "---------------------------------
 " Vim advanced mapping           |
@@ -343,10 +279,6 @@ map <c-l> <c-W>l
 " In the case sudo is needed
 cmap w!! w !sudo tee % >/dev/null
 
-" New tab on <c-W>T
-nnoremap <c-w>T :tabnew<cr>
-
-
 " Dupplicate current line above or below
 nnoremap <silent> [<space> :pu! _<cr>:']+1<cr>
 nnoremap <silent> ]<space> :pu _<cr>:'[-1<cr>
@@ -357,7 +289,6 @@ inoremap <silent> <c-l> <esc>mO<c-C>:e #<cr>
 
 " Current word highlight
 noremap * mP*N`P
-nnoremap <silent> <2-LeftMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
 
 " Tag completion
 inoremap <c-t> <c-x><c-]>
@@ -366,22 +297,40 @@ inoremap <c-t> <c-x><c-]>
 " Single char mapping            |
 "---------------------------------
 
+" <tab> Tabbing visual selection
+vnoremap           <tab>   >gv
+nnoremap           <tab>   >>
+vnoremap           <s-tab> <gv
+vnoremap           <s-tab> <<
+
 " Search with <space>
 map <space> /
 
 " Use Q for formatting the current paragraph (or selection)
-vnoremap Q gq
-noremap  Q gqap
+vnoremap           Q       gq
+nnoremap           Q       gqap
 
 " Go back to marker position (the swiss french keyboard sucks)
-noremap ' `
+noremap            '       `
 
 " Terminal redraw
-noremap § :redraw<cr>
+noremap            §       :redraw<cr>
 
 "---------------------------------
 " Control + Char mapping         |
 "---------------------------------
+
+" <c-Tab> Next buffer
+nnoremap           <c-Tab> :bn<cr>
+inoremap           <c-Tab> <c-o>:bn<cr>
+cnoremap           <c-Tab> <c-c>:bn<cr>
+onoremap           <c-Tab> <c-c>:bn<cr>
+
+" <c-s-Tab> Previous buffer
+nnoremap           <c-s-Tab> :bp<cr>
+inoremap           <c-s-Tab> <c-o>:bp<cr>
+cnoremap           <c-s-Tab> <c-c>:bp<cr>
+onoremap           <c-s-Tab> <c-c>:bp<cr>
 
 " <c-a> Select all (like every modern editor)
 inoremap           <c-a>   <esc>ggVG
@@ -392,20 +341,24 @@ noremap            <c-b>        :CtrlPBuffer<cr>
 inoremap           <c-b>   <c-o>:CtrlPBuffer<cr>
 vnoremap           <c-b>   <c-c>:CtrlPBuffer<cr>
 
-" <c-c> Copy with Ctrl-c or Ctrl insert
-vnoremap           <c-c>   "+y
+" <c-c> Copy
+"  - Copy word under cursor if no selection
+"  - Copy selection
+inoremap <silent>  <c-c> <esc>m`viw"+y``a
+nnoremap <silent>  <c-c> <esc>m`viw"+y``
+vnoremap           <c-c> "+y
 
 " <c-d> Replace word under cursor (Delete A word)
 inoremap <silent>  <c-d>   <c-c>"_ciw
 nnoremap <silent>  <c-d>   "_ciw
 
 " <c-e> Decrement the next number on the line
-nnoremap <silent> <c-e> :<c-u>call AddSubtract("\<c-x>", '')<CR>
+nnoremap <silent>  <c-e>   :<c-u>call AddSubtract("\<c-x>", '')<CR>
 
-" <c-f> Buffer switch (Next/Previous buffer)
-nnoremap <c-f> :bp<cr>
-inoremap <c-f> <c-o>:bp<cr>
-vnoremap <c-f> <c-c>:bp<cr>
+" <c-f> Search
+nnoremap           <c-f>   /<C-u><C-r>=Escape(expand('<cword>'))<CR>
+inoremap           <c-f>   <esc>/<C-u><C-r>=Escape(expand('<cword>'))<CR>
+vnoremap           <c-f>   /<C-u><C-r>=GetVisualSelection()<CR>
 
 " <c-g> Buffer switch (Previous buffer)
 nnoremap <c-g> :bn<cr>
@@ -413,27 +366,41 @@ inoremap <c-g> <c-o>:bn<cr>
 vnoremap <c-g> <c-c>:bn<cr>
 
 " <c-h> Replacement
-noremap   <c-h>     :%s/<c-R><c-W>//g<left><left>
-inoremap  <c-h>     <esc>:%s/<c-R><c-W>//g<left><left>
-vnoremap  <c-h>     gv:%s/<c-R><c-W>//g<left><left>
+nnoremap <c-h> :<C-u>%s/<C-r>=Escape(expand('<cword>'))<CR>//g<left><left>
+inoremap <c-h> <esc>:%s/<C-r>=Escape(expand('<cword>'))<CR>//g<left><left>
+vnoremap <c-h> :<C-u>%s/<C-r>=GetVisualSelection()<CR>//g<left><left>
 
-" Add empty line above and after the current line
+" <c-j> Add an empty line below the cursor
 nnoremap <silent> <c-j> m`o<esc>``
 inoremap <silent> <c-j> <esc>m`o<esc>``a
 
+" <c-k> Add an empty line above the cursor
 nnoremap <silent> <c-k> m`O<esc>``
 inoremap <silent> <c-k> <esc>m`O<esc>``a
 
-" Save Ctrl-S
+" <c-s-p> Vim-CtrlP-CmdPalette to immitate Sublime's behaviour
+nnoremap           <c-s-p>  :CtrlPCmdPalette<cr>
+inoremap           <c-s-p>  <c-O>:CtrlPCmdPalette<cr>
+vnoremap           <c-s-p>  <c-C>:CtrlPCmdPalette<cr>
+
+" <c-s> Save
 noremap            <c-s>    :update!<CR>
 vnoremap           <c-s>    <c-C>:update!<CR>
 inoremap           <c-s>    <c-O>:update!<CR>
 
-" Cut with Ctrl-x
+" <c-v> Paste
+noremap            <c-v>    "+gP
+cnoremap           <c-v>    <c-R>+
+exe 'inoremap <script> <c-v> <c-g>u' . paste#paste_cmd['i']
+exe 'vnoremap <script> <c-v> ' . paste#paste_cmd['v']
+
+" <c-x> Cut
 vnoremap <c-X>   "+x
 
-" Increment the next number on the line
+" <c-y> Increment closest number
 nnoremap <silent> <c-y> :<c-u>call AddSubtract("\<c-a>", '')<CR>
+
+
 
 "---------------------------------
 " F Function mapping             |
@@ -514,7 +481,7 @@ nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 " Switch between source files and beader files quickly
 noremap <leader>h   :A<cr>
 
-nmap <leader>d :bprevious<CR>:bdelete #<CR>
+nmap <leader>d :bprevious<CR>:bdelete! #<CR>
 " CtrlP Tag search
 nnoremap <leader>. :CtrlPTag<cr>
 
@@ -761,6 +728,24 @@ endfunction
 let s:mycolors     = ['hybrid', 'eclipse', 'automation']
 let s:airlinetheme = ['wombat', 'base16', 'base16']
 
+" Get Visual Selection
+" --------------------
+function! GetVisualSelection()
+  let old_reg = @v
+  normal! gv"vy
+  let raw_search = @v
+  let @v = old_reg
+  return substitute(escape(raw_search, '\/.*$^~[]'), "\n", '\\n', "g")
+endfunction
+
+" Escape special chars for a regexp search
+" ----------------------------------------
+function! Escape(stuff)
+  return substitute(escape(a:stuff, '\/.*$^~[]'), "\n", '\\n', "g")
+endfunction
+
+" Next colorscheme
+" ----------------
 function! NextColor(how)
     call s:NextColor(a:how, 1)
 endfunction
