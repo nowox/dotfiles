@@ -84,8 +84,9 @@ let mapleader = ","                    " Use a more convenient leader key
 "---------------------------------
 " Graphical interface            |
 "---------------------------------
+behave mswin
+
 if s:is_windows
-  behave mswin
   set guifont=Powerline_Consolas:h9:cANSI
   winpos 0 0                           " Always start vim form the top left corner of the screen
   win 120 75                           " Windows size
@@ -234,36 +235,6 @@ nnoremap <BS> X
 
 " Shortcuts that put vim into insert mode
 nnoremap <end> i<end>
-
-" Visual mode selection in terminal mode
-if s:is_cygwin
-vnoremap <Left> <esc><left>
-vnoremap <Right> <esc><right>
-vnoremap <Up> <esc><up>
-vnoremap <Down> <esc><down>
-nnoremap <s-left> vh
-nnoremap <s-right> vl
-nnoremap <s-up> vk
-nnoremap <s-down> vj
-
-inoremap <s-left> <esc>vh
-inoremap <s-right> <esc>vl
-inoremap <s-up> <esc>vk
-inoremap <s-down> <esc>vj
-
-vnoremap <s-left> h
-vnoremap <s-right> l
-vnoremap <s-up> k
-vnoremap <s-down> j
-nnoremap <s-end> v$
-nnoremap <s-home> v0
-
-inoremap <s-end> <esc>v$
-inoremap <s-home> <esc>v0
-
-vnoremap <end> $
-vnoremap <home> 0
-endif
 
 " jk is back to normal mode
 inoremap jk <esc><right>
