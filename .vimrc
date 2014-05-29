@@ -9,7 +9,7 @@
 "---------------------------------
 
 " On which OS are we are ?
-let s:is_windows = has('win32') || has('win64')
+let s:is_windows = (has('win32') || has('win64')) && has('gui')
 let s:is_cygwin  = has('win32unix')
 let s:is_macvim  = has('gui_macvim')
 
@@ -31,29 +31,91 @@ call vundle#begin()
 " Let Vundle manage Vundle
 Plugin 'gmarik/Vundle.vim'
 
-" Load other vim extensions
-Plugin 'Lokaltog/vim-easymotion'       " Allow to move quickly using shortcuts
-Plugin 'haya14busa/vim-easyoperator-line'
-Plugin 'godlygeek/tabular'             " Align to = for example
+" Easymotion
+Plugin 'Lokaltog/vim-easymotion'        " Allow to move quickly using shortcuts
+let g:EasyMotion_startofline = 0        " Keep cursor colum when JK motion
+let g:EasyMotion_smartcase = 1          " Same as smartcase in vim
+let g:EasyMotion_do_shade = 1           " Shade text to better see the keys
+let g:EasyMotion_enter_jump_first = 1   " When search, jump directly on enter
+let g:EasyMotion_do_special_mapping = 1 " {operator}<leader>l (select, yank, paste ...)
+let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz123456789'
+
 Plugin 'bling/vim-airline'             " Best status line ever (needs Powerline Consolas font)
-Plugin 'ervandew/supertab'
-Plugin 'fisadev/vim-ctrlp-cmdpalette'  " Command palette for ctrlp
-Plugin 'flazz/vim-colorschemes'        " A lot of colorschemes (including hybrid)
-Plugin 'honza/vim-snippets'            " Snippets files for various programming languages
-"    Plugin 'sirver/ultisnips'              " Snipper plugin
-Plugin 'dbakker/vim-projectroot'       " Set default path to root project by detecting .git for instance
+let g:airline_theme = 'wombat'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+
+Plugin 'kien/ctrlp.vim'                " Sublime's <C-P> feature
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_cache_dir         = '~/.cache/ctrlp'
+let g:ctrlp_switch_buffer     = 'e'
+let g:ctrlp_cmd               = 'CtrlPMixed'
+let g:ctrlp_match_window      = 'bottom,order:ttb,min:1,max:20,results:20'
+let g:ctrlp_show_hidden       = 1
+let g:ctrlp_max_files         = 2000
+let g:ctrlp_max_depth         = 20
+let g:ctrlp_follow_symblinks  = 1
+let g:ctrlp_custom_ignore = {
+            \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+            \ 'file': '\v\.(exe|so|dll|doj|bin|zip|tar|gz|iso|class|rar|swp|ldr|dpj|stk)$',
+            \ 'link': 'some_bad_symbolic_links',
+            \ }
+
+Plugin 'scrooloose/nerdtree'           " File explorer
+let g:NERDTreeDirArrows  = 1           " Show nice arrows instead of |+
+let g:NERDTreeShowHidden = 1           " Show hidden files
+let g:NERDTreeWinPos     = "left"      " Window position
+let g:NERDTreeWinSize    = 50          " Width of the NERDTree sidebar
+
+Plugin 'xolox/vim-notes'               " Note taking
+let g:notes_directories = ['~/.notes/']
+let g:notes_suffix      = '.txt'
+
+Plugin 'terryma/vim-multiple-cursors'  " Sublime's multiple selection feature
+let g:multi_cursor_use_default_mapping=0
+let g:multi_cursor_next_key  = '<C-m>'
+let g:multi_cursor_start_key = '<C-m>'
+let g:multi_cursor_quit_key  = '<Esc>'
+
 Plugin 'nathanaelkane/vim-indent-guides'
+let g:indent_guides_auto_colors = 1
+let g:indent_guides_start_level = 2
+let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
+if s:is_windows
+    let g:indent_guides_enable_on_vim_startup = 0
+else
+    let g:indent_guides_enable_on_vim_startup = 0
+endif
+
+Plugin 'dbakker/vim-projectroot'       " Set default path to root project by detecting .git for instance
+au BufEnter * if &ft != 'help' | call ProjectRootCD() | endif
+
+Plugin 'Shougo/vimproc.vim' 
+Plugin 'Shougo/vimshell.vim'
+Plugin 'tpope/vim-fugitive'            " Git wrapper for vim
+
+
+Plugin 'fisadev/vim-ctrlp-cmdpalette'  " Command palette for ctrlp
+Plugin 'chrisbra/NrrwRgn'              " Focus on selected regions, making the rest inaccessible
+Plugin 'scrooloose/syntastic'          " Syntax checker
+Plugin 'godlygeek/tabular'             " Select, then :Tabularize /= to align to equal sign
+Plugin 'ervandew/supertab'
+Plugin 'flazz/vim-colorschemes'        " A lot of colorschemes (including hybrid)
+
+
+Plugin 'honza/vim-snippets'            " Snippets files for various programming languages
+Plugin 'sirver/ultisnips'              " Snipper plugin
+
 Plugin 'airblade/vim-gitgutter'        " Show changed
 Plugin 'kana/vim-fakeclip'             " Allow to use clipboard under cygwin
-Plugin 'kien/ctrlp.vim'                " Sublime's <c-P> feature
+
 Plugin 'majutsushi/tagbar'             " File tags browsing
 Plugin 'mileszs/ack.vim'               " Use the Perl module App::Ack
 Plugin 'scrooloose/nerdcommenter'      " Un/Comment lines
-Plugin 'scrooloose/nerdtree'           " File explorer
+
 Plugin 'sjl/gundo.vim'                 " Visualize your Vim undo tree
 Plugin 'terryma/vim-expand-region'     " Allow to visually select increasingly larger region of text
-Plugin 'terryma/vim-multiple-cursors'  " Sublime's multiple selection feature
-Plugin 'tpope/vim-fugitive'            " Git wrapper for vim
+
 Plugin 'tpope/vim-surround'            " Easy delete, change on surroundings in pairs
 Plugin 'vim-scripts/Align'             " Alignment at equal sign
 Plugin 'vim-scripts/Txtfmt-The-Vim-Highlighter'
@@ -62,8 +124,16 @@ Plugin 'mihaifm/bufstop'               " Easy way to switch buffers
 Plugin 'vim-scripts/loremipsum'        " Insert Lipsum text
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'vim-scripts/a.vim'             " Alternate quickly between .c <--> .h
-Plugin 'vim-scripts/ZoomWin'           " <c-w>o full screen split
+Plugin 'vim-scripts/ZoomWin'           " <C-w>o full screen split
 Plugin 'milkypostman/vim-togglelist'   " Allow to toggle quickfix and location list window
+
+Plugin 'ciaranm/detectindent'          " Automatically detect indentation
+Plugin 'kien/rainbow_parentheses.vim'  "
+Plugin 'xolox/vim-misc'                " Needed by vim-notes
+Plugin 'xolox/vim-easytags'            " To test
+
+Plugin 'skammer/vim-css-color'
+Plugin 'vim-scripts/bufkill.vim'
 
 call vundle#end()
 
@@ -81,22 +151,22 @@ filetype indent on                     " Enable Automatic Indent
 " Remap leader
 let mapleader = ","                    " Use a more convenient leader key
 
+" Vim's language
+language messages en
+
 "---------------------------------
 " Graphical interface            |
 "---------------------------------
-behave mswin
 
 if s:is_windows
   set guifont=Powerline_Consolas:h9:cANSI
-  winpos 0 0                           " Always start vim form the top left corner of the screen
-  win 120 75                           " Windows size
   set guioptions=                      " No menu, no toolbar, no scrollbars
 else
   set guifont=Powerline\ Consolas\ 10
 endif
 
 syntax on                              " Enable Syntax
-colorscheme hybrid                     " My colorscheme
+colorscheme hybrid                     " Best colorscheme ever
 
 "---------------------------------
 " Standard settings              |
@@ -111,9 +181,13 @@ if &termencoding == ""
     let &termencoding = &encoding
 endif
 
-" Mouse configuration
+" Mouse/Selection configuration (behave)
 set mouse=a                            " Use mouse in All modes
 set mousefocus                         " Activate windows on mouseover
+set selectmode=mouse,key
+set mousemodel=popup
+set keymodel=startsel,stopsel
+set selection=exclusive
 
 " Interface (behavior)
 set history=1000                       " Remember more commands and search history
@@ -131,6 +205,8 @@ set virtualedit=all                    " Allow to place cursor at any location
 set cursorline                         " Highlight current line
 set writeany                           " Allow writing to any file with no need for "!" override
 set backspace=eol,start,indent         " Allow backspacing over CR autoindent and start of insert
+set helpheight=999
+set winminheight=0
 
 " Performances
 set ttyfast                            " Send more chars to redraw in CTERM
@@ -144,7 +220,7 @@ set t_vb=
 set tm=500
 
 " Search/Find/Replace
-set hlsearch                           " Highlight search results
+set nohlsearch                         " No Highlight search results
 set incsearch                          " Interactive search
 set magic                              " Simplify usage of Regex
 set showmatch                          " Show matching brackets
@@ -206,11 +282,14 @@ set completeopt=menuone,longest
 "---------------------------------
 " Mouse mapping                  |
 "---------------------------------
+if s:is_cygwin
+    " <2-LeftMouse> Allow to select a word with a double click in cygwin
+    inoremap <2-LeftMouse> <esc>viw
 
-" <2-LeftMouse> Allow to select a word with a double click in cygwin
-if !has('gui')
-    inoremap <2-LeftMouse> <esc>viw<right>
+    " <3-LeftMouse> Allow to select the whole line
+    inoremap <3-LeftMouse> <esc>V
 endif
+
 
 " <2-LeftMouse> Highlight the word under cursor
 nnoremap <silent> <2-LeftMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
@@ -242,10 +321,10 @@ inoremap jk <esc><right>
 map <c-space> ?
 
 " Smart way to move between windows
-map <c-j> <c-W>j
-map <c-k> <c-W>k
-map <c-h> <c-W>h
-map <c-l> <c-W>l
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
 
 " In the case sudo is needed
 cmap w!! w !sudo tee % >/dev/null
@@ -255,14 +334,14 @@ nnoremap <silent> [<space> :pu! _<cr>:']+1<cr>
 nnoremap <silent> ]<space> :pu _<cr>:'[-1<cr>
 
 " Switch to previous active buffer
-nnoremap <silent> <c-l> :e #<cr>
-inoremap <silent> <c-l> <esc>mO<c-C>:e #<cr>
+nnoremap <silent> <C-l> :e #<cr>
+inoremap <silent> <C-l> <esc>mO<C-C>:e #<cr>
 
 " Current word highlight
 noremap * mP*N`P
 
 " Tag completion
-inoremap <c-t> <c-x><c-]>
+inoremap <C-t> <C-x><c-]>
 
 "---------------------------------
 " Single char mapping            |
@@ -287,140 +366,179 @@ noremap            '       `
 " Terminal redraw
 noremap            §       :redraw<cr>
 
+" Easymotion
+nmap s <Plug>(easymotion-s)
+vmap s <Plug>(easymotion-s)
+nmap t <Plug>(easymotion-t)
+
 "---------------------------------
 " Control + Char mapping         |
 "---------------------------------
 
 " <c-Tab> Next buffer
 nnoremap           <c-Tab> :bn<cr>
-inoremap           <c-Tab> <c-o>:bn<cr>
-cnoremap           <c-Tab> <c-c>:bn<cr>
-onoremap           <c-Tab> <c-c>:bn<cr>
+inoremap           <c-Tab> <C-o>:bn<cr>
+cnoremap           <c-Tab> <C-c>:bn<cr>
+onoremap           <c-Tab> <C-c>:bn<cr>
 
 " <c-s-Tab> Previous buffer
 nnoremap           <c-s-Tab> :bp<cr>
-inoremap           <c-s-Tab> <c-o>:bp<cr>
-cnoremap           <c-s-Tab> <c-c>:bp<cr>
-onoremap           <c-s-Tab> <c-c>:bp<cr>
+inoremap           <c-s-Tab> <C-o>:bp<cr>
+cnoremap           <c-s-Tab> <C-c>:bp<cr>
+onoremap           <c-s-Tab> <C-c>:bp<cr>
 
-" <c-a> Select all (like every modern editor)
-inoremap           <c-a>   <esc>ggVG
-nnoremap           <c-a>        ggVG
+" <C-a> Select all (like every modern editor)
+inoremap           <C-a>   <esc>ggVG
+nnoremap           <C-a>        ggVG
 
-" <c-b> Vim-ctrlP Buffer explorer with Ctrl-B
-noremap            <c-b>        :CtrlPBuffer<cr>
-inoremap           <c-b>   <c-o>:CtrlPBuffer<cr>
-vnoremap           <c-b>   <c-c>:CtrlPBuffer<cr>
+" <C-b> Vim-ctrlP Buffer explorer with Ctrl-B
+noremap            <C-b>        :CtrlPBuffer<cr>
+inoremap           <C-b>   <C-o>:CtrlPBuffer<cr>
+vnoremap           <C-b>   <C-c>:CtrlPBuffer<cr>
 
-" <c-c> Copy
-"  - Copy word under cursor if no selection
-"  - Copy selection
-inoremap <silent>  <c-c> <esc>m`viw"+y``a
-nnoremap <silent>  <c-c> <esc>m`viw"+y``
-vnoremap           <c-c> "+y
+" <C-c> Copy
+inoremap <silent>  <C-c> <esc>m`viw"+y``a
+nnoremap <silent>  <C-c> <esc>m`viw"+y``
+vnoremap           <C-c> "+y
 
-" <c-d> Replace word under cursor (Delete A word)
-inoremap <silent>  <c-d>   <c-c>"_ciw
-nnoremap <silent>  <c-d>   "_ciw
+" <C-d> Replace word under cursor (Delete A word)
+inoremap <silent>  <C-d>   <C-c>"_ciw
+nnoremap <silent>  <C-d>   "_ciw
 
-" <c-e> Decrement the next number on the line
-nnoremap <silent>  <c-e>   :<c-u>call AddSubtract("\<c-x>", '')<CR>
+" <C-e> Decrement the next number on the line
+nnoremap <silent>  <C-e>   :<C-u>call AddSubtract("\<C-x>", '')<CR>
 
-" <c-f> Search
-nnoremap           <c-f>   /<C-u><C-r>=Escape(expand('<cword>'))<CR>
-inoremap           <c-f>   <esc>/<C-u><C-r>=Escape(expand('<cword>'))<CR>
-vnoremap           <c-f>   /<C-u><C-r>=GetVisualSelection()<CR>
+" <C-f> Search
+nnoremap           <C-f>   /<C-u><C-r>=Escape(expand('<cword>'))<CR>
+inoremap           <C-f>   <esc>/<C-u><C-r>=Escape(expand('<cword>'))<CR>
+vnoremap           <C-f>   /<C-u><C-r>=GetVisualSelection()<CR>
 
-" <c-g> Buffer switch (Previous buffer)
-nnoremap <c-g> :bn<cr>
-inoremap <c-g> <c-o>:bn<cr>
-vnoremap <c-g> <c-c>:bn<cr>
+" <C-g> Buffer switch (Previous buffer)
+nnoremap <C-g> :bn<cr>
+inoremap <C-g> <C-o>:bn<cr>
 
-" <c-h> Replacement
-nnoremap <c-h> :<C-u>%s/<C-r>=Escape(expand('<cword>'))<CR>//g<left><left>
-inoremap <c-h> <esc>:%s/<C-r>=Escape(expand('<cword>'))<CR>//g<left><left>
-vnoremap <c-h> :<C-u>%s/<C-r>=GetVisualSelection()<CR>//g<left><left>
 
-" <c-j> Add an empty line below the cursor
-nnoremap <silent> <c-j> m`o<esc>``
-inoremap <silent> <c-j> <esc>m`o<esc>``a
+" <C-h> Replacement
+nnoremap <C-h> :<C-u>%s/<C-r>=Escape(expand('<cword>'))<CR>//g<left><left>
+inoremap <C-h> <esc>:%s/<C-r>=Escape(expand('<cword>'))<CR>//g<left><left>
+vnoremap <C-h> :<C-u>%s/<C-r>=GetVisualSelection()<CR>//g<left><left>
 
-" <c-k> Add an empty line above the cursor
-nnoremap <silent> <c-k> m`O<esc>``
-inoremap <silent> <c-k> <esc>m`O<esc>``a
+" <C-i>
+"-----------
+
+" <C-j> Add an empty line below the cursor
+nnoremap <silent> <C-j> m`o<esc>``
+inoremap <silent> <C-j> <esc>m`o<esc>``a
+
+" <C-k> Add an empty line above the cursor
+nnoremap <silent> <C-k> m`O<esc>``
+inoremap <silent> <C-k> <esc>m`O<esc>``a
+
+" <C-l>
+
+" <C-m> Multiple cursor
+" [Mapping already set with the multiple-cursor plugin]
+
+" <C-n>
+
+" <C-o>
 
 " <c-s-p> Vim-CtrlP-CmdPalette to immitate Sublime's behaviour
 nnoremap           <c-s-p>  :CtrlPCmdPalette<cr>
-inoremap           <c-s-p>  <c-O>:CtrlPCmdPalette<cr>
-vnoremap           <c-s-p>  <c-C>:CtrlPCmdPalette<cr>
+inoremap           <c-s-p>  <C-O>:CtrlPCmdPalette<cr>
+vnoremap           <c-s-p>  <C-C>:CtrlPCmdPalette<cr>
 
-" <c-s> Save
-noremap            <c-s>    :update!<CR>
-vnoremap           <c-s>    <c-C>:update!<CR>
-inoremap           <c-s>    <c-O>:update!<CR>
+" <C-q> Blockwise visual mode
+noremap            <C-q>    <C-v>
 
-" <c-v> Paste
-noremap            <c-v>    "+gP
-cnoremap           <c-v>    <c-R>+
-exe 'inoremap <script> <c-v> <c-g>u' . paste#paste_cmd['i']
-exe 'vnoremap <script> <c-v> ' . paste#paste_cmd['v']
+" <C-r>
 
-" <c-x> Cut
-vnoremap <c-X>   "+x
+" <C-s> Save
+noremap            <C-s>    :update!<CR>
+vnoremap           <C-s>    <C-c>:update!<CR>
+inoremap           <C-s>    <C-o>:update!<CR>
 
-" <c-y> Increment closest number
-nnoremap <silent> <c-y> :<c-u>call AddSubtract("\<c-a>", '')<CR>
+" <C-t>
 
+" <C-u>
 
+" <C-v> Paste
+noremap            <C-v>    "+gP
+cnoremap           <C-v>    <C-R>+
+exe 'inoremap <script> <C-v> <C-g>u' . paste#paste_cmd['i']
+exe 'vnoremap <script> <C-v> ' . paste#paste_cmd['v']
+
+" <C-w> Window command (Split)
+" Used to split vim's environmnent in multiple workspaces called windows.
+"       <C-w>v   Vertical Split
+"       <C-w>s   Horizontal Split
+"       <C-w>o   Zoom (from plugin vim-zoom)
+"       <C-w>n   New vertical split with an empty buffer
+"       <C-w>^   Veritcal split with alternate buffer #
+"       <C-w>q   Quit current window and exit vim if last window
+"       <C-w>c   Close current window
+"
+"       <C-w>[jklh]  Move cursor to Nth window down/left/right/up
+"       <C-w>j   Move cursor to Nth window below
+"       :help split
+
+"noremap  <C-w>     :BD<CR>
+
+" <C-x> Cut
+vnoremap <C-x>   "+x
+
+" <C-y> Increment closest number
+nnoremap <silent> <C-y> :<C-u>call AddSubtract("\<C-a>", '')<CR>
+
+" <C-z> Undo
+noremap           <C-z>    u
+inoremap          <C-z>    <C-o>u
 
 "---------------------------------
 " F Function mapping             |
 "---------------------------------
 
-" Toggle Menu bar
-nnoremap <c-F1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<CR>
+" Help in full screen
+noremap  <F1>       :help<cr>:only<cr>
+inoremap <F1>      <esc>:help<cr>:only<cr>
 
 " File explorer (NERD Tree)
 noremap  <silent> <F2> :NERDTreeToggle<CR>
-inoremap <silent> <F2> <c-O>:NERDTreeToggle<CR>
+inoremap <silent> <F2> <C-O>:NERDTreeToggle<CR>
 
 " Taglist pane
 noremap  <silent> <F3> :TlistToggle<CR>
-vnoremap <silent> <F3> <c-C>:TlistToggle<CR>
-inoremap <silent> <F3> <c-O>:TlistToggle<CR>
+vnoremap <silent> <F3> <C-C>:TlistToggle<CR>
+inoremap <silent> <F3> <C-O>:TlistToggle<CR>
 
 " Tagbar
 noremap  <silent> <F4> :TagbarToggle<CR>
-vnoremap <silent> <F4> <c-C>:TagbarToggle<CR>
-inoremap <silent> <F4> <c-O>:TagbarToggle<CR>
+vnoremap <silent> <F4> <C-C>:TagbarToggle<CR>
+inoremap <silent> <F4> <C-O>:TagbarToggle<CR>
 
-nnoremap <F6> :call ToggleFlag('guioptions','mrT')<cr>
-inoremap <F6> <c-C>:call ToggleFlag('guioptions','mrT')<cr>
+" Toggle colorscheme
+nnoremap <F8> :call NextColor(1)<CR>
+nnoremap <S-F8> :call NextColor(-1)<CR>
+nnoremap <A-F8> :call NextColor(0)<CR>
 
-" Change colorscheme
-nnoremap <F7> :call NextColor(1)<CR>
-nnoremap <S-F7> :call NextColor(-1)<CR>
-nnoremap <A-F7> :call NextColor(0)<CR>
-
-" Insert Lopsum Text
-noremap  <silent> <F9> :Loremipsum 200<CR>
-vnoremap <silent> <F9> <c-C>:Loremipsum 200<CR>
-inoremap <silent> <F9> <c-O>:Loremipsum 200<CR>
+" Toggle menu
+nnoremap <F9> :call ToggleFlag('guioptions','mrT')<cr>
+inoremap <F9> <C-C>:call ToggleFlag('guioptions','mrT')<cr>
 
 " Close quickfix window
 noremap  <silent> <F10> :ccl<CR>
-vnoremap <silent> <F10> <c-C>:ccl<CR>
-inoremap <silent> <F10> <c-O>:ccl<CR>
+vnoremap <silent> <F10> <C-C>:ccl<CR>
+inoremap <silent> <F10> <C-O>:ccl<CR>
 
 " Toggle numbers
 noremap  <silent> <F11> :set nonu!<CR>
-vnoremap <silent> <F11> <c-C>:set nonu!<CR>
-inoremap <silent> <F11> <c-O>:set nonu!<CR>
+vnoremap <silent> <F11> <C-C>:set nonu!<CR>
+inoremap <silent> <F11> <C-O>:set nonu!<CR>
 
 " Remove trailing spaces
 noremap  <silent> <F12> :FixWhitespace<CR>
-vnoremap <silent> <F12> <c-C>:FixWhitespace<CR>
-inoremap <silent> <F12> <c-O>:FixWhitespace<CR>
+vnoremap <silent> <F12> <C-C>:FixWhitespace<CR>
+inoremap <silent> <F12> <C-O>:FixWhitespace<CR>
 
 "---------------------------------
 " Leader mapping                 |
@@ -457,17 +575,15 @@ nmap <leader>d :bprevious<CR>:bdelete! #<CR>
 nnoremap <leader>. :CtrlPTag<cr>
 
 " Ack search
-noremap <leader>a  :Ack! <c-R><c-W><cr>
-noremap <leader>A  :Ack! <c-R><c-W><cr>
+noremap <leader>a  :Ack! <C-R><C-W><cr>
+noremap <leader>A  :Ack! <C-R><C-W><cr>
 
-" Use CTRL-Q to do what CTRL-V used to do
-noremap <c-q> <c-v>
 
 " Leader Shortcuts
 nmap <leader>w :w!<cr>
 
 " Remap interrupt search command
-noremap <c-u> <c-c>
+noremap <C-u> <C-c>
 
 " GitGutter
 noremap <leader>gh  :GitGutterLineHighlightsToggle<cr>
@@ -478,54 +594,21 @@ noremap <leader>ga  :GitGutterStageHunk<cr>
 noremap <leader>gu  :GitGutterReverHunk<cr>
 noremap <leader>gv  :GitGutterPreviewHunk<cr>
 
-" ---------------------------------------------------------
-" Plugins settings
-" ---------------------------------------------------------
-
-" Vim-indent-guides
-" -----------------
-let g:indent_guides_auto_colors = 1
-let g:indent_guides_start_level = 2
-let g:indent_guides_guide_size  = 1
-let g:indent_guides_enable_on_vim_startup = 0
-let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
-hi IndentGuidesOdd  ctermbg=black
-hi IndentGuidesEven ctermbg=darkgrey
-
-" Easymotion
-" ----------
-nmap s <Plug>(easymotion-s)
-nmap t <Plug>(easymotion-t)
-map  / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-
 map <Leader>l <Plug>(easymotion-lineforward)
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 map <Leader>h <Plug>(easymotion-linebackward)
 
-let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
-let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz'
-let g:EasyMotion_smartcase = 1
-let g:EasyMotion_do_special_mapping = 1
 
-" CtrlP
-" -----
-let g:ctrlp_working_path_mode = 'a'   " Change current directory if file is outside
-let g:ctrlp_match_window = 'bottom,order:ttb,min:5,max:30,result:30'
-let g:ctrlp_cache_dir = '~/.cache/ctrlp'
-let g:ctrlp_switch_buffer = 0
-let g:ctrlp_cmd = 'CtrlPMixed'
-let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:20,results:20'
-let g:ctrlp_show_hidden = 1  " Match dotfiles
-let g:ctrlp_max_files = 2000
-let g:ctrlp_max_depth = 20
-let g:ctrlp_follow_symblinks = 1
-let g:ctrlp_custom_ignore = {
-            \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-            \ 'file': '\v\.(exe|so|dll|doj|bin|zip|tar|gz|iso|class|rar|swp|ldr|dpj|stk)$',
-            \ 'link': 'some_bad_symbolic_links',
-            \ }
+" ---------------------------------------------------------
+" Plugins settings
+" ---------------------------------------------------------
+
+
+" Expand-region
+" -------------
+let g:expand_region_use_select_mode = 1
+
 
 " Taglist
 " -------
@@ -533,42 +616,17 @@ let g:Tlist_Auto_Highlight_Tag = 1
 let g:Tlist_Auto_Update = 1
 let g:Tlist_WinWidth = 50
 
-" Airline
-" -------
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme             = 'wombat'
-let g:airline_powerline_fonts = 1
-
 " Utilsnips
 " ---------
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-g>"
-
-" NERDTree
-" --------
-let g:NERDTreeDirArrows=1           " Show nice arrows instead of |+
-let g:NERDTreeShowHidden=1          " Show hidden files
-let g:NERDTreeWinPos="left"         " Window position
-let g:NERDTreeWinSize=50            " Width of the NERDTree sidebar
-
-" Calendar
-" --------
-let g:calendar_google_calendar = 1
-let g:calendar_google_task = 1
-
-" Vim Multiple cursor
-" -------------------
-let g:multi_cursor_use_default_mapping=0
-let g:multi_cursor_next_key  = '<c-m>'
-let g:multi_cursor_start_key = '<c-m>'
-let g:multi_cursor_quit_key  = '<Esc>'
+let g:UltiSnipsJumpForwardTrigger="<C-g>"
 
 " Ultisnips
 " ---------
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsJumpForwardTrigger="<C-b>"
+let g:UltiSnipsJumpBackwardTrigger="<C-z>"
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
@@ -590,7 +648,6 @@ func! paste#Paste()
     endif
     let &ve = ove
 endfunc
-
 "------------------------------------------------------------
 " Autocommands
 "------------------------------------------------------------
@@ -699,9 +756,55 @@ endfunction
 let s:mycolors     = ['hybrid', 'eclipse', 'automation']
 let s:airlinetheme = ['wombat', 'base16', 'base16']
 
+" Improved Yank Mode
+" ------------------
+"nnoremap <expr> <C-c> MyYank()
+"inoremap <expr> <C-c> MyYank()
+"vnoremap <expr> <C-c> MyYank()
+
+"nnoremap <expr> <C-v> MyPaste('n')
+"nnoremap <C-v>    "+gP
+"cnoremap           <C-v>    <C-R>+
+
+" Not using numbered registers because they get rotated due to quote_number
+" Instead. A indexed string is used to map <count> to a letter
+let s:mapping = 'qwertzuiop'
+
+fu! MyYank(...)
+    " Get the register to yank in
+    let l:count = v:count > len(s:mapping) ? 0 : v:count
+    let l:regs = l:count ? l:mapping[l:count - 1] : '+'
+
+    " Action depends on the current mode
+    let l:currentmode = a:0 > 0 ? a:1 : mode()
+    if l:currentmode == 'n'
+        return 'm`viw"' . l:regs . 'y``'
+    elseif l:currentmode == 'i'
+        return "\e" . 'm`viw"' . l:regs . 'y``a'
+    elseif l:currentmode == 'v'
+        return '"' . l:regs . 'y'
+    endif
+endfu
+
+fu! MyPaste(...)
+    " Get the register to yank in
+    let l:count = v:count > len(s:mapping) ? 0 : v:count
+    let l:regs = l:count ? s:mapping[l:count - 1] : '+'
+
+    " Action depends on the current mode
+    let l:currentmode = a:0 > 0 ? a:1 : mode()
+    if l:currentmode == 'n'
+        return '"' . l:regs . 'P'
+    elseif l:currentmode == 'i'
+        return "\e" . 'm`viw"' . l:regs . 'y``a'
+    elseif l:currentmode == 'v'
+        return '"' . l:regs . 'y'
+    endif
+endfun
+
 " Get Visual Selection
 " --------------------
-function! GetVisualSelection()
+fu! GetVisualSelection()
   let old_reg = @v
   normal! gv"vy
   let raw_search = @v
