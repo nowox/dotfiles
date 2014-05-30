@@ -2,22 +2,17 @@
 "   ()/ __)(  _  )(_  _)( \( )()
 "    ( (__  )(_)(  _)(_  )  (
 " ()()\___)(_____)(____)(_)\_)()()
-" My Own Ultimate .vimrc
+" An ultimate .vimrc
+" Optimized to bring Vim closer to other modern editors.
 
 "---------------------------------
 " Plateform selection            |
 "---------------------------------
 
 " On which OS are we are ?
-let s:is_windows = (has('win32') || has('win64')) && has('gui')
+let s:is_windows = has("win16") || has("win32") || has("win64")|| has("win95")
 let s:is_cygwin  = has('win32unix')
 let s:is_macvim  = has('gui_macvim')
-
-if s:is_windows && !s:is_cygwin
-    cd ~/
-    set shell=c:\windows\system32\cmd.exe
-    set runtimepath^=~/.vim
-endif
 
 "---------------------------------
 " Plugins                        |
@@ -68,6 +63,7 @@ let g:NERDTreeWinPos     = "left"      " Window position
 let g:NERDTreeWinSize    = 50          " Width of the NERDTree sidebar
 
 Plugin 'xolox/vim-notes'               " Note taking
+Plugin 'xolox/vim-misc'                " Needed by vim-notes
 let g:notes_directories = ['~/.notes/']
 let g:notes_suffix      = '.txt'
 
@@ -129,8 +125,8 @@ Plugin 'milkypostman/vim-togglelist'   " Allow to toggle quickfix and location l
 
 Plugin 'ciaranm/detectindent'          " Automatically detect indentation
 Plugin 'kien/rainbow_parentheses.vim'  "
-Plugin 'xolox/vim-misc'                " Needed by vim-notes
-Plugin 'xolox/vim-easytags'            " To test
+
+"Plugin 'xolox/vim-easytags'            " To test
 
 Plugin 'skammer/vim-css-color'
 Plugin 'vim-scripts/bufkill.vim'
@@ -152,7 +148,9 @@ filetype indent on                     " Enable Automatic Indent
 let mapleader = ","                    " Use a more convenient leader key
 
 " Vim's language
+if s:is_windows && has('gui')
 language messages en
+endif
 
 "---------------------------------
 " Graphical interface            |
@@ -171,6 +169,13 @@ colorscheme hybrid                     " Best colorscheme ever
 "---------------------------------
 " Standard settings              |
 "---------------------------------
+
+" Shell, runtime and enviromnent
+if s:is_windows && !s:is_cygwin
+    set shell=c:\windows\system32\cmd.exe
+    set runtimepath^=~/.vim
+endif
+set shelltemp=0
 
 " Encoding and filetypes
 set encoding=utf-8
@@ -457,6 +462,11 @@ noremap            <C-q>    <C-v>
 noremap            <C-s>    :update!<CR>
 vnoremap           <C-s>    <C-c>:update!<CR>
 inoremap           <C-s>    <C-o>:update!<CR>
+
+" <C-S-s> Save as with gvim
+noremap            <C-S-s>    :browse w<CR>
+vnoremap           <C-S-s>    <C-c>:browse w<CR>
+inoremap           <C-S-s>    <C-o>:browse w<CR>
 
 " <C-t>
 
