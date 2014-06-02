@@ -36,7 +36,7 @@ let g:EasyMotion_do_special_mapping = 1 " {operator}<leader>l (select, yank, pas
 let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz123456789'
 
 Plugin 'bling/vim-airline'             " Best status line ever (needs Powerline Consolas font)
-let g:airline_theme = 'wombat'
+let g:airline_theme = 'coin'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
@@ -62,10 +62,10 @@ let g:NERDTreeShowHidden = 1           " Show hidden files
 let g:NERDTreeWinPos     = "left"      " Window position
 let g:NERDTreeWinSize    = 50          " Width of the NERDTree sidebar
 
-Plugin 'xolox/vim-notes'               " Note taking
-Plugin 'xolox/vim-misc'                " Needed by vim-notes
-let g:notes_directories = ['~/.notes/']
-let g:notes_suffix      = '.txt'
+"Plugin 'xolox/vim-notes'               " Note taking
+"Plugin 'xolox/vim-misc'                " Needed by vim-notes
+"let g:notes_directories = ['~/.notes/']
+"let g:notes_suffix      = '.txt'
 
 Plugin 'terryma/vim-multiple-cursors'  " Sublime's multiple selection feature
 let g:multi_cursor_use_default_mapping=0
@@ -86,10 +86,12 @@ endif
 Plugin 'dbakker/vim-projectroot'       " Set default path to root project by detecting .git for instance
 au BufEnter * if &ft != 'help' | call ProjectRootCD() | endif
 
-Plugin 'Shougo/vimproc.vim' 
+Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/vimshell.vim'
 Plugin 'tpope/vim-fugitive'            " Git wrapper for vim
 
+Plugin 'vim-scripts/LanguageTool'
+let g:languagetool_jar='$HOME/languagetool/languagetool-commandline.jar'
 
 Plugin 'fisadev/vim-ctrlp-cmdpalette'  " Command palette for ctrlp
 Plugin 'chrisbra/NrrwRgn'              " Focus on selected regions, making the rest inaccessible
@@ -98,14 +100,20 @@ Plugin 'godlygeek/tabular'             " Select, then :Tabularize /= to align to
 Plugin 'ervandew/supertab'
 Plugin 'flazz/vim-colorschemes'        " A lot of colorschemes (including hybrid)
 
+Plugin 'vim-scripts/VOoM'
 
-Plugin 'honza/vim-snippets'            " Snippets files for various programming languages
-Plugin 'sirver/ultisnips'              " Snipper plugin
+"Plugin 'honza/vim-snippets'            " Snippets files for various programming languages
+"Plugin 'sirver/ultisnips'              " Snipper plugin
 
 Plugin 'airblade/vim-gitgutter'        " Show changed
+let $GIT_DISCOVERY_ACROSS_FILESYSTEM=1
+
 Plugin 'kana/vim-fakeclip'             " Allow to use clipboard under cygwin
 
 Plugin 'majutsushi/tagbar'             " File tags browsing
+let g:tarbar_left=1                    " I prefer having the Tagbar window to the left
+
+" Binded to <F4>
 Plugin 'mileszs/ack.vim'               " Use the Perl module App::Ack
 Plugin 'scrooloose/nerdcommenter'      " Un/Comment lines
 
@@ -113,6 +121,8 @@ Plugin 'sjl/gundo.vim'                 " Visualize your Vim undo tree
 Plugin 'terryma/vim-expand-region'     " Allow to visually select increasingly larger region of text
 
 Plugin 'tpope/vim-surround'            " Easy delete, change on surroundings in pairs
+Plugin 'tpope/vim-unimpaired'
+
 Plugin 'vim-scripts/Align'             " Alignment at equal sign
 Plugin 'vim-scripts/Txtfmt-The-Vim-Highlighter'
 Plugin 'vim-scripts/ccase.vim'
@@ -120,11 +130,12 @@ Plugin 'mihaifm/bufstop'               " Easy way to switch buffers
 Plugin 'vim-scripts/loremipsum'        " Insert Lipsum text
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'vim-scripts/a.vim'             " Alternate quickly between .c <--> .h
-Plugin 'vim-scripts/ZoomWin'           " <C-w>o full screen split
-Plugin 'milkypostman/vim-togglelist'   " Allow to toggle quickfix and location list window
+Plugin 'vim-scripts/ZoomWin'           " <C-w>o get full screen then <C-w>o again will restore the windows. 
 
-Plugin 'ciaranm/detectindent'          " Automatically detect indentation
-Plugin 'kien/rainbow_parentheses.vim'  "
+Plugin 'milkypostman/vim-togglelist'   " Allow to toggle quickfix and location list window
+" Togglequickfix called by <F10>
+
+"Plugin 'ciaranm/detectindent'          " Automatically detect indentation
 
 "Plugin 'xolox/vim-easytags'            " To test
 
@@ -174,8 +185,8 @@ colorscheme hybrid                     " Best colorscheme ever
 if s:is_windows && !s:is_cygwin
     set shell=c:\windows\system32\cmd.exe
     set runtimepath^=~/.vim
+    cd ~
 endif
-set shelltemp=0
 
 " Encoding and filetypes
 set encoding=utf-8
@@ -225,7 +236,9 @@ set t_vb=
 set tm=500
 
 " Search/Find/Replace
-set nohlsearch                         " No Highlight search results
+set hlsearch                           " No Highlight search results
+let @/=""
+
 set incsearch                          " Interactive search
 set magic                              " Simplify usage of Regex
 set showmatch                          " Show matching brackets
@@ -387,10 +400,10 @@ cnoremap           <c-Tab> <C-c>:bn<cr>
 onoremap           <c-Tab> <C-c>:bn<cr>
 
 " <c-s-Tab> Previous buffer
-nnoremap           <c-s-Tab> :bp<cr>
-inoremap           <c-s-Tab> <C-o>:bp<cr>
-cnoremap           <c-s-Tab> <C-c>:bp<cr>
-onoremap           <c-s-Tab> <C-c>:bp<cr>
+"nnoremap           <c-s-Tab> :bp<cr>
+"inoremap           <c-s-Tab> <C-o>:bp<cr>
+"cnoremap           <c-s-Tab> <C-c>:bp<cr>
+"onoremap           <c-s-Tab> <C-c>:bp<cr>
 
 " <C-a> Select all (like every modern editor)
 inoremap           <C-a>   <esc>ggVG
@@ -464,9 +477,9 @@ vnoremap           <C-s>    <C-c>:update!<CR>
 inoremap           <C-s>    <C-o>:update!<CR>
 
 " <C-S-s> Save as with gvim
-noremap            <C-S-s>    :browse w<CR>
-vnoremap           <C-S-s>    <C-c>:browse w<CR>
-inoremap           <C-S-s>    <C-o>:browse w<CR>
+"noremap            <C-S-s>    :browse w<CR>
+"vnoremap           <C-S-s>    <C-c>:browse w<CR>
+"inoremap           <C-S-s>    <C-o>:browse w<CR>
 
 " <C-t>
 
@@ -536,9 +549,9 @@ nnoremap <F9> :call ToggleFlag('guioptions','mrT')<cr>
 inoremap <F9> <C-C>:call ToggleFlag('guioptions','mrT')<cr>
 
 " Close quickfix window
-noremap  <silent> <F10> :ccl<CR>
-vnoremap <silent> <F10> <C-C>:ccl<CR>
-inoremap <silent> <F10> <C-O>:ccl<CR>
+noremap  <silent> <F10> :call ToggleQuickfixList()<CR>
+vnoremap <silent> <F10> <C-C>:call ToggleQuickfixList()<CR>
+inoremap <silent> <F10> <C-O>:call ToggleQuickfixList()<CR>
 
 " Toggle numbers
 noremap  <silent> <F11> :set nonu!<CR>

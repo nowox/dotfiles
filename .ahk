@@ -15,6 +15,12 @@
     Reload
     Return
 
+; Gvim/Vim mappings
+; -----------------
+;#IfWinActive ahk_class mintty
+
+;#IfWinActive
+
 ; Google Chrome
 ; -------------
 ; <WIN><Leader>c  Run Chrome
@@ -45,7 +51,7 @@ Return
 
 ; Move windows to next monitor
 ; ----------------------------
-^!s::
+#s::
     WinGet, mm, MinMax, A
     WinRestore, A
     WinGetPos, X, Y,,,A
@@ -55,6 +61,15 @@ Return
     }
 return
 
+; Move window to the quadrant #
+#q::
+    Input, leader, T1 L1 B
+    If ErrorLevel = Timeout
+    {
+        Return
+    }
+    MoveToQuadrant(leader)
+;       WinMove, A,, 0*(A_ScreenWidth/2), 0, A_ScreenWidth/2, A_ScreenHeight - taskbar
 
 ; WINDOWS KEY + H TOGGLES HIDDEN FILES
 #h::
@@ -81,6 +96,35 @@ Clipboard := ClipSaved
 ClipSaved =
 return
 #IfWinActive
+
+MoveToQuadrant(number)
+{
+    number := number - 1
+    
+    horizontalQuadrantsPerMonitor := 2
+    verticalQuadrantsPerMonitor := 1
+
+	SysGet, monCount, MonitorCount
+	WinGetPos, winX, winY, winW, winH, A
+	WinGet, mm, MinMax, A     
+
+	curMonNum := GetMonitorNumber(baseX, baseY, winX, winY, monCount)
+    quadrants := horizontalQuadrantsPerMonitor * verticalQuadrantsPerMonitor * curMonNum
+
+    If (number > quadrants)
+        Return
+
+	monWidth := GetMonitorWorkArea("width", curMonNum)
+	monHeight := GetMonitorWorkArea("height", curMonNum)
+
+    winH := monHeight
+    winW := monWidth/horizontalQuadrantsPerMonitor
+    tX := number*(winW)
+    tY := 0
+
+    WinMove, A,, tX, tY, winW, winH
+
+}
 
 Move(direction)
 {
