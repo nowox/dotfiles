@@ -18,29 +18,36 @@ let s:is_macvim  = has('gui_macvim')
 " Plugins                        |
 "---------------------------------
 
-" Start Vundle the package manager
 filetype off                           " Required for Vundle
-set rtp+=~/.vim/bundle/Vundle.vim
+
+" Start Vundle the package manager
+set  runtimepath +=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " Let Vundle manage Vundle
 Plugin 'gmarik/Vundle.vim'
 
 " Easymotion
+" A revolutionary new way to navigate in a file. EasyMotion provides a much simpler way
+" to use some motions in vim.
 Plugin 'Lokaltog/vim-easymotion'        " Allow to move quickly using shortcuts
-let g:EasyMotion_startofline = 0        " Keep cursor colum when JK motion
-let g:EasyMotion_smartcase = 1          " Same as smartcase in vim
-let g:EasyMotion_do_shade = 1           " Shade text to better see the keys
-let g:EasyMotion_enter_jump_first = 1   " When search, jump directly on enter
+let g:EasyMotion_startofline        = 0 " Keep cursor colum when JK motion
+let g:EasyMotion_smartcase          = 1 " Same as smartcase in vim
+let g:EasyMotion_do_shade           = 1 " Shade text to better see the keys
+let g:EasyMotion_enter_jump_first   = 1 " When search, jump directly on enter
 let g:EasyMotion_do_special_mapping = 1 " {operator}<leader>l (select, yank, paste ...)
 let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz123456789'
 
-Plugin 'bling/vim-airline'             " Best status line ever (needs Powerline Consolas font)
-let g:airline_theme = 'coin'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
+" Vim-Airline
+" Fancy status and tab bar, very good plugin
+Plugin 'bling/vim-airline'                        " Best status line ever (needs Powerline Consolas font)
+let g:airline_theme                      = 'coin' " With brighter split separators
+let g:airline#extensions#tabline#enabled = 1      " Allows to view windows/tabs
+let g:airline_powerline_fonts            = 1      " Fancy fonts
 
-Plugin 'kien/ctrlp.vim'                " Sublime's <C-P> feature
+" CtrlP
+" Inspired from Sublime. Provide a nice solution to navigate and load files.
+Plugin 'kien/ctrlp.vim'                           " Sublime's <C-P> feature
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_cache_dir         = '~/.cache/ctrlp'
 let g:ctrlp_switch_buffer     = 'e'
@@ -56,16 +63,13 @@ let g:ctrlp_custom_ignore = {
             \ 'link': 'some_bad_symbolic_links',
             \ }
 
+" NERDTree
+" Files Explorer
 Plugin 'scrooloose/nerdtree'           " File explorer
 let g:NERDTreeDirArrows  = 1           " Show nice arrows instead of |+
 let g:NERDTreeShowHidden = 1           " Show hidden files
 let g:NERDTreeWinPos     = "left"      " Window position
 let g:NERDTreeWinSize    = 50          " Width of the NERDTree sidebar
-
-"Plugin 'xolox/vim-notes'               " Note taking
-"Plugin 'xolox/vim-misc'                " Needed by vim-notes
-"let g:notes_directories = ['~/.notes/']
-"let g:notes_suffix      = '.txt'
 
 Plugin 'terryma/vim-multiple-cursors'  " Sublime's multiple selection feature
 let g:multi_cursor_use_default_mapping=0
@@ -82,6 +86,13 @@ if s:is_windows
 else
     let g:indent_guides_enable_on_vim_startup = 0
 endif
+
+Plugin 'majutsushi/tagbar'             " File tags browsing
+let g:tarbar_left=1                    " I prefer having the Tagbar window to the left
+
+" Vim-Fakeclip
+" Allows cut/copy/paste by default with cygwin
+Plugin 'kana/vim-fakeclip'             " Allow to use clipboard under cygwin
 
 Plugin 'dbakker/vim-projectroot'       " Set default path to root project by detecting .git for instance
 au BufEnter * if &ft != 'help' | call ProjectRootCD() | endif
@@ -106,12 +117,8 @@ Plugin 'vim-scripts/VOoM'
 "Plugin 'sirver/ultisnips'              " Snipper plugin
 
 Plugin 'airblade/vim-gitgutter'        " Show changed
-let $GIT_DISCOVERY_ACROSS_FILESYSTEM=1
-
-Plugin 'kana/vim-fakeclip'             " Allow to use clipboard under cygwin
-
-Plugin 'majutsushi/tagbar'             " File tags browsing
-let g:tarbar_left=1                    " I prefer having the Tagbar window to the left
+let g:gitgutter_enabled = 0            " BufEnter much slower with gitgutter. I disabled it !
+let $GIT_DISCOVERY_ACROSS_FILESYSTEM=1 " Require on Windows/Cygwin to avoid :system() error
 
 " Binded to <F4>
 Plugin 'mileszs/ack.vim'               " Use the Perl module App::Ack
@@ -130,17 +137,21 @@ Plugin 'mihaifm/bufstop'               " Easy way to switch buffers
 Plugin 'vim-scripts/loremipsum'        " Insert Lipsum text
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'vim-scripts/a.vim'             " Alternate quickly between .c <--> .h
-Plugin 'vim-scripts/ZoomWin'           " <C-w>o get full screen then <C-w>o again will restore the windows. 
+Plugin 'vim-scripts/ZoomWin'           " <C-w>o get full screen then <C-w>o again will restore the windows.
 
 Plugin 'milkypostman/vim-togglelist'   " Allow to toggle quickfix and location list window
 " Togglequickfix called by <F10>
-
-"Plugin 'ciaranm/detectindent'          " Automatically detect indentation
 
 "Plugin 'xolox/vim-easytags'            " To test
 
 Plugin 'skammer/vim-css-color'
 Plugin 'vim-scripts/bufkill.vim'
+
+"Plugin 'xolox/vim-notes'               " Note taking
+"Plugin 'xolox/vim-misc'                " Needed by vim-notes
+"let g:notes_directories = ['~/.notes/']
+"let g:notes_suffix      = '.txt'
+
 
 call vundle#end()
 
@@ -198,12 +209,12 @@ if &termencoding == ""
 endif
 
 " Mouse/Selection configuration (behave)
-set mouse=a                            " Use mouse in All modes
+set mouse      =a                     " Use mouse in All modes
 set mousefocus                         " Activate windows on mouseover
-set selectmode=mouse,key
-set mousemodel=popup
-set keymodel=startsel,stopsel
-set selection=exclusive
+set selectmode =mouse,key
+set mousemodel =popup
+set keymodel   =startsel,stopsel
+set selection  =exclusive
 
 " Interface (behavior)
 set history=1000                       " Remember more commands and search history
@@ -223,6 +234,7 @@ set writeany                           " Allow writing to any file with no need 
 set backspace=eol,start,indent         " Allow backspacing over CR autoindent and start of insert
 set helpheight=999
 set winminheight=0
+set ttimeoutlen=0                      " Reduce the delay with <esc> when escaping from insert mode
 
 " Performances
 set ttyfast                            " Send more chars to redraw in CTERM
@@ -365,6 +377,9 @@ inoremap <C-t> <C-x><c-]>
 " Single char mapping            |
 "---------------------------------
 
+" <cr>
+nnoremap           <cr>    A<cr><esc>
+
 " <tab> Tabbing visual selection
 vnoremap           <tab>   >gv
 nnoremap           <tab>   >>
@@ -392,18 +407,31 @@ nmap t <Plug>(easymotion-t)
 "---------------------------------
 " Control + Char mapping         |
 "---------------------------------
+if s:is_cygwin
+    "<c-Tab Next buffer
+    set <f15>=[1;5I
+    noremap             <f15>  :bn<cr>
+    inoremap            <f15>  <C-o>:bn<cr>
+    vnoremap            <f15>  <C-c>:bn<cr>
 
-" <c-Tab> Next buffer
-nnoremap           <c-Tab> :bn<cr>
-inoremap           <c-Tab> <C-o>:bn<cr>
-cnoremap           <c-Tab> <C-c>:bn<cr>
-onoremap           <c-Tab> <C-c>:bn<cr>
+    "<C-S-Tab> Previous buffer
+    set <f16>=[1;6I
+    noremap             <f16>  :bp<cr>
+    inoremap            <f16>  <C-o>:bp<cr>
+    vnoremap            <f16>  <C-c>:bp<cr>
+else
+    " <c-Tab> Next buffer
+    nnoremap           <c-Tab> :bn<cr>
+    inoremap           <c-Tab> <C-o>:bn<cr>
+    cnoremap           <c-Tab> <C-c>:bn<cr>
+    onoremap           <c-Tab> <C-c>:bn<cr>
 
-" <c-s-Tab> Previous buffer
-"nnoremap           <c-s-Tab> :bp<cr>
-"inoremap           <c-s-Tab> <C-o>:bp<cr>
-"cnoremap           <c-s-Tab> <C-c>:bp<cr>
-"onoremap           <c-s-Tab> <C-c>:bp<cr>
+    " <c-s-Tab> Previous buffer
+    "nnoremap           <c-s-Tab> :bp<cr>
+    "inoremap           <c-s-Tab> <C-o>:bp<cr>
+    "cnoremap           <c-s-Tab> <C-c>:bp<cr>
+    "onoremap           <c-s-Tab> <C-c>:bp<cr>
+endif
 
 " <C-a> Select all (like every modern editor)
 inoremap           <C-a>   <esc>ggVG
@@ -516,6 +544,20 @@ nnoremap <silent> <C-y> :<C-u>call AddSubtract("\<C-a>", '')<CR>
 " <C-z> Undo
 noremap           <C-z>    u
 inoremap          <C-z>    <C-o>u
+
+"---------------------------------
+" Alt mapping                    |
+"---------------------------------
+
+" <A-j> Move screen down
+set <f13>=j
+noremap <f13> <C-y>
+inoremap <f13> <C-y>
+
+" <A-k> Move screen up
+set <f14>=k
+noremap <f14> <C-e>
+inoremap <f14> <C-e>
 
 "---------------------------------
 " F Function mapping             |
