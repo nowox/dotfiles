@@ -97,6 +97,8 @@ Plugin 'kana/vim-fakeclip'             " Allow to use clipboard under cygwin
 Plugin 'dbakker/vim-projectroot'       " Set default path to root project by detecting .git for instance
 au BufEnter * if &ft != 'help' | call ProjectRootCD() | endif
 
+"Plugin 'vim-scripts/LustyExplorer'
+
 Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/vimshell.vim'
 Plugin 'tpope/vim-fugitive'            " Git wrapper for vim
