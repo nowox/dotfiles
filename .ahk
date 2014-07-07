@@ -7,19 +7,13 @@
 ; Win+<char> quick mappings
 ; -------------------------
 #v::Run gvim
-#t::Run cyg
+#t::Run mintty -
 
 ; Reload AHK Script
 ; -----------------
 #a::
     Reload
     Return
-
-; Gvim/Vim mappings
-; -----------------
-;#IfWinActive ahk_class mintty
-
-;#IfWinActive
 
 ; Google Chrome
 ; -------------
@@ -73,40 +67,39 @@ return
 
 ; WINDOWS KEY + H TOGGLES HIDDEN FILES
 #h::
-RegRead, HiddenFiles_Status, HKEY_CURRENT_USER, Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced, Hidden
-If HiddenFiles_Status = 2
-RegWrite, REG_DWORD, HKEY_CURRENT_USER, Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced, Hidden, 1
-Else
-RegWrite, REG_DWORD, HKEY_CURRENT_USER, Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced, Hidden, 2
-WinGetClass, eh_Class,A
-If (eh_Class = "#32770" OR A_OSVersion = "WIN_VISTA")
-send, {F5}
-Else PostMessage, 0x111, 28931,,, A
-Return
+    RegRead, HiddenFiles_Status, HKEY_CURRENT_USER, Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced, Hidden
+    If HiddenFiles_Status = 2
+    RegWrite, REG_DWORD, HKEY_CURRENT_USER, Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced, Hidden, 1
+    Else
+    RegWrite, REG_DWORD, HKEY_CURRENT_USER, Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced, Hidden, 2
+    WinGetClass, eh_Class,A
+    If (eh_Class = "#32770" OR A_OSVersion = "WIN_VISTA")
+    send, {F5}
+    Else PostMessage, 0x111, 28931,,, A
+return
 
 ; Launch CMD from current
 #IfWinActive ahk_class CabinetWClass ; for use in explorer.
-^!h::
-ClipSaved := ClipboardAll
-Send !d
-Sleep 10
-Send ^c
-Run, cmd /K "cd `"%clipboard%`""
-Clipboard := ClipSaved
-ClipSaved =
+    ^!h::
+    ClipSaved := ClipboardAll
+    Send !d
+    Sleep 10
+    Send ^c
+    Run, cmd /K "cd `"%clipboard%`""
+    Clipboard := ClipSaved
+    ClipSaved =
 return
-#IfWinActive
 
 MoveToQuadrant(number)
 {
     number := number - 1
-    
+
     horizontalQuadrantsPerMonitor := 2
     verticalQuadrantsPerMonitor := 1
 
 	SysGet, monCount, MonitorCount
 	WinGetPos, winX, winY, winW, winH, A
-	WinGet, mm, MinMax, A     
+	WinGet, mm, MinMax, A
 
 	curMonNum := GetMonitorNumber(baseX, baseY, winX, winY, monCount)
     quadrants := horizontalQuadrantsPerMonitor * verticalQuadrantsPerMonitor * curMonNum
@@ -123,7 +116,6 @@ MoveToQuadrant(number)
     tY := 0
 
     WinMove, A,, tX, tY, winW, winH
-
 }
 
 Move(direction)
@@ -197,10 +189,6 @@ GetXYForExists:
 	Return
 
 GetXYForMove:
-	/*
-	Maximized winows are -4 x + -4 y of their current monitor.
-	Acount for this here.
-	*/
 	If (mm = 1)
 	{
 		winX := winX + 4

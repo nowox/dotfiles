@@ -108,7 +108,11 @@ ps1_time="$igreen[\A]$nocolor"
 if [[ ${USER} == "root" ]]; then
     ps1_0="$red$username@$ired$hostname$nocolor"
 else
-    ps1_0="$green$username$igreen@$hostname$nocolor"
+    if [[ ${HOSTNAME} == "canard" ]]; then
+        ps1_0="$blue$username$igreen@$hostname$nocolor"
+    else
+        ps1_0="$green$username$igreen@$hostname$nocolor"
+    fi
 fi
 ps1_9=" $yellow$path_short$nocolor\n$ "
 ps1_git='$(\
