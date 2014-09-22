@@ -1,4 +1,4 @@
-BoldAsFont=no
+BoldAsFont=yes
 BackgroundColour=21,21,21
 Transparency=off
 Font=Powerline Consolas
@@ -26,3 +26,10 @@ BoldWhite=245,245,245
 RightClickAction=paste
 FontHeight=10
 SwitchShortcuts=no
+WindowShortcuts=no
+ZoomShortcuts=no
+AltFnShortcuts=no
+FontIsBold=yes
+BoldAsColour=no
+FontSmoothing=full
+AllowBlinking=yes

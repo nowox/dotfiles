@@ -30,40 +30,40 @@ Plugin 'gmarik/Vundle.vim'
 " Easymotion
 " A revolutionary new way to navigate in a file. EasyMotion provides a much simpler way
 " to use some motions in vim.
-Plugin 'Lokaltog/vim-easymotion'        " Allow to move quickly using shortcuts
+Plugin 'Lokaltog/vim-easymotion'       " Allow to move quickly using shortcuts
 let g:EasyMotion_startofline        = 0 " Keep cursor colum when JK motion
 let g:EasyMotion_smartcase          = 1 " Same as smartcase in vim
 let g:EasyMotion_do_shade           = 1 " Shade text to better see the keys
 let g:EasyMotion_enter_jump_first   = 1 " When search, jump directly on enter
 let g:EasyMotion_do_special_mapping = 1 " {operator}<leader>l (select, yank, paste ...)
-let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz123456789'
+let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz123456789éà$,.-è<'
 
 " Vim-Airline
 " Fancy status and tab bar, very good plugin
 Plugin 'bling/vim-airline'                        " Best status line ever (needs Powerline Consolas font)
-let g:airline_theme                      = 'coin' " With brighter split separators
+let g:airline_theme                      = 'wombat' " With brighter split separators
 let g:airline#extensions#tabline#enabled = 1      " Allows to view windows/tabs
 let g:airline_powerline_fonts            = 1      " Fancy fonts
 
-" CtrlP
+" CtrlP <C-p>
 " Inspired from Sublime. Provide a nice solution to navigate and load files.
 Plugin 'kien/ctrlp.vim'                           " Sublime's <C-P> feature
-let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_working_path_mode = 'ra'    " was just a before !
 let g:ctrlp_cache_dir         = '~/.cache/ctrlp'
-let g:ctrlp_switch_buffer     = 'e'
+let g:ctrlp_switch_buffer     = 'e'    " was 0
 let g:ctrlp_cmd               = 'CtrlPMixed'
-let g:ctrlp_match_window      = 'bottom,order:ttb,min:1,max:20,results:20'
+let g:ctrlp_match_window      = 'bottom,order:ttb,min:5,max:30,results:30'
 let g:ctrlp_show_hidden       = 1
-let g:ctrlp_max_files         = 2000
-let g:ctrlp_max_depth         = 20
+let g:ctrlp_max_files         = 1000
+let g:ctrlp_max_depth         = 10
 let g:ctrlp_follow_symblinks  = 1
 let g:ctrlp_custom_ignore = {
             \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-            \ 'file': '\v\.(exe|so|dll|doj|bin|zip|tar|gz|iso|class|rar|swp|ldr|dpj|stk)$',
+            \ 'file': '\v\.(sbn|ovl|s|html|d|exe|so|dll|doj|bin|zip|tar|gz|iso|class|rar|swp|ldr|dpj|stk)$',
             \ 'link': 'some_bad_symbolic_links',
             \ }
 
-" NERDTree
+" NERDTree <F2>
 " Files Explorer
 Plugin 'scrooloose/nerdtree'           " File explorer
 let g:NERDTreeDirArrows  = 1           " Show nice arrows instead of |+
@@ -73,57 +73,69 @@ let g:NERDTreeWinSize    = 50          " Width of the NERDTree sidebar
 
 Plugin 'terryma/vim-multiple-cursors'  " Sublime's multiple selection feature
 let g:multi_cursor_use_default_mapping=0
-let g:multi_cursor_next_key  = '<C-m>'
-let g:multi_cursor_start_key = '<C-m>'
+let g:multi_cursor_next_key  = '<C-b>'
+let g:multi_cursor_start_key = '<C-b>'
 let g:multi_cursor_quit_key  = '<Esc>'
 
-Plugin 'nathanaelkane/vim-indent-guides'
-let g:indent_guides_auto_colors = 1
-let g:indent_guides_start_level = 2
-let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
-if s:is_windows
-    let g:indent_guides_enable_on_vim_startup = 0
-else
-    let g:indent_guides_enable_on_vim_startup = 0
-endif
+"Plugin 'nathanaelkane/vim-indent-guides'
+"let g:indent_guides_auto_colors = 1
+"let g:indent_guides_start_level = 2
+"let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
+"if s:is_windows
+"    let g:indent_guides_enable_on_vim_startup = 0
+"else
+"    let g:indent_guides_enable_on_vim_startup = 0
+"endif
 
 Plugin 'majutsushi/tagbar'             " File tags browsing
 let g:tarbar_left=1                    " I prefer having the Tagbar window to the left
+
+" Track the engine.
+Plugin 'SirVer/ultisnips'
+
+" Snippets are separated from the engine. Add this if you want them:
+Plugin 'honza/vim-snippets'
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<A-d>"
+let g:UltiSnipsJumpBackwardTrigger="<A-a>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
 
 " Vim-Fakeclip
 " Allows cut/copy/paste by default with cygwin
 Plugin 'kana/vim-fakeclip'             " Allow to use clipboard under cygwin
 
-Plugin 'dbakker/vim-projectroot'       " Set default path to root project by detecting .git for instance
-au BufEnter * if &ft != 'help' | call ProjectRootCD() | endif
+"Plugin 'dbakker/vim-projectroot'       " Set default path to root project by detecting .git for instance
+"au BufEnter * if &ft != 'help' | call ProjectRootCD() | endif
 
-"Plugin 'vim-scripts/LustyExplorer'
+"Plugin 'Shougo/vimproc.vim'
+"Plugin 'Shougo/vimshell.vim'
+"Plugin 'tpope/vim-fugitive'            " Git wrapper for vim
 
-Plugin 'Shougo/vimproc.vim'
-Plugin 'Shougo/vimshell.vim'
-Plugin 'tpope/vim-fugitive'            " Git wrapper for vim
+"Plugin 'vim-scripts/LanguageTool'
+"let g:languagetool_jar='$HOME/languagetool/languagetool-commandline.jar'
 
-Plugin 'vim-scripts/LanguageTool'
-let g:languagetool_jar='$HOME/languagetool/languagetool-commandline.jar'
-
-Plugin 'fisadev/vim-ctrlp-cmdpalette'  " Command palette for ctrlp
-Plugin 'chrisbra/NrrwRgn'              " Focus on selected regions, making the rest inaccessible
-Plugin 'scrooloose/syntastic'          " Syntax checker
+"Plugin 'fisadev/vim-ctrlp-cmdpalette'  " Command palette for ctrlp
+"Plugin 'chrisbra/NrrwRgn'              " Focus on selected regions, making the rest inaccessible
+"Plugin 'scrooloose/syntastic'          " Syntax checker
 Plugin 'godlygeek/tabular'             " Select, then :Tabularize /= to align to equal sign
 Plugin 'ervandew/supertab'
 Plugin 'flazz/vim-colorschemes'        " A lot of colorschemes (including hybrid)
 
 Plugin 'vim-scripts/VOoM'
 
-"Plugin 'honza/vim-snippets'            " Snippets files for various programming languages
-"Plugin 'sirver/ultisnips'              " Snipper plugin
 
-Plugin 'airblade/vim-gitgutter'        " Show changed
-let g:gitgutter_enabled = 0            " BufEnter much slower with gitgutter. I disabled it !
-let $GIT_DISCOVERY_ACROSS_FILESYSTEM=1 " Require on Windows/Cygwin to avoid :system() error
+"Plugin 'airblade/vim-gitgutter'        " Show changed
+"let g:gitgutter_enabled = 0            " BufEnter much slower with gitgutter. I disabled it !
+"let $GIT_DISCOVERY_ACROSS_FILESYSTEM=1 " Require on Windows/Cygwin to avoid :system() error
 
 " Binded to <F4>
-Plugin 'mileszs/ack.vim'               " Use the Perl module App::Ack
+" Plugin 'mileszs/ack.vim'               " Use the Perl module App::Ack
+Plugin 'rking/ag.vim'                  " Better than Ack
+
 Plugin 'scrooloose/nerdcommenter'      " Un/Comment lines
 
 Plugin 'sjl/gundo.vim'                 " Visualize your Vim undo tree
@@ -133,15 +145,22 @@ Plugin 'tpope/vim-surround'            " Easy delete, change on surroundings in 
 Plugin 'tpope/vim-unimpaired'
 
 Plugin 'vim-scripts/Align'             " Alignment at equal sign
-Plugin 'vim-scripts/Txtfmt-The-Vim-Highlighter'
+"Plugin 'vim-scripts/Txtfmt-The-Vim-Highlighter'
 Plugin 'vim-scripts/ccase.vim'
 Plugin 'mihaifm/bufstop'               " Easy way to switch buffers
+
 Plugin 'vim-scripts/loremipsum'        " Insert Lipsum text
+
 Plugin 'vim-scripts/taglist.vim'
+let g:Tlist_Auto_Highlight_Tag = 1
+let g:Tlist_Auto_Update = 1
+let g:Tlist_WinWidth = 50
+
 Plugin 'vim-scripts/a.vim'             " Alternate quickly between .c <--> .h
 Plugin 'vim-scripts/ZoomWin'           " <C-w>o get full screen then <C-w>o again will restore the windows.
 
 Plugin 'milkypostman/vim-togglelist'   " Allow to toggle quickfix and location list window
+let g:toggle_list_no_mappings = 1
 " Togglequickfix called by <F10>
 
 "Plugin 'xolox/vim-easytags'            " To test
@@ -149,12 +168,14 @@ Plugin 'milkypostman/vim-togglelist'   " Allow to toggle quickfix and location l
 Plugin 'skammer/vim-css-color'
 Plugin 'vim-scripts/bufkill.vim'
 
-"Plugin 'xolox/vim-notes'               " Note taking
-"Plugin 'xolox/vim-misc'                " Needed by vim-notes
-"let g:notes_directories = ['~/.notes/']
-"let g:notes_suffix      = '.txt'
+Plugin 'xolox/vim-notes'               " Note taking
+Plugin 'xolox/vim-misc'                " Needed by vim-notes
+let g:notes_directories = ['~/notes/']
+let g:notes_suffix      = '.txt'
 
-
+"Plugin 'vim-scripts/AutomaticLaTexPlugin'
+Plugin 'LaTeX-Box-Team/LaTeX-Box'
+let g:LatexBox_latexmk_options='-xelatex'
 call vundle#end()
 
 "---------------------------------
@@ -173,7 +194,7 @@ let mapleader = ","                    " Use a more convenient leader key
 
 " Vim's language
 if s:is_windows && has('gui')
-language messages en
+    language messages en
 endif
 
 "---------------------------------
@@ -181,10 +202,10 @@ endif
 "---------------------------------
 
 if s:is_windows
-  set guifont=Powerline_Consolas:h9:cANSI
-  set guioptions=                      " No menu, no toolbar, no scrollbars
+    set guifont=Powerline_Consolas:h9:cANSI
+    set guioptions=                      " No menu, no toolbar, no scrollbars
 else
-  set guifont=Powerline\ Consolas\ 10
+    set guifont=Powerline\ Consolas\ 10
 endif
 
 syntax on                              " Enable Syntax
@@ -198,6 +219,7 @@ colorscheme hybrid                     " Best colorscheme ever
 if s:is_windows && !s:is_cygwin
     set shell=c:\windows\system32\cmd.exe
     set runtimepath^=~/.vim
+    set viminfo+=n~/.viminfo
     cd ~
 endif
 
@@ -241,7 +263,7 @@ set ttimeoutlen=0                      " Reduce the delay with <esc> when escapi
 " Performances
 set ttyfast                            " Send more chars to redraw in CTERM
 set lazyredraw                         " Buffer screen updates instead of updating al the time
-let loaded_matchparen = 1
+"let loaded_matchparen = 1
 
 " Alerts
 set noerrorbells
@@ -291,6 +313,9 @@ set foldmethod=indent
 set splitright                         " New vertical split always at the right of the current window
 set splitbelow                         " New horizontal split always at the bottom of the current window
 
+" Diff
+set diffopt+=iwhite
+
 " Backup behaviour
 set nobackup                           " Disable backup
 set noswapfile                         " Disable swap because sometime swapfile is in readonly
@@ -322,7 +347,6 @@ if s:is_cygwin
     inoremap <3-LeftMouse> <esc>V
 endif
 
-
 " <2-LeftMouse> Highlight the word under cursor
 nnoremap <silent> <2-LeftMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
 
@@ -350,46 +374,65 @@ nnoremap <end> i<end>
 " jk is back to normal mode
 inoremap jk <esc><right>
 
+imap jjj <esc>,j
+imap kkk <esc>,k
+imap lll <esc>,l
+imap hhh <esc>,h
+
 map <c-space> ?
 
-" Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+" Insertion mode on enter
+noremap <cr> A<cr>
 
 " In the case sudo is needed
 cmap w!! w !sudo tee % >/dev/null
 
 " Dupplicate current line above or below
 nnoremap <silent> [<space> :pu! _<cr>:']+1<cr>
-nnoremap <silent> ]<space> :pu _<cr>:'[-1<cr>
 
-" Switch to previous active buffer
-nnoremap <silent> <C-l> :e #<cr>
-inoremap <silent> <C-l> <esc>mO<C-C>:e #<cr>
 
 " Current word highlight
 noremap * mP*N`P
 
 " Tag completion
-inoremap <C-t> <C-x><c-]>
+inoremap <c-t> <c-x><c-]>
 
 "---------------------------------
 " Single char mapping            |
 "---------------------------------
+set <C-S-p>=
+map <C-S-p> :toto
+" Cygwin keycodes
+if s:is_cygwin
+"    set <xF1>=[1;5q
+"    set <xF2>=[1;5r
+"    set <xF3>=[1;5s
+"    set <xF4>=[1;5t
+"    set <f25>=[1;5u
 
-" <cr>
-nnoremap           <cr>    A<cr><esc>
+    " <C-Tab> Next buffer
+    set <f26>=[1;5I
+    map <silent> <f26> :bn<cr>
+    imap <silent> <f26> <c-o>:bn<cr>
+    vmap <silent> <f26> <c-c>:bn<cr>
+
+    " <C-S-Tab> Previous buffer
+    set <f27>=[1;6I
+    map <silent> <f27> :bp<cr>
+    imap <silent> <f27> <c-o>:bp<cr>
+    vmap <silent> <f27> <c-c>:bp<cr>
+
+endif
 
 " <tab> Tabbing visual selection
-vnoremap           <tab>   >gv
 nnoremap           <tab>   >>
-vnoremap           <s-tab> <gv
-vnoremap           <s-tab> <<
+nnoremap           <s-tab> <<
+inoremap           <s-tab> <c-o><<
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
 
 " Search with <space>
-map <space> /
+map                <space> /
 
 " Use Q for formatting the current paragraph (or selection)
 vnoremap           Q       gq
@@ -398,89 +441,73 @@ nnoremap           Q       gqap
 " Go back to marker position (the swiss french keyboard sucks)
 noremap            '       `
 
+" . is : To avoid shift
+noremap            .       :
+
+" - is .
+noremap            -       .
+
 " Terminal redraw
 noremap            §       :redraw<cr>
 
 " Easymotion
-nmap s <Plug>(easymotion-s)
-vmap s <Plug>(easymotion-s)
-nmap t <Plug>(easymotion-t)
+map                s       <Plug>(easymotion-s)
+map                f       <Plug>(easymotion-bd-wl)
+map                <c-j>   <Plug>(easymotion-j)
+map                <c-k>   <Plug>(easymotion-k)
 
 "---------------------------------
 " Control + Char mapping         |
 "---------------------------------
-if s:is_cygwin
-    "<c-Tab Next buffer
-    set <f15>=[1;5I
-    noremap             <f15>  :bn<cr>
-    inoremap            <f15>  <C-o>:bn<cr>
-    vnoremap            <f15>  <C-c>:bn<cr>
 
-    "<C-S-Tab> Previous buffer
-    set <f16>=[1;6I
-    noremap             <f16>  :bp<cr>
-    inoremap            <f16>  <C-o>:bp<cr>
-    vnoremap            <f16>  <C-c>:bp<cr>
-else
-    " <c-Tab> Next buffer
-    nnoremap           <c-Tab> :bn<cr>
-    inoremap           <c-Tab> <C-o>:bn<cr>
-    cnoremap           <c-Tab> <C-c>:bn<cr>
-    onoremap           <c-Tab> <C-c>:bn<cr>
+" <c-a> Select all (like every modern editor)
+inoremap           <c-a>   <esc>ggVG
+nnoremap           <c-a>        ggVG
 
-    " <c-s-Tab> Previous buffer
-    "nnoremap           <c-s-Tab> :bp<cr>
-    "inoremap           <c-s-Tab> <C-o>:bp<cr>
-    "cnoremap           <c-s-Tab> <C-c>:bp<cr>
-    "onoremap           <c-s-Tab> <C-c>:bp<cr>
-endif
+" <c-b> Vim-ctrlP Buffer explorer with Ctrl-B
+noremap            <c-b>        :CtrlPBuffer<cr>
+inoremap           <c-b>   <c-o>:CtrlPBuffer<cr>
+vnoremap           <c-b>   <c-c>:CtrlPBuffer<cr>
 
-" <C-a> Select all (like every modern editor)
-inoremap           <C-a>   <esc>ggVG
-nnoremap           <C-a>        ggVG
+" <c-c> Copy
+"  - Copy word under cursor if no selection
+"  - Copy selection
+inoremap <silent>  <c-c> <esc>m`viw"+y``a
+nnoremap <silent>  <c-c> <esc>m`viw"+y``
+vnoremap           <c-c> "+y
 
-" <C-b> Vim-ctrlP Buffer explorer with Ctrl-B
-noremap            <C-b>        :CtrlPBuffer<cr>
-inoremap           <C-b>   <C-o>:CtrlPBuffer<cr>
-vnoremap           <C-b>   <C-c>:CtrlPBuffer<cr>
+" <c-d> Replace word under cursor (Delete A word)
+inoremap <silent>  <c-d>   <c-c>"_ciw
+nnoremap <silent>  <c-d>   "_ciw
 
-" <C-c> Copy
-inoremap <silent>  <C-c> <esc>m`viw"+y``a
-nnoremap <silent>  <C-c> <esc>m`viw"+y``
-vnoremap           <C-c> "+y
+" <c-e> Decrement the next number on the line
+nnoremap <silent>  <c-e>   :<c-u>call AddSubtract("\<c-x>", '')<CR>
 
-" <C-d> Replace word under cursor (Delete A word)
-inoremap <silent>  <C-d>   <C-c>"_ciw
-nnoremap <silent>  <C-d>   "_ciw
+" <c-f> Search
+nnoremap           <c-f>   /<C-u><C-r>=Escape(expand('<cword>'))<CR>
+inoremap           <c-f>   <esc>/<C-u><C-r>=Escape(expand('<cword>'))<CR>
+vnoremap           <c-f>   /<C-u><C-r>=GetVisualSelection()<CR>
 
-" <C-e> Decrement the next number on the line
-nnoremap <silent>  <C-e>   :<C-u>call AddSubtract("\<C-x>", '')<CR>
+" <c-g> Buffer switch (Previous buffer)
+nnoremap <c-g> :bn<cr>
+inoremap <c-g> <c-o>:bn<cr>
+vnoremap <c-g> <c-c>:bn<cr>
 
-" <C-f> Search
-nnoremap           <C-f>   /<C-u><C-r>=Escape(expand('<cword>'))<CR>
-inoremap           <C-f>   <esc>/<C-u><C-r>=Escape(expand('<cword>'))<CR>
-vnoremap           <C-f>   /<C-u><C-r>=GetVisualSelection()<CR>
-
-" <C-g> Buffer switch (Previous buffer)
-nnoremap <C-g> :bn<cr>
-inoremap <C-g> <C-o>:bn<cr>
-
-
-" <C-h> Replacement
-nnoremap <C-h> :<C-u>%s/<C-r>=Escape(expand('<cword>'))<CR>//g<left><left>
-inoremap <C-h> <esc>:%s/<C-r>=Escape(expand('<cword>'))<CR>//g<left><left>
-vnoremap <C-h> :<C-u>%s/<C-r>=GetVisualSelection()<CR>//g<left><left>
+" <c-h> Replacement
+nnoremap <c-h> :<C-u>%s/<C-r>=Escape(expand('<cword>'))<CR>//g<left><left>
+inoremap <c-h> <esc>:%s/<C-r>=Escape(expand('<cword>'))<CR>//g<left><left>
+vnoremap <c-h> :<C-u>%s/<C-r>=GetVisualSelection()<CR>//g<left><left>
 
 " <C-i>
 "-----------
 
 " <C-j> Add an empty line below the cursor
-nnoremap <silent> <C-j> m`o<esc>``
-inoremap <silent> <C-j> <esc>m`o<esc>``a
+"nnoremap <silent> <C-j> m`o<esc>``
+"inoremap <silent> <C-j> <esc>m`o<esc>``a
 
-" <C-k> Add an empty line above the cursor
-nnoremap <silent> <C-k> m`O<esc>``
-inoremap <silent> <C-k> <esc>m`O<esc>``a
+" <c-k> Add an empty line above the cursor
+"nnoremap <silent> <c-k> m`O<esc>``
+"inoremap <silent> <c-k> <esc>m`O<esc>``a
 
 " <C-l>
 
@@ -491,10 +518,8 @@ inoremap <silent> <C-k> <esc>m`O<esc>``a
 
 " <C-o>
 
-" <c-s-p> Vim-CtrlP-CmdPalette to immitate Sublime's behaviour
-nnoremap           <c-s-p>  :CtrlPCmdPalette<cr>
-inoremap           <c-s-p>  <C-O>:CtrlPCmdPalette<cr>
-vnoremap           <c-s-p>  <C-C>:CtrlPCmdPalette<cr>
+" <C-P> Refresh <C-p> cache
+noremap            <C-P>    :CtrlPClearAllCaches<cr> 
 
 " <C-q> Blockwise visual mode
 noremap            <C-q>    <C-v>
@@ -506,20 +531,13 @@ noremap            <C-s>    :update!<CR>
 vnoremap           <C-s>    <C-c>:update!<CR>
 inoremap           <C-s>    <C-o>:update!<CR>
 
-" <C-S-s> Save as with gvim
-"noremap            <C-S-s>    :browse w<CR>
-"vnoremap           <C-S-s>    <C-c>:browse w<CR>
-"inoremap           <C-S-s>    <C-o>:browse w<CR>
-
 " <C-t>
-
 " <C-u>
-
-" <C-v> Paste
-noremap            <C-v>    "+gP
-cnoremap           <C-v>    <C-R>+
-exe 'inoremap <script> <C-v> <C-g>u' . paste#paste_cmd['i']
-exe 'vnoremap <script> <C-v> ' . paste#paste_cmd['v']
+" <c-v> Paste
+noremap            <c-v>    "+gP
+cnoremap           <c-v>    <c-R>+
+exe 'inoremap <script> <c-v> <c-g>u' . paste#paste_cmd['i']
+exe 'vnoremap <script> <c-v> ' . paste#paste_cmd['v']
 
 " <C-w> Window command (Split)
 " Used to split vim's environmnent in multiple workspaces called windows.
@@ -540,48 +558,46 @@ exe 'vnoremap <script> <C-v> ' . paste#paste_cmd['v']
 " <C-x> Cut
 vnoremap <C-x>   "+x
 
-" <C-y> Increment closest number
-nnoremap <silent> <C-y> :<C-u>call AddSubtract("\<C-a>", '')<CR>
+" <c-y> Increment closest number
+nnoremap <silent> <c-y> :<c-u>call AddSubtract("\<c-a>", '')<CR>
 
-" <C-z> Undo
-noremap           <C-z>    u
-inoremap          <C-z>    <C-o>u
 
 "---------------------------------
 " Alt mapping                    |
 "---------------------------------
 
 " <A-j> Move screen down
-set <f13>=j
-noremap <f13> <C-y>
-inoremap <f13> <C-y>
-
+set <f32>=j
+noremap <f32> <C-y>k
+inoremap <f32> <C-y><C-o>k
 " <A-k> Move screen up
-set <f14>=k
-noremap <f14> <C-e>
-inoremap <f14> <C-e>
+set <f33>=k
+noremap <f33> <C-e>j
+inoremap <f33> <C-e><C-o>j
 
 "---------------------------------
 " F Function mapping             |
 "---------------------------------
 
 " Help in full screen
-noremap  <F1>       :help<cr>:only<cr>
-inoremap <F1>      <esc>:help<cr>:only<cr>
+nnoremap <c-F1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<CR>
 
 " File explorer (NERD Tree)
 noremap  <silent> <F2> :NERDTreeToggle<CR>
-inoremap <silent> <F2> <C-O>:NERDTreeToggle<CR>
+inoremap <silent> <F2> <c-O>:NERDTreeToggle<CR>
 
 " Taglist pane
 noremap  <silent> <F3> :TlistToggle<CR>
-vnoremap <silent> <F3> <C-C>:TlistToggle<CR>
-inoremap <silent> <F3> <C-O>:TlistToggle<CR>
+vnoremap <silent> <F3> <c-C>:TlistToggle<CR>
+inoremap <silent> <F3> <c-O>:TlistToggle<CR>
 
 " Tagbar
 noremap  <silent> <F4> :TagbarToggle<CR>
-vnoremap <silent> <F4> <C-C>:TagbarToggle<CR>
-inoremap <silent> <F4> <C-O>:TagbarToggle<CR>
+vnoremap <silent> <F4> <c-C>:TagbarToggle<CR>
+inoremap <silent> <F4> <c-O>:TagbarToggle<CR>
+
+nnoremap <F6> :call ToggleFlag('guioptions','mrT')<cr>
+inoremap <F6> <c-C>:call ToggleFlag('guioptions','mrT')<cr>
 
 " Toggle colorscheme
 nnoremap <F8> :call NextColor(1)<CR>
@@ -599,13 +615,13 @@ inoremap <silent> <F10> <C-O>:call ToggleQuickfixList()<CR>
 
 " Toggle numbers
 noremap  <silent> <F11> :set nonu!<CR>
-vnoremap <silent> <F11> <C-C>:set nonu!<CR>
-inoremap <silent> <F11> <C-O>:set nonu!<CR>
+vnoremap <silent> <F11> <c-C>:set nonu!<CR>
+inoremap <silent> <F11> <c-O>:set nonu!<CR>
 
 " Remove trailing spaces
 noremap  <silent> <F12> :FixWhitespace<CR>
-vnoremap <silent> <F12> <C-C>:FixWhitespace<CR>
-inoremap <silent> <F12> <C-O>:FixWhitespace<CR>
+vnoremap <silent> <F12> <c-C>:FixWhitespace<CR>
+inoremap <silent> <F12> <c-O>:FixWhitespace<CR>
 
 "---------------------------------
 " Leader mapping                 |
@@ -641,16 +657,18 @@ nmap <leader>d :bprevious<CR>:bdelete! #<CR>
 " CtrlP Tag search
 nnoremap <leader>. :CtrlPTag<cr>
 
-" Ack search
-noremap <leader>a  :Ack! <C-R><C-W><cr>
-noremap <leader>A  :Ack! <C-R><C-W><cr>
+" Ag search
+noremap <leader>a  :Ag! <c-R><c-W><cr>
+noremap <leader>A  :Ag! <c-R><c-W><cr>
 
+" Use CTRL-Q to do what CTRL-V used to do
+noremap <c-q> <c-v>
 
 " Leader Shortcuts
 nmap <leader>w :w!<cr>
 
 " Remap interrupt search command
-noremap <C-u> <C-c>
+noremap <c-u> <c-c>
 
 " GitGutter
 noremap <leader>gh  :GitGutterLineHighlightsToggle<cr>
@@ -661,42 +679,19 @@ noremap <leader>ga  :GitGutterStageHunk<cr>
 noremap <leader>gu  :GitGutterReverHunk<cr>
 noremap <leader>gv  :GitGutterPreviewHunk<cr>
 
-map <Leader>l <Plug>(easymotion-lineforward)
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-map <Leader>h <Plug>(easymotion-linebackward)
-
-
 " ---------------------------------------------------------
 " Plugins settings
 " ---------------------------------------------------------
 
-
-" Expand-region
-" -------------
-let g:expand_region_use_select_mode = 1
-
-
-" Taglist
-" -------
-let g:Tlist_Auto_Highlight_Tag = 1
-let g:Tlist_Auto_Update = 1
-let g:Tlist_WinWidth = 50
-
-" Utilsnips
-" ---------
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<C-g>"
-
-" Ultisnips
-" ---------
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<C-b>"
-let g:UltiSnipsJumpBackwardTrigger="<C-z>"
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+" Vim-indent-guides
+" -----------------
+let g:indent_guides_auto_colors = 1
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size  = 1
+let g:indent_guides_enable_on_vim_startup = 0
+let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
+hi IndentGuidesOdd  ctermbg=black
+hi IndentGuidesEven ctermbg=darkgrey
 
 " ---------------------------------------------------------
 " Functions
@@ -715,37 +710,39 @@ func! paste#Paste()
     endif
     let &ve = ove
 endfunc
+
 "------------------------------------------------------------
 " Autocommands
 "------------------------------------------------------------
 
 augroup configgroup
-autocmd!
-autocmd VimEnter * highlight clear SignColumn
-autocmd FileType java setlocal noexpandtab
-autocmd FileType java setlocal list
-autocmd FileType java setlocal listchars=tab:+\ ,eol:-
-autocmd FileType java setlocal formatprg=par\ -w80\ -T4
-autocmd FileType php setlocal expandtab
-autocmd FileType php setlocal list
-autocmd FileType php setlocal listchars=tab:+\ ,eol:-
-autocmd FileType php setlocal formatprg=par\ -w80\ -T4
-autocmd FileType ruby setlocal tabstop=2
-autocmd FileType ruby setlocal shiftwidth=2
-autocmd FileType ruby setlocal softtabstop=2
-autocmd FileType ruby setlocal commentstring=#\ %s
-autocmd FileType python setlocal commentstring=#\ %s
-autocmd BufEnter *.cls setlocal filetype=java
-autocmd BufEnter *.zsh-theme setlocal filetype=zsh
-autocmd BufEnter Makefile setlocal noexpandtab
-autocmd BufEnter *.sh setlocal tabstop=2
-autocmd BufEnter *.sh setlocal shiftwidth=2
-autocmd BufEnter *.sh setlocal softtabstop=2
-autocmd BufEnter *.asm setlocal filetype=asmsharc
-autocmd BufEnter *.inc setlocal filetype=asmsharc
-autocmd BufEnter *.mac setlocal filetype=asmsharc
-autocmd BufEnter *.ldf setlocal filetype=c
-autocmd BufEnter *.def setlocal filetype=c
+    autocmd!
+    autocmd VimEnter * highlight clear SignColumn
+    autocmd FileType java setlocal noexpandtab
+    autocmd FileType java setlocal list
+    autocmd FileType java setlocal listchars=tab:+\ ,eol:-
+    autocmd FileType java setlocal formatprg=par\ -w80\ -T4
+    autocmd FileType php setlocal expandtab
+    autocmd FileType php setlocal list
+    autocmd FileType php setlocal listchars=tab:+\ ,eol:-
+    autocmd FileType php setlocal formatprg=par\ -w80\ -T4
+    autocmd FileType ruby setlocal tabstop=2
+    autocmd FileType ruby setlocal shiftwidth=2
+    autocmd FileType ruby setlocal softtabstop=2
+    autocmd FileType ruby setlocal commentstring=#\ %s
+    autocmd FileType python setlocal commentstring=#\ %s
+    autocmd BufEnter *.cls setlocal filetype=java
+    autocmd BufEnter *.zsh-theme setlocal filetype=zsh
+    autocmd BufEnter Makefile setlocal noexpandtab
+    autocmd BufEnter *.sh setlocal tabstop=2
+    autocmd BufEnter *.sh setlocal shiftwidth=2
+    autocmd BufEnter *.sh setlocal softtabstop=2
+    autocmd BufEnter *.asm setlocal filetype=asmsharc
+    autocmd BufEnter *.inc setlocal filetype=asmsharc
+    autocmd BufEnter *.mac setlocal filetype=asmsharc
+    autocmd BufEnter *.def setlocal filetype=c
+    autocmd BufEnter *.ldf setlocal filetype=ldf
+    autocmd BufEnter *.tex map <leader>ll :Latexmk<cr>
 augroup END
 "------------------------------------------------------------
 " Inline plugins
@@ -760,8 +757,8 @@ endif
 
 " Show and remove extra trailing spaces
 " -------------------------------------
-highlight ExtraWhitespace ctermbg=55 guibg=#382424
-autocmd ColorScheme * highlight ExtraWhitespace ctermbg=55 guibg=red
+highlight ExtraWhitespace ctermbg=235 guibg=#382424
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=235 guibg=red
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 
 " The above flashes annoyingly while typing, be calmer in insert mode
@@ -780,11 +777,20 @@ command! -range=% FixWhitespace call <SID>FixWhitespace(<line1>,<line2>)
 " Add/Substract value to a number
 " -------------------------------
 function! AddSubtract(char, back)
-  let pattern = &nrformats =~ 'alpha' ? '[[:alpha:][:digit:]]' : '[[:digit:]]'
-  call search(pattern, 'cw' . a:back)
-  execute 'normal! ' . v:count1 . a:char
-  silent! call repeat#set(":\<C-u>call AddSubtract('" .a:char. "', '" .a:back. "')\<CR>")
+    let pattern = &nrformats =~ 'alpha' ? '[[:alpha:][:digit:]]' : '[[:digit:]]'
+    call search(pattern, 'cw' . a:back)
+    execute 'normal! ' . v:count1 . a:char
+    silent! call repeat#set(":\<C-u>call AddSubtract('" .a:char. "', '" .a:back. "')\<CR>")
 endfunction
+
+"
+" Trailing spaces while editing
+" -----------------------------
+fun! StripTrailingWhitespaces()
+    let original_cursor = getpos('.')
+    exe b:insert_start . ',.s/\s\+$//e'
+    call setpos('.', original_cursor)
+endfun
 
 " Automatic adjust quickfix window height
 " ---------------------------------------
@@ -872,17 +878,27 @@ endfun
 " Get Visual Selection
 " --------------------
 fu! GetVisualSelection()
-  let old_reg = @v
-  normal! gv"vy
-  let raw_search = @v
-  let @v = old_reg
-  return substitute(escape(raw_search, '\/.*$^~[]'), "\n", '\\n', "g")
+    let old_reg = @v
+    normal! gv"vy
+    let raw_search = @v
+    let @v = old_reg
+    return substitute(escape(raw_search, '\/.*$^~[]'), "\n", '\\n', "g")
 endfunction
 
 " Escape special chars for a regexp search
 " ----------------------------------------
 function! Escape(stuff)
-  return substitute(escape(a:stuff, '\/.*$^~[]'), "\n", '\\n', "g")
+    return substitute(escape(a:stuff, '\/.*$^~[]'), "\n", '\\n', "g")
+endfunction
+
+" Present colorscheme
+function! Present()
+    set background=light
+    colorscheme summerfruit256
+    AirlineTheme solarized
+    AirlineToggle
+    set nocursorline
+    set nonu
 endfunction
 
 " Next colorscheme
