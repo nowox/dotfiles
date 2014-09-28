@@ -11,13 +11,12 @@
 # Umask
 umask 027
 
+# Mintty {{{
 # Mintty <C-S> for vim
 bind -r '\C-s'
 stty -ixon
-
-###############
-# Some Colors #
-###############
+# }}}
+# Colors definition {{{
 
 # Reset
 nocolor="\[\033[0m\]"         # Text Reset
@@ -92,9 +91,8 @@ on_ipurple="\[\033[10;95m\]"  # Purple
 on_icyan="\[\033[0;106m\]"    # Cyan
 on_iwhite="\[\033[0;107m\]"   # White
 
-#######
-# Git #
-#######
+# }}}
+# Git Prompt {{{
 
 export GIT_PS1_SHOWDIRTYSTATE=false
 export GIT_PS1_SHOWUNTRACKEDFILES=false
@@ -208,10 +206,8 @@ __git_ps1 ()
     fi
   fi
 }
-
-##########
-# Prompt #
-##########
+# }}}
+# Prompt {{{
 
 time24="\A"
 path_short="\w"
@@ -253,10 +249,8 @@ ps1_git='$(\
 
 source ~/.git-completion.bash
 export PS1=$ps1_0$ps1_3$ps1_9
-
-###########
-# Aliases #
-###########
+# }}}
+# Aliases {{{
 
 # Cygwin aliases
 alias browse='explorer $(cygpath --windows $(pwd))'
@@ -295,11 +289,6 @@ alias ..='cd ..'
 
 alias path='echo -e ${PATH//:/\\n}'
 
-# Functions
-title () {
-    echo -ne "\e]0;$1\a"
-}
-
 # Other tools
 alias ag='ag --color-match="31;40" -U -S --ignore *.xml --ignore *.html --ignore "*.s" --ignore "*.json"'
 
@@ -309,14 +298,18 @@ alias etver='etver.bat'
 
 alias ct="cleartool"
 alias taf="vim ~/notes/taf.rst"
-
-################
-# Bash Options #
-################
-
+# }}}
+# Shelloptions (shopt) {{{
 shopt -s cdspell                              # Autocorrect mistyped directory
 shopt -s autocd                               # Automatically add cd before known dir names
 shopt -s dirspell
 shopt -s globstar
 shopt -s extglob
+# }}}
+# Functions {{{
+title () {
+    echo -ne "\e]0;$1\a"
+}
+# }}}
 
+# vim:foldmethod=marker:foldlevel=0:tw=80
