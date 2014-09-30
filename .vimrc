@@ -669,10 +669,19 @@ inoremap <c-t> <c-x><c-]>
 " <C-u> Interrupt current search
 
 " <c-v> Paste
-noremap            <c-v>    "+gP
-cnoremap           <c-v>    <c-R>
-exe 'inoremap <script> <C-v>' paste#paste_cmd['i']
-exe 'vnoremap <script> <C-v>' paste#paste_cmd['v']
+noremap            <C-v>    "+gP
+cmap               <C-v>    <C-R>+
+
+" Pasting blockwise and linewise selections is not possible in Insert and
+" Visual mode without the +virtualedit feature.  They are pasted as if they
+" were characterwise instead.
+" Uses the paste.vim autoload script.
+
+exe 'inoremap <script> <C-V>' paste#paste_cmd['i']
+exe 'vnoremap <script> <C-V>' paste#paste_cmd['v']
+
+imap <S-Insert>     <C-v>
+vmap <S-Insert>     <C-v>
 
 " <C-w> Window command (Split)
 " Used to split vim's environmnent in multiple workspaces called windows.
