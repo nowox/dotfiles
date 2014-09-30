@@ -148,10 +148,10 @@ Plugin 'tyru/autochmodx.vim'
 " Plugin: Ultisnip {{{2
 
 " Track the engine.
-Plugin 'SirVer/ultisnips'
+"Plugin 'SirVer/ultisnips'
 
 " Snippets are separated from the engine. Add this if you want them:
-Plugin 'honza/vim-snippets'
+"Plugin 'honza/vim-snippets'
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -389,7 +389,7 @@ set selection  =exclusive
 set title                              " Set window title automatically
 set history=1000                       " Remember more commands and search history
 set undolevels=1000                    " Keep a raisonnable undo
-set scrolloff=7                        " Set the number of context lines to see above and below the cursor
+set scrolloff=2                        " Set the number of context lines to see above and below the cursor
 set autoread                           " Set to auto read when a file is changed from the outside
 set wildmenu                           " Command-line menu
 set ruler                              " See number of lines
@@ -527,6 +527,11 @@ noremap <silent> à mP*N`P
 " Disable highlight search
 noremap <silent> é :noh<cr>
 
+" $ to move physically at the end of the line
+" (Virtualedit must be enabled)
+noremap $        $l
+noremap <End>    $l
+
 " }}}2
 " Mappings: One char {{{2
 
@@ -625,10 +630,7 @@ inoremap <c-h> <esc>:%s/<C-r>=Escape(expand('<cword>'))<CR>//g<left><left>
 vnoremap <c-h> :<C-u>%s/<C-r>=GetVisualSelection()<CR>//g<left><left>
 
 " <C-i>
-noremap            <C-i>    :CtrlPCmdPalette<CR>
-vnoremap           <C-i>    <C-c>:CtrlPCmdPalette<CR>
-inoremap           <C-i>    <C-o>:CtrlPCmdPalette<CR>
-
+" Cannot be mapped, already binded to <Tab>
 
 " <C-j> Add an empty line below the cursor
 "nnoremap <silent> <C-j> m`o<esc>``
@@ -642,7 +644,7 @@ inoremap           <C-i>    <C-o>:CtrlPCmdPalette<CR>
 inoremap <C-l> <C-v>
 
 " <C-m> Multiple cursor
-" [Mapping already set with the multiple-cursor plugin]
+" Cannot be mapped, same as <CR>
 
 " <C-n>
 
@@ -704,6 +706,13 @@ vnoremap <C-x>   "+x
 
 " <c-y> Increment closest number
 nnoremap <silent> <c-y> :<c-u>call AddSubtract("\<c-a>", '')<CR>
+
+" <C-,> [1;5l
+
+" <C-.> [1;5n
+
+" <C--> [1;5m
+
 " }}}2
 " Mappings: Alt {{{2
 " <A-j> Move screen down

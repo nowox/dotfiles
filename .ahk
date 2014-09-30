@@ -6,8 +6,17 @@
 
 ; Win+<char> quick mappings
 ; -------------------------
-#v::Run gvim
-#t::Run mintty -
+#v::
+    Run gvim
+    WinWaitActive
+Return
+
+#t::
+    Run mintty -
+    WinWaitActive
+Return
+
+#d:: winshell_swapScreen("A")
 
 ; Reload AHK Script
 ; -----------------
@@ -28,7 +37,7 @@ If ErrorLevel = Timeout
 {
     If !WinExist("ahk_class Chrome_WidgetWin_1")
     {
-        Run, http://
+        Run, chrome
             WinWaitActive
     }
     IfWinNotActive, ahk_class Chrome_WidgetWin_1
@@ -40,7 +49,7 @@ If ErrorLevel = Timeout
     Return
 }
 If leader = n
-    Run, http://
+    Run, chrome
 Return
 
 ; Move windows to next monitor
@@ -448,3 +457,60 @@ DoesMonitorExist(newWinX, newWinY, monCount)
 
 Return
 
+winshell_swapScreen(windowTitle := "A") {
+    global screenLeftMonitorWidth
+    global screenLeftMonitorHeight
+    global screenRightMonitorWidth
+    global screenRightMonitorHeight
+
+    activeWindow := WinActive(windowTitle)
+    borderThreshold := -10
+    if activeWindow = 0
+    {
+        return
+    }
+    WinGet, minMax, MinMax, ahk_id %activeWindow%
+    WinGetPos, x, y, width, height, ahk_id %activeWindow%
+    
+    if (minMax = 1) {
+        ; WinRestore, ahk_id %activeWindow%
+        ; a maximized window has x,y = -8,-8 on Windows 8
+        newY := y
+        if (x > borderThreshold) {
+            newX := x - screenLeftMonitorWidth
+            newWidth := screenLeftMonitorWidth   - screenRightMonitorWidth  + width
+            newHeight := screenLeftMonitorHeight - screenRightMonitorHeight + height
+        } else {
+            newX := x + screenLeftMonitorWidth
+            newWidth := screenRightMonitorWidth   - screenLeftMonitorWidth  + width
+            newHeight := screenRightMonitorHeight - screenLeftMonitorHeight + height
+        }
+    } else {
+        WinGetPos, x, y, width, height, ahk_id %activeWindow%
+        if (x > borderThreshold) {
+            xScale := screenLeftMonitorWidth / screenRightMonitorWidth
+            yScale := screenLeftMonitorHeight / screenRightMonitorHeight
+            newX := x * xScale
+            newY := y * yScale
+            newWidth := width * xScale
+            newHeight := height * yScale
+            newX := newX - screenLeftMonitorWidth
+        } else {
+            xScale := screenRightMonitorWidth / screenLeftMonitorWidth
+            yScale := screenRightMonitorHeight / screenLeftMonitorHeight
+            x := screenLeftMonitorWidth + x
+            newX := x * xScale
+            newY := y * yScale
+            newWidth := width * xScale
+            newHeight := height * yScale
+        }
+    }
+    WinMove, ahk_id %activeWindow%, , %newX%, %newY%, %newWidth%, %newHeight%
+    /*
+    if (minMax = 1) {
+        WinMaximize, ahk_id %activeWindow%
+    }
+    */
+    WinActivate ahk_id %activeWindow%  ;Needed - otherwise another window may overlap it
+    return
+}

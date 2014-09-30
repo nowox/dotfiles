@@ -11,6 +11,8 @@
 # Umask
 umask 027
 
+export PYTHONHOME='/usr/local/bin'
+export PYTHONPATH='/usr/local/lib/python2.7/'
 # Mintty {{{
 # Mintty <C-S> for vim
 bind -r '\C-s'
@@ -290,7 +292,10 @@ alias ..='cd ..'
 alias path='echo -e ${PATH//:/\\n}'
 
 # Other tools
-alias ag='ag --color-match="31;40" -U -S --ignore *.xml --ignore *.html --ignore "*.s" --ignore "*.json"'
+alias agsrc='ag --color-match="31;40" -U -S -G "[.](c|h|inc|def|txt|ldf|asm)$"'
+alias agc='ag --color-match="31;40" -U -S -G "[.](c|h)$"'
+alias agasm='ag --color-match="31;40" -U -S -G "[.](asm|inc)$"'
+alias agdef='ag --color-match="31;40" -U -S -G "[.](def)$"'
 
 # Etel tools
 alias etreg='etreg.bat'
