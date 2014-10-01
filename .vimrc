@@ -357,7 +357,8 @@ else
 endif
 
 syntax on                              " Enable Syntax
-colorscheme hybrid                     " Best colorscheme ever
+colorscheme nowox                      " Best colorscheme ever
+
 " }}}2
 " Settings: Shell/System {{{2
 " Shell, runtime and enviromnent
@@ -400,6 +401,8 @@ set number                             " Show line number on the left
 set whichwrap+=<,>,h,l                 " Allow to use arrow keys to move in Visual Mode
 set virtualedit=all                    " Allow to place cursor at any location
 set cursorline                         " Highlight current line
+set nocursorcolumn
+set colorcolumn=90
 set writeany                           " Allow writing to any file with no need for "!" override
 set backspace=eol,start,indent         " Allow backspacing over CR autoindent and start of insert
 set helpheight=999
