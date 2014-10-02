@@ -168,7 +168,11 @@ Plugin 'bling/vim-airline'                        " Best status line ever (needs
 let g:airline_theme                      = 'wombat' " With brighter split separators
 let g:airline#extensions#tabline#enabled = 1      " Allows to view windows/tabs
 let g:airline_powerline_fonts            = 1      " Fancy fonts
+let g:airline#extensions#tabline#enabled = 1
 " }}}2
+" Plugin: edkolev/tmuxline.vim {{{2
+Plugin 'edkolev/tmuxline.vim'
+"}}}2
 " Plugin: Easymotion {{{2
 " A revolutionary new way to navigate in a file. EasyMotion provides a much simpler way
 " to use some motions in vim.
@@ -385,6 +389,7 @@ set selectmode =mouse,key
 set mousemodel =popup
 set keymodel   =startsel,stopsel
 set selection  =exclusive
+set ttymouse=xterm2
 " }}}2
 " Settings: Interface {{{2
 set title                              " Set window title automatically
@@ -842,6 +847,16 @@ noremap <leader>gv  :GitGutterPreviewHunk<cr>
 " }}}2
 
 " }}}1
+
+" Tmux {{{1
+if &term =~ '^screen'
+    " tmux will send xterm-style keys when its xterm-keys option is on
+    execute "set <xUp>=\e[1;*A"
+    execute "set <xDown>=\e[1;*B"
+    execute "set <xRight>=\e[1;*C"
+    execute "set <xLeft>=\e[1;*D"
+endif
+"}}}1
 
 " Autocommands {{{1
 augroup configgroup
