@@ -10,7 +10,7 @@
 
 # Umask
 umask 027
-
+export VIMRUNTIME=`cygpath $VIMRUNTIME`
 export PYTHONHOME='/usr/local/bin'
 export PYTHONPATH='/usr/local/lib/python2.7/'
 # Mintty {{{
@@ -217,6 +217,7 @@ path_full="\W"
 jobs_="\j"
 hostname="\h"
 username="\u"
+title="\033]2;\W\007"
 
 ps1_time="$igreen[\A]$nocolor"
 
@@ -250,7 +251,7 @@ ps1_git='$(\
 #fi
 
 source ~/.git-completion.bash
-export PS1=$ps1_0$ps1_3$ps1_9
+export PS1=$title$ps1_0$ps1_3$ps1_9
 # }}}
 # Aliases {{{
 
@@ -279,6 +280,7 @@ alias ll='ls -lv --group-directories-first'
 alias lr='ll -R'
 alias la='ll -a'
 
+alias vi='vim'
 alias tree='tree -Csuh' # Nice alternative to 'recursive ls'
 
 # My own things...

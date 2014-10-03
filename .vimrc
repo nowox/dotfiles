@@ -1,8 +1,6 @@
-"         o
-"   .    ,.,-.-.,---.,---.
-"    \  / || | ||    |
-"  o  `'  `` ' '`    `---'
-"           <nowox@x0x.ch>
+" File: .vimrc
+" Maintainer: Yves Chevallier
+" Date: 2014-10-03
 
 " Plateform {{{1
 " On which OS are we are ?
@@ -537,8 +535,12 @@ noremap <silent> é :noh<cr>
 
 " $ to move physically at the end of the line
 " (Virtualedit must be enabled)
-noremap $        $l
 noremap <End>    $l
+
+" zz center the current line and fold everything but the current fold
+noremap zz       zMzvzz
+noremap zt       zMzvzt
+noremap zb       zMzvzb
 
 " }}}2
 " Mappings: One char {{{2
