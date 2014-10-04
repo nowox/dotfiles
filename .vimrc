@@ -1,3 +1,4 @@
+
 " File: .vimrc
 " Maintainer: Yves Chevallier
 " Date: 2014-10-03
@@ -484,11 +485,15 @@ set foldenable
 set foldlevelstart=10
 set foldnestmax=10
 set foldmethod=indent
+set foldcolumn=3
 " }}}2
 " Settings: Backup {{{2
 set nobackup                           " Disable backup
 set noswapfile                         " Disable swap because sometime swapfile is in readonly
 " }}}2
+" Settings: Conceal
+set conceallevel=3        " Hide conceal chars
+set concealcursor="nvic"    " Show conceal chars on cursorline for all modes
 
 " }}}1
 " Mappings {{{1

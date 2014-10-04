@@ -4,66 +4,51 @@
 " Modified:   1 Oct 2014 10:20 PM
 " License:    MIT
 
-" Description:"{{{
-" ----------------------------------------------------------------------------
-" The RGB colour palette is taken from Tomorrow-Night.vim:
-" https://github.com/chriskempson/vim-tomorrow-theme
-"
-" The syntax highlighting scheme is taken from jellybeans.vim:
-" https://github.com/nanotech/jellybeans.vim
-"
-" The code taken from solarized.vim
-" https://github.com/altercation/vim-colors-solarized
+" Theme colors:
+" -------------
 
-"}}}
-" Requirements And Recommendations:"{{{
-" ----------------------------------------------------------------------------
-" This colourscheme is intended for use on:
-"   - gVim 7.3 for Linux, Mac and Windows.
-"   - Vim 7.3 for Linux, using a 256 colour enabled terminal.
-"
-" By default, Vim will use the closest matching cterm equivalent of the RGB
-" colours.
-"
-" However, Due to the limited 256 palette, colours in Vim and gVim will still
-" be noticeably different. In order to get a uniform appearance and the way
-" that this colourscheme was intended, it is HIGHLY recommended that you:
-"
-" 1.  Add these colours to ~/.Xresources:
-"
-"       https://gist.github.com/3278077
-"
-" 2.  Use Xresources colours by setting in ~/.vimrc:
-"
-"       let g:hybrid_use_Xresources = 1
-"       colorscheme hybrid
-"
-" For iTerm2 users:
-" 1.  Install this color preset on your iTerm2:
-"
-"       https://gist.github.com/luan/6362811
-"
-" 2. Use iTerm colours by setting in ~/.vimrc:
-"
-"       let g:hybrid_use_iTerm_colors = 1
-"       colorscheme hybrid
-"
+let s:background   = "#262626"
+let s:foreground   = "#c5c8c6"
 
-"}}}
-" Initialisation:"{{{
-" ----------------------------------------------------------------------------
-if !has("gui_running") && &t_Co < 256
-  finish
-endif
+let s:darkcolumn   = "#1c1c1c"
 
-if !exists("g:hybrid_use_Xresources")
-  let g:hybrid_use_Xresources = 0
-endif
+let s:gray_dark    = "#303030"
+let s:gray_middle  = "#313131"
+let s:gray_light   = "#4e4e4e"
 
-if !exists("g:hybrid_use_iTerm_colors")
-  let g:hybrid_use_iTerm_colors = 0
-endif
+let s:selection    = "#303030"
 
+let s:comment      = "#606060"    " This is a comment
+let s:constant     = "#ff5f5f"
+let s:red          = "#cc6666"
+let s:orange       = "#de935f"
+let s:typedef      = "#dfaf5f"
+let s:apple        = "#dfdf5f"
+let s:yellow       = "#f0c674"
+let s:green        = "#b5bd68"
+let s:character    = "#af875f"
+let s:aqua         = "#8abeb7"
+let s:blue         = "#81a2be"
+let s:purple       = "#b294bb"
+
+
+let s:addbg        = "#5F875F"
+let s:addfg        = "#d7ffaf"
+let s:changebg     = "#5F5F87"
+let s:changefg     = "#d7d7ff"
+let s:darkblue     = "#00005f"
+let s:darkcyan     = "#005f5f"
+let s:darkred      = "#5f0000"
+let s:darkpurple   = "#5f005f"
+
+let s:operator     = "#8787af"
+let s:keyword      = "#5f87af"
+let s:label        = "#5f875f"
+let s:include      = "#5fafdf"
+let s:cursorcolumn = "#303030"
+
+" Theme preferences: {{{1
+" ------------------
 set background=dark
 hi clear
 
@@ -73,370 +58,333 @@ endif
 
 let colors_name = "nowox"
 
-"}}}
-" GUI And Cterm Palettes:"{{{
-" ----------------------------------------------------------------------------
-if has("gui_running")
-  let s:vmode      = "gui"
-  let s:background = "#1d1f21"
-  let s:foreground = "#c5c8c6"
-  let s:selection  = "#373b41"
-  let s:line       = "#282a2e"
-  let s:comment    = "#707880"
-  let s:constant   = "#ff5f5f"
-  let s:red        = "#cc6666"
-  let s:orange     = "#de935f"
-  let s:typedef    = "#dfaf5f"
-  let s:storage    = "#dfdf5f"
-  let s:yellow     = "#f0c674"
-  let s:green      = "#b5bd68"
-  let s:character  = "#af875f"
-  let s:aqua       = "#8abeb7"
-  let s:blue       = "#81a2be"
-  let s:purple     = "#b294bb"
-  let s:window     = "#303030"
-  let s:darkcolumn = "#1c1c1c"
-  let s:addbg      = "#5F875F"
-  let s:addfg      = "#d7ffaf"
-  let s:changebg   = "#5F5F87"
-  let s:changefg   = "#d7d7ff"
-  let s:darkblue   = "#00005f"
-  let s:darkcyan   = "#005f5f"
-  let s:darkred    = "#5f0000"
-  let s:darkpurple = "#5f005f"
-  let s:darkgray   = "#262626"
-  let s:lightgray  = "#4e4e4e"
-  let s:operator   = "#8787af"
-  let s:keyword    = "#5f87af"
-  let s:label      = "#5f875f"
-  let s:include    = "#0087af"
-  let s:cursorcolumn    = "#262626"
+" Functions : {{{1
+" ----------
 
-else
-  let s:vmode      = "cterm"
-  let s:background = "234"
-  let s:window     = "236"
-  let s:darkcolumn = "234"
-  let s:addbg      = "65"
-  let s:addfg      = "193"
-  let s:changebg   = "160"
-  let s:changefg   = "189"
-  let s:darkblue   = "17"
-  let s:darkcyan   = "24"
-  let s:darkred    = "52"
-  let s:darkpurple = "53"
-  let s:darkgray   = "235"
-  let s:lightgray  = "239"
-  let s:operator   = "103"
-  let s:constant   = "203"
-  let s:storage    = "185"
-  let s:character  = "138"
-  let s:keyword    = "67"
-  let s:label      = "65"
-  let s:include    = "31"
-  let s:cursorcolumn = "235"  
-  if g:hybrid_use_Xresources == 1
-    let s:foreground = "15"   " White
-    let s:selection  = "8"    " DarkGrey
-    let s:line       = "0"    " Black
-    let s:comment    = "7"    " LightGrey
-    let s:red        = "9"    " LightRed
-    let s:orange     = "3"    " DarkYellow
-    let s:yellow     = "11"   " LightYellow
-    let s:green      = "10"   " LightGreen
-    let s:aqua       = "14"   " LightCyan
-    let s:blue       = "12"   " LightBlue
-    let s:purple     = "13"   " LightMagenta
-  elseif g:hybrid_use_iTerm_colors == 1
-    let s:background = "8"
-    let s:foreground = "15"
-    let s:selection  = "13"
-    let s:line       = "0"
-    let s:comment    = "7"
-    let s:red        = "1"
-    let s:orange     = "9"
-    let s:yellow     = "3"
-    let s:green      = "2"
-    let s:aqua       = "6"
-    let s:blue       = "4"
-    let s:purple     = "5"
-    let s:darkcolumn = "11"
-    let s:addbg      = "10"
-    let s:changebg   = "12"
-  else
-    let s:foreground = "250"
-    let s:selection  = "237"
-    let s:line       = "235"
-    let s:comment    = "243"
-    let s:red        = "167"
-    let s:orange     = "173"
-    let s:typedef    = "179"
-    let s:yellow     = "221"
-    let s:green      = "143"
-    let s:aqua       = "109"
-    let s:blue       = "110"
-    let s:purple     = "139"
-  endif
-endif
+if has("gui_running") || &t_Co == 88 || &t_Co == 256
+	" Returns an approximate grey index for the given grey level
+	fun! <SID>grey_number(x)
+		if &t_Co == 88
+			if a:x < 23
+				return 0
+			elseif a:x < 69
+				return 1
+			elseif a:x < 103
+				return 2
+			elseif a:x < 127
+				return 3
+			elseif a:x < 150
+				return 4
+			elseif a:x < 173
+				return 5
+			elseif a:x < 196
+				return 6
+			elseif a:x < 219
+				return 7
+			elseif a:x < 243
+				return 8
+			else
+				return 9
+			endif
+		else
+			if a:x < 14
+				return 0
+			else
+				let l:n = (a:x - 8) / 10
+				let l:m = (a:x - 8) % 10
+				if l:m < 5
+					return l:n
+				else
+					return l:n + 1
+				endif
+			endif
+		endif
+	endfun
 
-"}}}
-" Formatting Options:"{{{
-" ----------------------------------------------------------------------------
-let s:none   = "NONE"
-let s:t_none = "NONE"
-let s:n      = "NONE"
-let s:c      = ",undercurl"
-let s:r      = ",reverse"
-let s:s      = ",standout"
-let s:b      = ",bold"
-let s:u      = ",underline"
-let s:i      = ",italic"
+	" Returns the actual grey level represented by the grey index
+	fun! <SID>grey_level(n)
+		if &t_Co == 88
+			if a:n == 0
+				return 0
+			elseif a:n == 1
+				return 46
+			elseif a:n == 2
+				return 92
+			elseif a:n == 3
+				return 115
+			elseif a:n == 4
+				return 139
+			elseif a:n == 5
+				return 162
+			elseif a:n == 6
+				return 185
+			elseif a:n == 7
+				return 208
+			elseif a:n == 8
+				return 231
+			else
+				return 255
+			endif
+		else
+			if a:n == 0
+				return 0
+			else
+				return 8 + (a:n * 10)
+			endif
+		endif
+	endfun
 
-"}}}
-" Highlighting Primitives:"{{{
-" ----------------------------------------------------------------------------
-exe "let s:bg_none       = ' ".s:vmode."bg=".s:none      ."'"
-exe "let s:bg_foreground = ' ".s:vmode."bg=".s:foreground."'"
-exe "let s:bg_background = ' ".s:vmode."bg=".s:background."'"
-exe "let s:bg_selection  = ' ".s:vmode."bg=".s:selection ."'"
-exe "let s:bg_line       = ' ".s:vmode."bg=".s:line      ."'"
-exe "let s:bg_comment    = ' ".s:vmode."bg=".s:comment   ."'"
-exe "let s:bg_red        = ' ".s:vmode."bg=".s:red       ."'"
-exe "let s:bg_orange     = ' ".s:vmode."bg=".s:orange    ."'"
-exe "let s:bg_yellow     = ' ".s:vmode."bg=".s:yellow    ."'"
-exe "let s:bg_green      = ' ".s:vmode."bg=".s:green     ."'"
-exe "let s:bg_aqua       = ' ".s:vmode."bg=".s:aqua      ."'"
-exe "let s:bg_blue       = ' ".s:vmode."bg=".s:blue      ."'"
-exe "let s:bg_purple     = ' ".s:vmode."bg=".s:purple    ."'"
-exe "let s:bg_window     = ' ".s:vmode."bg=".s:window    ."'"
-exe "let s:bg_darkcolumn = ' ".s:vmode."bg=".s:darkcolumn."'"
-exe "let s:bg_addbg      = ' ".s:vmode."bg=".s:addbg     ."'"
-exe "let s:bg_addfg      = ' ".s:vmode."bg=".s:addfg     ."'"
-exe "let s:bg_changebg   = ' ".s:vmode."bg=".s:changebg  ."'"
-exe "let s:bg_changefg   = ' ".s:vmode."bg=".s:changefg  ."'"
-exe "let s:bg_darkblue   = ' ".s:vmode."bg=".s:darkblue  ."'"
-exe "let s:bg_darkcyan   = ' ".s:vmode."bg=".s:darkcyan  ."'"
-exe "let s:bg_darkred    = ' ".s:vmode."bg=".s:darkred   ."'"
-exe "let s:bg_darkpurple = ' ".s:vmode."bg=".s:darkpurple."'"
-exe "let s:bg_darkgray   = ' ".s:vmode."bg=".s:darkgray  ."'"
-exe "let s:bg_lightgray  = ' ".s:vmode."bg=".s:lightgray ."'"
-exe "let s:bg_operator   = ' ".s:vmode."bg=".s:operator  ."'"
-exe "let s:bg_cursorcolumn = ' ".s:vmode."bg=".s:cursorcolumn  ."'"
+	" Returns the palette index for the given grey index
+	fun! <SID>grey_colour(n)
+		if &t_Co == 88
+			if a:n == 0
+				return 16
+			elseif a:n == 9
+				return 79
+			else
+				return 79 + a:n
+			endif
+		else
+			if a:n == 0
+				return 16
+			elseif a:n == 25
+				return 231
+			else
+				return 231 + a:n
+			endif
+		endif
+	endfun
 
-exe "let s:fg_none       = ' ".s:vmode."fg=".s:none      ."'"
-exe "let s:fg_foreground = ' ".s:vmode."fg=".s:foreground."'"
-exe "let s:fg_background = ' ".s:vmode."fg=".s:background."'"
-exe "let s:fg_selection  = ' ".s:vmode."fg=".s:selection ."'"
-exe "let s:fg_line       = ' ".s:vmode."fg=".s:line      ."'"
-exe "let s:fg_comment    = ' ".s:vmode."fg=".s:comment   ."'"
-exe "let s:fg_red        = ' ".s:vmode."fg=".s:red       ."'"
-exe "let s:fg_orange     = ' ".s:vmode."fg=".s:orange    ."'"
-exe "let s:fg_yellow     = ' ".s:vmode."fg=".s:yellow    ."'"
-exe "let s:fg_green      = ' ".s:vmode."fg=".s:green     ."'"
-exe "let s:fg_aqua       = ' ".s:vmode."fg=".s:aqua      ."'"
-exe "let s:fg_blue       = ' ".s:vmode."fg=".s:blue      ."'"
-exe "let s:fg_purple     = ' ".s:vmode."fg=".s:purple    ."'"
-exe "let s:fg_window     = ' ".s:vmode."fg=".s:window    ."'"
-exe "let s:fg_darkcolumn = ' ".s:vmode."fg=".s:darkcolumn."'"
-exe "let s:fg_addbg      = ' ".s:vmode."fg=".s:addbg     ."'"
-exe "let s:fg_addfg      = ' ".s:vmode."fg=".s:addfg     ."'"
-exe "let s:fg_changebg   = ' ".s:vmode."fg=".s:changebg  ."'"
-exe "let s:fg_changefg   = ' ".s:vmode."fg=".s:changefg  ."'"
-exe "let s:fg_darkblue   = ' ".s:vmode."fg=".s:darkblue  ."'"
-exe "let s:fg_darkcyan   = ' ".s:vmode."fg=".s:darkcyan  ."'"
-exe "let s:fg_darkred    = ' ".s:vmode."fg=".s:darkred   ."'"
-exe "let s:fg_darkpurple = ' ".s:vmode."fg=".s:darkpurple."'"
-exe "let s:fg_darkgray   = ' ".s:vmode."fg=".s:darkgray  ."'"
-exe "let s:fg_lightgray  = ' ".s:vmode."fg=".s:lightgray ."'"
-exe "let s:fg_typedef    = ' ".s:vmode."fg=".s:typedef   ."'"
-exe "let s:fg_operator   = ' ".s:vmode."fg=".s:operator  ."'"
-exe "let s:fg_storage    = ' ".s:vmode."fg=".s:storage   ."'"
-exe "let s:fg_constant   = ' ".s:vmode."fg=".s:constant  ."'"
-exe "let s:fg_character  = ' ".s:vmode."fg=".s:character ."'"
-exe "let s:fg_keyword    = ' ".s:vmode."fg=".s:keyword   ."'"
-exe "let s:fg_label      = ' ".s:vmode."fg=".s:label     ."'"
-exe "let s:fg_include    = ' ".s:vmode."fg=".s:include   ."'"
+	" Returns an approximate colour index for the given colour level
+	fun! <SID>rgb_number(x)
+		if &t_Co == 88
+			if a:x < 69
+				return 0
+			elseif a:x < 172
+				return 1
+			elseif a:x < 230
+				return 2
+			else
+				return 3
+			endif
+		else
+			if a:x < 75
+				return 0
+			else
+				let l:n = (a:x - 55) / 40
+				let l:m = (a:x - 55) % 40
+				if l:m < 20
+					return l:n
+				else
+					return l:n + 1
+				endif
+			endif
+		endif
+	endfun
 
-exe "let s:fmt_none      = ' ".s:vmode."=NONE".          " term=NONE"        ."'"
-exe "let s:fmt_bold      = ' ".s:vmode."=NONE".s:b.      " term=NONE".s:b    ."'"
-exe "let s:fmt_bldi      = ' ".s:vmode."=NONE".s:b.      " term=NONE".s:b    ."'"
-exe "let s:fmt_undr      = ' ".s:vmode."=NONE".s:u.      " term=NONE".s:u    ."'"
-exe "let s:fmt_undb      = ' ".s:vmode."=NONE".s:u.s:b.  " term=NONE".s:u.s:b."'"
-exe "let s:fmt_undi      = ' ".s:vmode."=NONE".s:u.      " term=NONE".s:u    ."'"
-exe "let s:fmt_curl      = ' ".s:vmode."=NONE".s:c.      " term=NONE".s:c    ."'"
-exe "let s:fmt_ital      = ' ".s:vmode."=NONE".s:i.      " term=NONE".s:i    ."'"
-exe "let s:fmt_stnd      = ' ".s:vmode."=NONE".s:s.      " term=NONE".s:s    ."'"
-exe "let s:fmt_revr      = ' ".s:vmode."=NONE".s:r.      " term=NONE".s:r    ."'"
-exe "let s:fmt_revb      = ' ".s:vmode."=NONE".s:r.s:b.  " term=NONE".s:r.s:b."'"
+	" Returns the actual colour level for the given colour index
+	fun! <SID>rgb_level(n)
+		if &t_Co == 88
+			if a:n == 0
+				return 0
+			elseif a:n == 1
+				return 139
+			elseif a:n == 2
+				return 205
+			else
+				return 255
+			endif
+		else
+			if a:n == 0
+				return 0
+			else
+				return 55 + (a:n * 40)
+			endif
+		endif
+	endfun
 
-if has("gui_running")
-  exe "let s:sp_none       = ' guisp=".s:none      ."'"
-  exe "let s:sp_foreground = ' guisp=".s:foreground."'"
-  exe "let s:sp_background = ' guisp=".s:background."'"
-  exe "let s:sp_selection  = ' guisp=".s:selection ."'"
-  exe "let s:sp_line       = ' guisp=".s:line      ."'"
-  exe "let s:sp_comment    = ' guisp=".s:comment   ."'"
-  exe "let s:sp_red        = ' guisp=".s:red       ."'"
-  exe "let s:sp_orange     = ' guisp=".s:orange    ."'"
-  exe "let s:sp_yellow     = ' guisp=".s:yellow    ."'"
-  exe "let s:sp_green      = ' guisp=".s:green     ."'"
-  exe "let s:sp_aqua       = ' guisp=".s:aqua      ."'"
-  exe "let s:sp_blue       = ' guisp=".s:blue      ."'"
-  exe "let s:sp_purple     = ' guisp=".s:purple    ."'"
-  exe "let s:sp_window     = ' guisp=".s:window    ."'"
-  exe "let s:sp_addbg      = ' guisp=".s:addbg     ."'"
-  exe "let s:sp_addfg      = ' guisp=".s:addfg     ."'"
-  exe "let s:sp_changebg   = ' guisp=".s:changebg  ."'"
-  exe "let s:sp_changefg   = ' guisp=".s:changefg  ."'"
-  exe "let s:sp_darkblue   = ' guisp=".s:darkblue  ."'"
-  exe "let s:sp_darkcyan   = ' guisp=".s:darkcyan  ."'"
-  exe "let s:sp_darkred    = ' guisp=".s:darkred   ."'"
-  exe "let s:sp_darkpurple = ' guisp=".s:darkpurple."'"
-  exe "let s:sp_darkgray   = ' guisp=".s:darkgray  ."'"
-  exe "let s:sp_lightgray  = ' guisp=".s:lightgray ."'"
-  exe "let s:sp_typedef    = ' guisp=".s:typedef   ."'"
+	" Returns the palette index for the given R/G/B colour indices
+	fun! <SID>rgb_colour(x, y, z)
+		if &t_Co == 88
+			return 16 + (a:x * 16) + (a:y * 4) + a:z
+		else
+			return 16 + (a:x * 36) + (a:y * 6) + a:z
+		endif
+	endfun
 
-else
-  let s:sp_none       = ""
-  let s:sp_foreground = ""
-  let s:sp_background = ""
-  let s:sp_selection  = ""
-  let s:sp_line       = ""
-  let s:sp_comment    = ""
-  let s:sp_red        = ""
-  let s:sp_orange     = ""
-  let s:sp_yellow     = ""
-  let s:sp_green      = ""
-  let s:sp_aqua       = ""
-  let s:sp_blue       = ""
-  let s:sp_purple     = ""
-  let s:sp_window     = ""
-  let s:sp_addbg      = ""
-  let s:sp_addfg      = ""
-  let s:sp_changebg   = ""
-  let s:sp_changefg   = ""
-  let s:sp_darkblue   = ""
-  let s:sp_darkcyan   = ""
-  let s:sp_darkred    = ""
-  let s:sp_darkpurple = ""
-  let s:sp_darkgray   = ""
-  let s:sp_lightgray  = ""
-  let s:sp_typedef    = ""
-endif
+	" Returns the palette index to approximate the given R/G/B colour levels
+	fun! <SID>colour(r, g, b)
+		" Get the closest grey
+		let l:gx = <SID>grey_number(a:r)
+		let l:gy = <SID>grey_number(a:g)
+		let l:gz = <SID>grey_number(a:b)
 
-"}}}
-" Vim Highlighting: (see :help highlight-groups)"{{{
-" ----------------------------------------------------------------------------
-exe "hi! ColorColumn"   .s:fg_none        .s:bg_line        .s:fmt_none
-"		Conceal"
-"		Cursor"
-"		CursorIM"
-exe "hi! CursorColumn"  .s:fg_none        .s:bg_cursorcolumn .s:fmt_none
-exe "hi! CursorLine"    .s:fg_none        .s:bg_line        .s:fmt_none
-exe "hi! Directory"     .s:fg_blue        .s:bg_none        .s:fmt_none
-exe "hi! DiffAdd"       .s:fg_addfg       .s:bg_addbg       .s:fmt_none
-exe "hi! DiffChange"    .s:fg_changefg    .s:bg_changebg    .s:fmt_none
-exe "hi! DiffDelete"    .s:fg_background  .s:bg_red         .s:fmt_none
-exe "hi! DiffText"      .s:fg_background  .s:bg_blue        .s:fmt_none
-exe "hi! ErrorMsg"      .s:fg_background  .s:bg_red         .s:fmt_stnd
-exe "hi! VertSplit"     .s:fg_window      .s:bg_none        .s:fmt_none
-exe "hi! Folded"        .s:fg_comment     .s:bg_window      .s:fmt_none
-exe "hi! FoldColumn"    .s:fg_none        .s:bg_window      .s:fmt_none
-exe "hi! SignColumn"    .s:fg_none        .s:bg_darkcolumn  .s:fmt_none
-"		Incsearch"
-exe "hi! LineNr"        .s:fg_lightgray   .s:bg_darkgray    .s:fmt_none
-exe "hi! CursorLineNr"  .s:fg_yellow      .s:bg_darkgray    .s:fmt_bold
-exe "hi! MatchParen"    .s:fg_background  .s:bg_changebg    .s:fmt_none
-exe "hi! ModeMsg"       .s:fg_green       .s:bg_none        .s:fmt_none
-exe "hi! MoreMsg"       .s:fg_green       .s:bg_none        .s:fmt_none
-exe "hi! NonText"       .s:fg_selection   .s:bg_none        .s:fmt_none
-exe "hi! Pmenu"         .s:fg_foreground  .s:bg_selection   .s:fmt_none
-exe "hi! PmenuSel"      .s:fg_foreground  .s:bg_selection   .s:fmt_revr
-"		PmenuSbar"
-"		PmenuThumb"
-exe "hi! Question"      .s:fg_green       .s:bg_none        .s:fmt_none
-exe "hi! Search"        .s:fg_background  .s:bg_green       .s:fmt_none
-exe "hi! SpecialKey"    .s:fg_selection   .s:bg_none        .s:fmt_none
-exe "hi! SpellCap"      .s:fg_blue        .s:bg_darkblue    .s:fmt_undr
-exe "hi! SpellLocal"    .s:fg_aqua        .s:bg_darkcyan    .s:fmt_undr
-exe "hi! SpellBad"      .s:fg_red         .s:bg_darkred     .s:fmt_undr
-exe "hi! SpellRare"     .s:fg_purple      .s:bg_darkpurple  .s:fmt_undr
-exe "hi! StatusLine"    .s:fg_comment     .s:bg_background  .s:fmt_revr
-exe "hi! StatusLineNC"  .s:fg_window      .s:bg_comment     .s:fmt_revr
-exe "hi! TabLine"       .s:fg_foreground  .s:bg_darkcolumn  .s:fmt_revr
-"		TabLineFill"
-"		TabLineSel"
-exe "hi! Title"         .s:fg_yellow      .s:bg_none        .s:fmt_none
-exe "hi! Visual"        .s:fg_none        .s:bg_selection   .s:fmt_none
-"		VisualNos"
-exe "hi! WarningMsg"    .s:fg_red         .s:bg_none        .s:fmt_none
-"		WildMenu"
+		" Get the closest colour
+		let l:x = <SID>rgb_number(a:r)
+		let l:y = <SID>rgb_number(a:g)
+		let l:z = <SID>rgb_number(a:b)
 
-" Use Xresources for background colour
-if has('gui_running') || (g:hybrid_use_Xresources != 1 && g:hybrid_use_iTerm_colors != 1)
-  exe "hi! Normal"        .s:fg_foreground  .s:bg_background  .s:fmt_none
-else
-  exe "hi! Normal"        .s:fg_foreground  .s:bg_none        .s:fmt_none
-endif
+		if l:gx == l:gy && l:gy == l:gz
+			" There are two possibilities
+			let l:dgr = <SID>grey_level(l:gx) - a:r
+			let l:dgg = <SID>grey_level(l:gy) - a:g
+			let l:dgb = <SID>grey_level(l:gz) - a:b
+			let l:dgrey = (l:dgr * l:dgr) + (l:dgg * l:dgg) + (l:dgb * l:dgb)
+			let l:dr = <SID>rgb_level(l:gx) - a:r
+			let l:dg = <SID>rgb_level(l:gy) - a:g
+			let l:db = <SID>rgb_level(l:gz) - a:b
+			let l:drgb = (l:dr * l:dr) + (l:dg * l:dg) + (l:db * l:db)
+			if l:dgrey < l:drgb
+				" Use the grey
+				return <SID>grey_colour(l:gx)
+			else
+				" Use the colour
+				return <SID>rgb_colour(l:x, l:y, l:z)
+			endif
+		else
+			" Only one possibility
+			return <SID>rgb_colour(l:x, l:y, l:z)
+		endif
+	endfun
 
-"}}}
-" Generic Syntax Highlighting: (see :help group-name)"{{{
-" ----------------------------------------------------------------------------
-exe "hi! Comment"         .s:fg_comment     .s:bg_none        .s:fmt_none
+	" Returns the palette index to approximate the 'rrggbb' hex string
+	fun! <SID>rgb(rgb)
+		let l:r = ("0x" . strpart(a:rgb, 0, 2)) + 0
+		let l:g = ("0x" . strpart(a:rgb, 2, 2)) + 0
+		let l:b = ("0x" . strpart(a:rgb, 4, 2)) + 0
 
-exe "hi! Constant"        .s:fg_constant    .s:bg_none        .s:fmt_none
-exe "hi! String"          .s:fg_green       .s:bg_none        .s:fmt_none
-exe "hi! Character"       .s:fg_character   .s:bg_none        .s:fmt_none
+		return <SID>colour(l:r, l:g, l:b)
+	endfun
 
-exe "hi! Number"          .s:fg_orange      .s:bg_none        .s:fmt_none
-exe "hi! Boolean"         .s:fg_orange      .s:bg_none        .s:fmt_none
-exe "hi! Float"           .s:fg_orange      .s:bg_none        .s:fmt_none
+	" Sets the highlighting for the given group
+	fun! <SID>X(group, fg, bg, attr) 
+		if a:fg != ""
+			exec "hi " . a:group . " guifg=" . a:fg . " ctermfg=" . <SID>rgb(strpart(a:fg,1))
+		endif
+		if a:bg != ""
+			exec "hi " . a:group . " guibg=" . a:bg . " ctermbg=" . <SID>rgb(strpart(a:bg,1))
+		endif
+		if a:attr != ""
+			exec "hi " . a:group . " gui=" . a:attr . " cterm=" . a:attr
+		endif
+	endfun
+" }}}
 
-exe "hi! Identifier"      .s:fg_purple      .s:bg_none        .s:fmt_none
-exe "hi! Function"        .s:fg_yellow      .s:bg_none        .s:fmt_none
+call <SID>X("ColorColumn"  , ""           , s:gray_dark  , "")
+call <SID>X("Conceal"      , "#dfdf5f"    , ""           , "")
 
-exe "hi! Statement"       .s:fg_blue        .s:bg_none        .s:fmt_none
+call <SID>X("Cursor"       , ""           , "#f9c674"    , "")
+call <SID>X("CursorIM"     , ""           , "#f9c674"    , "")
+
+call <SID>X("CursorLine"   , ""           , s:gray_dark  , "NONE")
+call <SID>X("CursorColumn" , ""           , s:gray_dark  , "NONE")
+
+call <SID>X("Directory"    , "#81a2be"    , ""           , "")
+
+call <SID>X("ErrorMsg"     , s:background , "#cc6666"    , "standout")
+
+call <SID>X("VertSplit"    , s:background , "#d7ffaf"    , "")
+
+call <SID>X("Folded"       , "#8a8a8a"    , s:gray_dark  , "")
+call <SID>X("FoldColumn"   , ""           , s:gray_dark  , "")
+call <SID>X("SignColumn"   , ""           , s:darkcolumn , "")
+
+call <SID>X("IncSearch"    , ""           , "#af875f"    , "")
+call <SID>X("Search"       , s:background , "#af875f"    , "")
+
+call <SID>X("LineNr"       , s:gray_light , s:gray_dark  , "")
+
+call <SID>X("CursorLineNr" , "#f0c674"    , s:gray_dark  , "bold")
+call <SID>X("MatchParen"   , s:background , s:changebg   , "")
+call <SID>X("ModeMsg"      , s:green      , ""           , "")
+call <SID>X("MoreMsg"      , s:green      , ""           , "")
+call <SID>X("NonText"      , "#81a2be"    , ""           , "")
+call <SID>X("Pmenu"        , s:foreground , s:selection  , "")
+call <SID>X("PmenuSel"     , s:foreground , s:selection  , "reverse")
+
+call <SID>X("PmenuSbar"    , s:foreground , s:selection  , "reverse")
+call <SID>X("PmenuThumb"   , s:foreground , s:selection  , "reverse")
+
+call <SID>X("Question"     , s:green      , ""           , "")
+
+call <SID>X("SpecialKey"   , s:blue       , ""           , "")
+call <SID>X("SpellCap"     , s:blue       , s:darkblue   , "underline")
+call <SID>X("SpellLocal"   , s:aqua       , s:darkcyan   , "underline")
+call <SID>X("SpellBad"     , s:red        , s:darkred    , "underline")
+call <SID>X("SpellRare"    , s:purple     , s:darkpurple , "underline")
+call <SID>X("StatusLine"   , s:comment    , s:background , "reverse")
+call <SID>X("StatusLineNC" , s:gray_dark  , s:comment    , "reverse")
+call <SID>X("TabLine"      , s:foreground , s:darkcolumn , "reverse")
+call <SID>X("TabLineFill"  , s:foreground , s:darkcolumn , "reverse")
+call <SID>X("TabLineSel"   , s:foreground , s:darkcolumn , "reverse")
+
+call <SID>X("Title"        , s:yellow     , ""           , "")
+call <SID>X("Visual"       , ""           , s:selection  , "")
+call <SID>X("VisualNos"    , ""           , s:selection  , "")
+
+call <SID>X("WarningMsg"   , s:red        , ""           , "")
+call <SID>X("WildMenu"     , s:red        , ""           , "")
+
+
+call <SID>X("Normal"       , s:foreground , s:background , "")
+
+call <SID>X("Comment"      , s:comment    , ""           , "")
+call <SID>X("Constant"     , s:constant   , ""           , "")
+call <SID>X("String"       , s:green      , ""           , "")
+call <SID>X("Character"    , s:character  , ""           , "")
+call <SID>X("Number"       , s:orange     , ""           , "")
+call <SID>X("Boolean"      , s:orange     , ""           , "")
+call <SID>X("Float"        , s:orange     , ""           , "")
+call <SID>X("Identifier"   , s:purple     , ""           , "")
+call <SID>X("Function"     , s:yellow     , ""           , "")
+
+call <SID>X("Statement"    , s:blue       , ""           , "")
 "		Conditional"
 "		Repeat"
-exe "hi! Label"           .s:fg_label       .s:bg_none        .s:fmt_none
-exe "hi! Operator"        .s:fg_operator    .s:bg_none        .s:fmt_none
-exe "hi! Keyword"         .s:fg_keyword     .s:bg_none        .s:fmt_none
+call <SID>X("Label"           ,s:label       ,"",        "")
+call <SID>X("Operator"        ,s:operator    ,"",        "")
+call <SID>X("Keyword"         ,s:keyword     ,"",        "")
 "		Exception"
 
-exe "hi! PreProc"         .s:fg_aqua        .s:bg_none        .s:fmt_none
-exe "hi! Include"         .s:fg_include     .s:bg_none        .s:fmt_none
+call <SID>X("PreProc"         ,s:aqua        ,"",        "")
+call <SID>X("Include"         ,s:include     ,"",        "")
 "		Define"
 "		Macro"
 "		PreCondit"
 
-exe "hi! Type"            .s:fg_orange      .s:bg_none        .s:fmt_none
-exe "hi! Storage"         .s:fg_storage     .s:bg_none        .s:fmt_none
-exe "hi! Structure"       .s:fg_aqua        .s:bg_none        .s:fmt_none
-exe "hi! Typedef"         .s:fg_typedef     .s:bg_none        .s:fmt_none
+call <SID>X("Type"            ,s:orange      ,"",        "")
+call <SID>X("Storage"         ,s:apple     ,"",        "")
+call <SID>X("Structure"       ,s:aqua        ,"",        "")
+call <SID>X("Typedef"         ,s:typedef     ,"",        "")
 
-exe "hi! Special"         .s:fg_green       .s:bg_none        .s:fmt_none
+call <SID>X("Special"         ,s:green       ,"",        "")
 "		SpecialChar"
 "		Tag"
 "		Delimiter"
 "		SpecialComment"
 "		Debug"
 "
-exe "hi! Underlined"      .s:fg_blue        .s:bg_none        .s:fmt_none
+call <SID>X("Underlined"      ,s:blue        ,"",        "")
 
-exe "hi! Ignore"          .s:fg_none        .s:bg_none        .s:fmt_none
+call <SID>X("Ignore"          ,""        ,"",        "")
 
-exe "hi! Error"           .s:fg_red         .s:bg_darkred     .s:fmt_undr
+call <SID>X("Error"           ,s:red         ,s:darkred,     "")
 
-exe "hi! Todo"            .s:fg_addfg       .s:bg_none        .s:fmt_none
+call <SID>X("Todo"            ,s:addfg       ,"",        "")
 
 " Quickfix window highlighting
-exe "hi! qfLineNr"        .s:fg_yellow      .s:bg_none        .s:fmt_none
-exe "hi! qfFileName"      .s:fg_keyword     .s:bg_none        .s:fmt_none 
-exe "hi! qfError"         .s:fg_red         .s:bg_none        .s:fmt_none 
+call <SID>X("qfLineNr"        ,s:yellow      ,"",        "")
+call <SID>X("qfFileName"      ,s:keyword     ,"",        "")
+call <SID>X("qfError"         ,s:red         ,"",        "")
 
 "}}}
 " Diff Syntax Highlighting:"{{{
 " ----------------------------------------------------------------------------
+
+call <SID>X("DiffAdd"    , s:addfg      , s:addbg      , "")
+call <SID>X("DiffChange" , s:changefg   , s:changebg   , "")
+call <SID>X("DiffDelete" , s:background , s:red        , "")
+call <SID>X("DiffText"   , s:background , s:blue       , "")
 " Diff
 "		diffOldFile
 "		diffNewFile
@@ -448,41 +396,12 @@ exe "hi! qfError"         .s:fg_red         .s:bg_none        .s:fmt_none
 "		diffIsA
 "		diffNoEOL
 "		diffCommon
-hi! link diffRemoved Constant
+"link diffRemoved Constant
 "		diffChanged
-hi! link diffAdded Special
+"link diffAdded Special
 "		diffLine
 "		diffSubname
 "		diffComment
+endif
 
-"}}}
-" Legal:"{{{
-" ----------------------------------------------------------------------------
-" Copyright (c) 2011 Ethan Schoonover
-" Copyright (c) 2009-2012 NanoTech
-" Copyright (c) 2012 w0ng
-"
-" Permission is hereby granted, free of charge, to any per‐
-" son obtaining a copy of this software and associated doc‐
-" umentation files (the “Software”), to deal in the Soft‐
-" ware without restriction, including without limitation
-" the rights to use, copy, modify, merge, publish, distrib‐
-" ute, sublicense, and/or sell copies of the Software, and
-" to permit persons to whom the Software is furnished to do
-" so, subject to the following conditions:
-"
-" The above copyright notice and this permission notice
-" shall be included in all copies or substantial portions
-" of the Software.
-"
-" THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY
-" KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
-" THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICU‐
-" LAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-" AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-" DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CON‐
-" TRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CON‐
-" NECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-" THE SOFTWARE.
-
-" }}}
+" vim:foldmethod=marker:foldlevel=0:tw=80
