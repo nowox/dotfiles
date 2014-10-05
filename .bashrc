@@ -293,11 +293,15 @@ alias ..='cd ..'
 
 alias path='echo -e ${PATH//:/\\n}'
 
-# Other tools
+# Search tool
 alias agsrc='ag --color-match="31;40" -U -S -G "[.](c|h|inc|def|txt|ldf|asm)$"'
 alias agc='ag --color-match="31;40" -U -S -G "[.](c|h)$"'
 alias agasm='ag --color-match="31;40" -U -S -G "[.](asm|inc)$"'
 alias agdef='ag --color-match="31;40" -U -S -G "[.](def)$"'
+alias gg='git grep'
+
+# Perl pie
+alias pie='perl -pi -e'
 
 # Etel tools
 alias etreg='etreg.bat'

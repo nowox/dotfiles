@@ -315,7 +315,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 " }}}
 
 call <SID>X("ColorColumn"  , ""           , s:gray_dark  , "")
-call <SID>X("Conceal"      , "#dfdf5f"    , ""           , "")
+call <SID>X("Conceal"      , "#dfdf5f"    , s:background , "")
 
 call <SID>X("Cursor"       , ""           , "#f9c674"    , "")
 call <SID>X("CursorIM"     , ""           , "#f9c674"    , "")

@@ -1,6 +1,7 @@
-" File: .vimrc
-" Maintainer: Yves Chevallier
-" Date: 2014-10-03
+" File:   .vimrc
+" Author: Yves Chevallier <nowox@x0x.ch>
+" Date:   2014-10-03
+" Source: https://github.com/nowox/dotfiles
 
 " Plateform {{{1
 " On which OS are we are ?
@@ -72,7 +73,7 @@ let g:toggle_list_no_mappings = 1
 
 "Plugin 'xolox/vim-easytags'            " To test
 
-"Plugin 'skammer/vim-css-color'         " Very slow plugin not usable 
+"Plugin 'skammer/vim-css-color'         " Very slow plugin not usable
 Plugin 'vim-scripts/bufkill.vim'
 
 " Plugin: Prompt Airline {{{2
@@ -289,12 +290,19 @@ Plugin 'godlygeek/tabular'             " Select, then :Tabularize /= to align to
 Plugin 'junegunn/goyo.vim'
 " Plugin: Expand-region (ö: expand ä: shrink) {{{2
 Plugin 'terryma/vim-expand-region'     " Allow to visually select increasingly larger region of text {{{2
-" Plugin: Markdown fold
-Plugin 'nelstrom/vim-markdown-folding'
+" Plugin: Markdown fold {{{2
+"Plugin 'nelstrom/vim-markdown-folding'
+"Plugin 'plasticboy/vim-markdown'
+" Plugin: Markdown conceal {{{2
+Plugin 'prurigro/vim-markdown-concealed'
+
+" Plugin: Improve f F T {{{2
+Plugin 'chrisbra/improvedft'
+
 " End Bundle {{{2
 
 call vundle#end()
-
+" }}}1
 
 " Settings {{{1
 " Important settings {{{2
@@ -372,13 +380,14 @@ set backspace=eol,start,indent         " Allow backspacing over CR autoindent an
 set helpheight=999
 set winminheight=0
 set ttimeoutlen=0                      " Reduce the delay with <esc> when escaping from insert mode
+set shortmess=aoA
 
 " Split Windows
 set splitright                         " New vertical split always at the right of the current window
 set splitbelow                         " New horizontal split always at the bottom of the current window
 
 " Diff
-set diffopt+=iwhite
+set diffopt+=filler,iwhite,icase,vertical
 
 " Status line
 set fillchars=fold:─,vert:│            " Separator for status window
@@ -444,11 +453,12 @@ set foldcolumn=3
 set nobackup                           " Disable backup
 set noswapfile                         " Disable swap because sometime swapfile is in readonly
 " Settings: Conceal {{{2
-set conceallevel=3        " Hide conceal chars
+set conceallevel=2        " Hide conceal chars
 set concealcursor="nvic"    " Show conceal chars on cursorline for all modes
 let g:tex_conceal="agm"
 " Settings: Encryption {{{2
 set cryptmethod=blowfish2
+" }}}1
 
 " Mappings {{{1
 
@@ -520,8 +530,8 @@ noremap            §       :redraw<cr>
 
 " Easymotion
 map                s       <Plug>(easymotion-s)
-map                f       <Plug>(easymotion-bd-wl)
-map                F       <Plug>(easymotion-bd-el)
+"map                f       <Plug>(easymotion-bd-wl)
+"map                F       <Plug>(easymotion-bd-el)
 map                <c-j>   <Plug>(easymotion-j)
 map                <c-k>   <Plug>(easymotion-k)
 
@@ -725,9 +735,9 @@ vnoremap <silent> <F10> <C-C>:call ToggleQuickfixList()<CR>
 inoremap <silent> <F10> <C-O>:call ToggleQuickfixList()<CR>
 
 " Toggle numbers
-noremap  <silent> <F11> :set nonu!<CR>
-vnoremap <silent> <F11> <c-C>:set nonu!<CR>
-inoremap <silent> <F11> <c-O>:set nonu!<CR>
+noremap  <silent> <F11> :call ToggleNumber()<CR>
+vnoremap <silent> <F11> <c-C>:call ToggleNumber()<CR>
+inoremap <silent> <F11> <c-O>:set ToggleNumber()<CR>
 
 " Remove trailing spaces
 noremap  <silent> <F12> :FixWhitespace<CR>
@@ -831,6 +841,11 @@ augroup configgroup
     autocmd BufEnter *.def setlocal filetype=c
     autocmd BufEnter *.ldf setlocal filetype=ldf
     autocmd BufEnter *.tex map <leader>ll :Latexmk<cr>
+augroup END
+
+augroup vimrc
+    autocmd!
+    autocmd BufEnter .vimrc setlocal foldmethod=marker | set foldlevel=0
 augroup END
 "}}}1
 " .vimrc Plugins {{{1
@@ -1030,6 +1045,7 @@ function! s:NextColor(how, echo_color)
     endif
 endfunction
 
+" ToggleFlag {{{2
 function! ToggleFlag(option,flag)
     exec ('let lopt = &' . a:option)
     if lopt =~ (".*" . a:flag . ".*")
@@ -1039,11 +1055,68 @@ function! ToggleFlag(option,flag)
     endif
 endfunction
 
+" ToggleNumber {{{2
+function! ToggleNumber()
+    " Loop trough number style
+    " - Nonu
+    " - Nu
+    " - RelativeNumber
+    if (!&nu && !&relativenumber)
+        " Nonu -> Nu
+        set nu
+    elseif (&nu && !&relativenumber)
+        " Nu -> RelativeNumber
+        set relativenumber
+    else
+        " RelativeNumber -> Nonu
+        set nonu
+        set norelativenumber
+    endif
+endfunction
 " }}}1
 
-" New Stuff: {{{1
+" New Stuff {{{1
 " This part concerns things that I recently added to vim. In this way I can
 " easily revert things that don't work as expected.
+hi link htmlBold Storage
+hi link htmlItalic Identifier
+hi link htmlH2 Keyword
+function! MarkdownFolds()
+  let thisline = getline(v:lnum)
+  if match(thisline, '^##') >= 0
+    return ">2"
+  elseif match(thisline, '^#') >= 0
+    return ">1"
+  else
+    return "="
+  endif
+endfunction
+setlocal foldmethod=expr
+setlocal foldexpr=MarkdownFolds()
+
+function! MarkdownFoldText()
+  let foldsize = (v:foldend-v:foldstart)
+  return getline(v:foldstart).' ('.foldsize.' lines)'
+endfunction
+setlocal foldtext=MarkdownFoldText()
+
+" Fold text function {{{2
+function! MyFoldText()
+  let l:line = substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{{\d*\s*', '', 'g')
+  if &ft == 'mkdc'
+     let l:line = substitute(l:line, '^#\+', '', 'g')
+  endif
+  let l:line = ' ' .  l:line.' '
+
+  let lines_count = v:foldend - v:foldstart + 1
+  let lines_count_text = ' ' . printf("%10s", lines_count . ' lines') . ' '
+  let foldchar = matchstr(&fillchars, 'fold:\zs.')
+  let foldtextstart = strpart(repeat(foldchar, v:foldlevel*2) . l:line, 0, (winwidth(0)*2)/3)
+  let foldtextend = lines_count_text . repeat(foldchar, 8)
+  let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+  return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
+endfunction
+set foldtext=MyFoldText()
+" }}}2
 
 " }}}1
-" vim:foldmethod=marker:foldlevel=0:tw=80
