@@ -455,7 +455,7 @@ set noswapfile                         " Disable swap because sometime swapfile 
 " Settings: Conceal {{{2
 set conceallevel=2        " Hide conceal chars
 set concealcursor="nvic"    " Show conceal chars on cursorline for all modes
-let g:tex_conceal="agm"
+"let g:tex_conceal="abdmgsS"
 " Settings: Encryption {{{2
 set cryptmethod=blowfish2
 " }}}1
@@ -1078,6 +1078,8 @@ endfunction
 " New Stuff {{{1
 " This part concerns things that I recently added to vim. In this way I can
 " easily revert things that don't work as expected.
+hi link texBoldStyle Storage
+hi link texItalStyle  Keyword
 hi link htmlBold Storage
 hi link htmlItalic Identifier
 hi link htmlH2 Keyword
@@ -1101,22 +1103,63 @@ endfunction
 setlocal foldtext=MarkdownFoldText()
 
 " Fold text function {{{2
-function! MyFoldText()
-  let l:line = substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{{\d*\s*', '', 'g')
-  if &ft == 'mkdc'
-     let l:line = substitute(l:line, '^#\+', '', 'g')
-  endif
-  let l:line = ' ' .  l:line.' '
+if has("folding")
 
-  let lines_count = v:foldend - v:foldstart + 1
-  let lines_count_text = ' ' . printf("%10s", lines_count . ' lines') . ' '
-  let foldchar = matchstr(&fillchars, 'fold:\zs.')
-  let foldtextstart = strpart(repeat(foldchar, v:foldlevel*2) . l:line, 0, (winwidth(0)*2)/3)
-  let foldtextend = lines_count_text . repeat(foldchar, 8)
-  let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
-  return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
-endfunction
-set foldtext=MyFoldText()
+
+  function! MyFoldText()
+      if &foldmethod == 'syntax'
+          let l:lpadding = &fdc
+          redir => l:signs
+          execute 'silent sign place buffer='.bufnr('%')
+          redir End
+          let l:lpadding += l:signs =~ 'id=' ? 2 : 0
+
+          if exists("+relativenumber")
+              if (&number)
+                  let l:lpadding += max([&numberwidth, strlen(line('$'))]) + 1
+              elseif (&relativenumber)
+                  let l:lpadding += max([&numberwidth, strlen(v:foldstart - line('w0')), strlen(line('w$') - v:foldstart), strlen(v:foldstart)]) + 1
+              endif
+          else
+              if (&number)
+                  let l:lpadding += max([&numberwidth, strlen(line('$'))]) + 1
+              endif
+          endif
+
+          " expand tabs
+          let l:start = substitute(getline(v:foldstart), '\t', repeat(' ', &tabstop), 'g')
+          let l:end = substitute(substitute(getline(v:foldend), '\t', repeat(' ', &tabstop), 'g'), '^\s*', '', 'g')
+
+          let l:info = ' (' . (v:foldend - v:foldstart) . ')'
+          let l:infolen = strlen(substitute(l:info, '.', 'x', 'g'))
+          let l:width = winwidth(0) - l:lpadding - l:infolen
+
+          let l:separator = ' … '
+          let l:separatorlen = strlen(substitute(l:separator, '.', 'x', 'g'))
+          let l:start = strpart(l:start , 0, l:width - strlen(substitute(l:end, '.', 'x', 'g')) - l:separatorlen)
+          let l:text = l:start . ' … ' . l:end
+
+          return l:text . repeat(' ', l:width - strlen(substitute(l:text, ".", "x", "g"))) . l:info          
+      else
+          let l:line = substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{{\d*\s*', '', 'g')
+          if &ft == 'mkdc'
+              let l:line = substitute(l:line, '^#\+', '', 'g')
+          endif
+          let l:line = ' ' .  l:line.' '
+
+          let lines_count = v:foldend - v:foldstart + 1
+          let lines_count_text = ' ' . printf("%10s", lines_count . ' lines') . ' '
+          let foldchar = matchstr(&fillchars, 'fold:\zs.')
+          let foldtextstart = strpart(repeat(foldchar, v:foldlevel*2) . l:line, 0, (winwidth(0)*2)/3)
+          let foldtextend = lines_count_text . repeat(foldchar, 8)
+          let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+          return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
+
+      endif
+  endfunction
+  set foldtext=MyFoldText()
+
+endif       
 " }}}2
 
 " }}}1
