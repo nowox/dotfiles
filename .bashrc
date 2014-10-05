@@ -283,8 +283,10 @@ alias la='ll -a'
 alias vi='vim'
 alias tree='tree -Csuh' # Nice alternative to 'recursive ls'
 
-# My own things...
-alias tmux="TERM=screen-256color tmux -2"
+# Use utf-8 with tmux
+alias tmux="tmux -u"
+alias killtmux="tmux ls | awk '{print $1}' | sed 's/://g' | xargs -I{} tmux
+kill-session -t {}"
 
 # Short aliases
 alias h='history'

@@ -347,9 +347,7 @@ set encoding=utf-8
 set ffs=unix,dos,mac                   " Default type UNIX then DOS then MAC
 setglobal fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,latin1
-if &termencoding == ""
-    let &termencoding = &encoding
-endif
+set termencoding=utf-8
 " Settings: Mouse/Selection {{{2
 set mouse      =a                     " Use mouse in All modes
 set mousefocus                         " Activate windows on mouseover
