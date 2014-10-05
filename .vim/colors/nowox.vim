@@ -6,50 +6,94 @@
 
 " Theme colors:
 " -------------
+set background=dark
 
-let s:background   = "#262626"
-let s:foreground   = "#c5c8c6"
+if &background == "dark"
+    let s:background   = "#262626"
+    let s:foreground   = "#c5c8c6"
 
-let s:darkcolumn   = "#1c1c1c"
+    let s:darkcolumn   = "#1c1c1c"
 
-let s:gray_dark    = "#303030"
-let s:gray_middle  = "#313131"
-let s:gray_light   = "#4e4e4e"
+    let s:gray_dark    = "#303030"
+    let s:gray_middle  = "#313131"
+    let s:gray_light   = "#4e4e4e"
 
-let s:selection    = "#303030"
+    let s:selection    = "#303030"
 
-let s:comment      = "#606060"    " This is a comment
-let s:constant     = "#ff5f5f"
-let s:red          = "#cc6666"
-let s:orange       = "#de935f"
-let s:typedef      = "#dfaf5f"
-let s:apple        = "#dfdf5f"
-let s:yellow       = "#f0c674"
-let s:green        = "#b5bd68"
-let s:character    = "#af875f"
-let s:aqua         = "#8abeb7"
-let s:blue         = "#81a2be"
-let s:purple       = "#b294bb"
+    let s:comment      = "#606060"    " This is a comment
+    let s:constant     = "#ff5f5f"
+    let s:red          = "#cc6666"
+    let s:orange       = "#de935f"
+    let s:typedef      = "#dfaf5f"
+    let s:apple        = "#dfdf5f"
+    let s:yellow       = "#f0c674"
+    let s:green        = "#b5bd68"
+    let s:character    = "#af875f"
+    let s:aqua         = "#8abeb7"
+    let s:blue         = "#81a2be"
+    let s:purple       = "#b294bb"
 
 
-let s:addbg        = "#5F875F"
-let s:addfg        = "#d7ffaf"
-let s:changebg     = "#5F5F87"
-let s:changefg     = "#d7d7ff"
-let s:darkblue     = "#00005f"
-let s:darkcyan     = "#005f5f"
-let s:darkred      = "#5f0000"
-let s:darkpurple   = "#5f005f"
+    let s:addbg        = "#5F875F"
+    let s:addfg        = "#d7ffaf"
+    let s:changebg     = "#5F5F87"
+    let s:changefg     = "#d7d7ff"
+    let s:darkblue     = "#00005f"
+    let s:darkcyan     = "#005f5f"
+    let s:darkred      = "#5f0000"
+    let s:darkpurple   = "#5f005f"
 
-let s:operator     = "#8787af"
-let s:keyword      = "#5f87af"
-let s:label        = "#5f875f"
-let s:include      = "#5fafdf"
-let s:cursorcolumn = "#303030"
+    let s:operator     = "#8787af"
+    let s:keyword      = "#5f87af"
+    let s:label        = "#5f875f"
+    let s:include      = "#5fafdf"
+    let s:cursorcolumn = "#303030"
+endif
+
+if &background == "light"
+    let s:foreground  = "#262626"
+    let s:background  = "#ffffff"
+
+    let s:darkcolumn   = "#1c1c1c"
+
+    let s:gray_dark    = "#303030"
+    let s:gray_middle  = "#313131"
+    let s:gray_light   = "#4e4e4e"
+
+    let s:selection    = "#303030"
+
+    let s:comment      = "#606060"    " This is a comment
+    let s:constant     = "#ff5f5f"
+    let s:red          = "#cc6666"
+    let s:orange       = "#de935f"
+    let s:typedef      = "#dfaf5f"
+    let s:apple        = "#dfdf5f"
+    let s:yellow       = "#f0c674"
+    let s:green        = "#b5bd68"
+    let s:character    = "#af875f"
+    let s:aqua         = "#8abeb7"
+    let s:blue         = "#81a2be"
+    let s:purple       = "#b294bb"
+
+
+    let s:addbg        = "#5F875F"
+    let s:addfg        = "#d7ffaf"
+    let s:changebg     = "#5F5F87"
+    let s:changefg     = "#d7d7ff"
+    let s:darkblue     = "#00005f"
+    let s:darkcyan     = "#005f5f"
+    let s:darkred      = "#5f0000"
+    let s:darkpurple   = "#5f005f"
+
+    let s:operator     = "#8787af"
+    let s:keyword      = "#5f87af"
+    let s:label        = "#5f875f"
+    let s:include      = "#5fafdf"
+    let s:cursorcolumn = "#303030"
+endif                             
 
 " Theme preferences: {{{1
 " ------------------
-set background=dark
 hi clear
 
 if exists("syntax_on")

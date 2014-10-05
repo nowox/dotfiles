@@ -1,4 +1,3 @@
-
 " File: .vimrc
 " Maintainer: Yves Chevallier
 " Date: 2014-10-03
@@ -8,7 +7,6 @@
 let s:is_windows = has("win16") || has("win32") || has("win64")|| has("win95")
 let s:is_cygwin  = has('win32unix')
 let s:is_macvim  = has('gui_macvim')
-" }}}1
 
 " Plugins {{{1
 " ------------
@@ -22,7 +20,6 @@ call vundle#begin()
 
 " Let Vundle manage Vundle
 Plugin 'gmarik/Vundle.vim'
-" }}}2
 
 " Plugins {{{2
 
@@ -75,13 +72,9 @@ let g:toggle_list_no_mappings = 1
 
 "Plugin 'xolox/vim-easytags'            " To test
 
-Plugin 'skammer/vim-css-color'
+"Plugin 'skammer/vim-css-color'         " Very slow plugin not usable 
 Plugin 'vim-scripts/bufkill.vim'
 
-
-"Plugin 'vim-scripts/AutomaticLaTexPlugin'
-
-" }}}2
 " Plugin: Prompt Airline {{{2
 Plugin 'edkolev/promptline.vim'
 let g:promptline_theme = 'jelly'
@@ -93,7 +86,6 @@ let g:promptline_preset = {
           \'left_sections' : [ 'b', 'a' ],
           \'right_sections' : [ 'c' ],
           \'left_only_sections' : [ 'b', 'a', 'c' ]}}
-" }}}2
 " Plugin: Fakeclip {{{2
 " Allow to use clipboard under cygwin
 " Fakeclip is a Vim plugin to provide a pseudo |clipboard| register for
@@ -105,13 +97,11 @@ let g:promptline_preset = {
 Plugin 'kana/vim-fakeclip'
 let g:fakeclip_terminal_multiplexer_type="tmux"
 
-" }}}2
 " Plugin: LaTeX-Box {{{2
 
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
 let g:LatexBox_latexmk_options='-xelatex'
 
-" }}}2
 " Plugin: Vim-fugitive {{{2
 " View any blob, tree, commit, or tag in the repository with :Gedit (and
 " :Gsplit, :Gvsplit, :Gtabedit, ...). Edit a file in the index and write to it
@@ -120,7 +110,6 @@ let g:LatexBox_latexmk_options='-xelatex'
 " capabilities to stage a subset of the file's changes.
 Plugin 'tpope/vim-fugitive'
 
-" }}}2
 " Plugin: Taglist {{{2
 
 Plugin 'vim-scripts/taglist.vim'
@@ -128,7 +117,6 @@ let g:Tlist_Auto_Highlight_Tag = 1
 let g:Tlist_Auto_Update = 1
 let g:Tlist_WinWidth = 50
 
-" }}}2
 " Plugin: Tagbar {{{2
 " Tagbar is a vim plugin for browsing the tags of source code files. It provides
 " a sidebar that displays the ctags-generated tags of the current file, ordered
@@ -138,12 +126,10 @@ Plugin 'majutsushi/tagbar'
 let g:tarbar_left=1
 let g:tagbar_iconchars = ['►', '▼'] " Set for consolas powerline
 
-" }}}2
 " Plugin: Autochmodx {{{2
 " If a current file looks like an executable script, make it executable by running "chmod +x %"
 Plugin 'tyru/autochmodx.vim'
 
-" }}}2
 " Plugin: Ultisnip {{{2
 
 " Track the engine.
@@ -160,7 +146,6 @@ let g:UltiSnipsJumpBackwardTrigger="<A-a>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
-" }}}2
 " Plugin: Vim-Airline {{{2
 " Fancy status and tab bar, very good plugin
 Plugin 'bling/vim-airline'                        " Best status line ever (needs Powerline Consolas font)
@@ -168,10 +153,8 @@ let g:airline_theme                      = 'wombat' " With brighter split separa
 let g:airline#extensions#tabline#enabled = 1      " Allows to view windows/tabs
 let g:airline_powerline_fonts            = 1      " Fancy fonts
 let g:airline#extensions#tabline#enabled = 1
-" }}}2
 " Plugin: edkolev/tmuxline.vim {{{2
 Plugin 'edkolev/tmuxline.vim'
-"}}}2
 " Plugin: Easymotion {{{2
 " A revolutionary new way to navigate in a file. EasyMotion provides a much simpler way
 " to use some motions in vim.
@@ -182,7 +165,6 @@ let g:EasyMotion_do_shade           = 1 " Shade text to better see the keys
 let g:EasyMotion_enter_jump_first   = 1 " When search, jump directly on enter
 let g:EasyMotion_do_special_mapping = 1 " {operator}<leader>l (select, yank, paste ...)
 let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz123456789éà$,.-è<'
-" }}}2
 " Plugin: CtrlP <C-p> {{{2
 " Inspired from Sublime. Provide a nice solution to navigate and load files.
 Plugin 'kien/ctrlp.vim'                           " Sublime's <C-P> feature
@@ -200,19 +182,15 @@ let g:ctrlp_custom_ignore = {
             \ 'file': '\v\.(sbn|ovl|s|html|d|exe|so|dll|doj|bin|zip|tar|gz|iso|class|rar|swp|ldr|dpj|stk)$',
             \ 'link': 'some_bad_symbolic_links',
             \ }
-" }}}2
 " Plugin: CtrlP Command Palette {{{2
 Plugin 'fisadev/vim-ctrlp-cmdpalette'  " Command palette for ctrlp
 let g:ctrlp_cmdpalette_execute=1
-" }}}2
 " Plugin: CtrlP Yankround {{{2
 Plugin 'LeafCage/yankround.vim'
 
-" }}}2
 " Plugin: CtrlP Extensions (Menu) {{{2
 Plugin 'sgur/ctrlp-extensions.vim'
 
-" }}}2
 " Plugin: NERDTree <F2> {{{2
 " Files Explorer
 Plugin 'scrooloose/nerdtree'           " File explorer
@@ -220,14 +198,12 @@ let g:NERDTreeDirArrows  = 1           " Show nice arrows instead of |+
 let g:NERDTreeShowHidden = 1           " Show hidden files
 let g:NERDTreeWinPos     = "left"      " Window position
 let g:NERDTreeWinSize    = 50          " Width of the NERDTree sidebar
-" }}}2
 " Plugin: vim-multiple-cursors {{{2
 Plugin 'terryma/vim-multiple-cursors'  " Sublime's multiple selection feature
 let g:multi_cursor_use_default_mapping=0
 let g:multi_cursor_next_key  = '<C-b>'
 let g:multi_cursor_start_key = '<C-b>'
 let g:multi_cursor_quit_key  = '<Esc>'
-" }}}2
 " Plugin: Indent-guides {{{2
 
 "Plugin 'nathanaelkane/vim-indent-guides'
@@ -248,21 +224,18 @@ let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
 hi IndentGuidesOdd  ctermbg=black
 hi IndentGuidesEven ctermbg=darkgrey
 
-" }}}2
 " Plugin: vim-notes {{{2
 
-Plugin 'xolox/vim-notes'               " Note taking
-Plugin 'xolox/vim-misc'                " Needed by vim-notes
-let g:notes_directories = ['~/notes/']
-let g:notes_suffix      = '.txt'
+"Plugin 'xolox/"vim-notes'               " Note taking
+"Plugin 'xolox/vim-misc'                " Needed by vim-notes
+"let g:notes_directories = ['~/notes/']
+"let g:notes_suffix      = '.txt'
 
-" }}}2
 " Plugin: NERDCommenter {{{2
 " [count]<leader>cb |NERDComAlignedComment|  ( Comment lines )
 " [count]<leader>cu |NERDComUncommentLine|   ( Uncomment lines )
 Plugin 'scrooloose/nerdcommenter'
 
-" }}}2
 " Plugin: SuperTab {{{2
 " Supertab is a vim plugin which allows you to use <Tab> for all your insert
 " completion needs (:help ins-completion).
@@ -270,7 +243,6 @@ Plugin 'ervandew/supertab'
 let g:SuperTabDefaultCompletionType = 'context'
 let g:SuperTabMappingForward = '<C-@>'
 let g:SuperTabMappingBackward = '<S-C-@>'
-" }}}2
 " Plugin: Ag/Ack {{{2
 
 if executable('ag')
@@ -279,22 +251,17 @@ else
     Plugin 'mileszs/ack.vim'               " Use the Perl module App::Ack
 endif
 
-" }}}2
 " Plugin: Eregex (Perl regex style in vim) {{{2
 Plugin 'othree/eregex.vim'
 let g:eregex_default_enable = 0
 
-" }}}2
 " Plugin: Mark--Karkat {{{2
 Plugin 'vim-scripts/Mark--Karkat'
-" }}}2
 " Plugin: Voom {{{2
 Plugin 'vim-scripts/VOoM'
-" }}}2
 " Plugin: Gundo {{{2
 Plugin 'sjl/gundo.vim'                 " Visualize your Vim undo tree
 let g:voom_tree_width=40
-" }}}2
 " Plugin: A (Alternate .c <--> .h) {{{2
 "A few of quick commands to swtich between source files and header files quickly.
 " :A switches to the header file corresponding to the current file being edited (or vise versa)
@@ -312,24 +279,22 @@ let g:voom_tree_width=40
 " <Leader>ihn cycles through matches
 Plugin 'vim-scripts/a.vim'             " Alternate quickly between .c <--> .h
 
-" }}}2
 " Plugin: Bufstop (Easy way to switch buffers) {{{2
 Plugin 'mihaifm/bufstop'               " Easy way to switch buffers
-" }}}2
 " Plugin: Tabular {{{2
 " :Tabularize /=
 " :Tabularize /=\ \d
 Plugin 'godlygeek/tabular'             " Select, then :Tabularize /= to align to equal sign
-" }}}2
+" Plugin: Goyo (Distraction free) {{{2
+Plugin 'junegunn/goyo.vim'
 " Plugin: Expand-region (ö: expand ä: shrink) {{{2
-Plugin 'terryma/vim-expand-region'     " Allow to visually select increasingly larger region of text
-" }}}2
-
+Plugin 'terryma/vim-expand-region'     " Allow to visually select increasingly larger region of text {{{2
+" Plugin: Markdown fold
+Plugin 'nelstrom/vim-markdown-folding'
 " End Bundle {{{2
 
 call vundle#end()
 
-" }}}1
 
 " Settings {{{1
 " Important settings {{{2
@@ -348,7 +313,6 @@ let mapleader = ","                    " Use a more convenient leader key
 if s:is_windows && has('gui')
     language messages en
 endif
-" }}}2
 
 " Settings: GUI {{{2
 
@@ -362,7 +326,6 @@ endif
 syntax on                              " Enable Syntax
 colorscheme nowox                      " Best colorscheme ever
 
-" }}}2
 " Settings: Shell/System {{{2
 " Shell, runtime and enviromnent
 if s:is_windows && !s:is_cygwin
@@ -371,7 +334,6 @@ if s:is_windows && !s:is_cygwin
     set viminfo+=n~/.viminfo
     cd ~
 endif
-" }}}2
 " Settings: Encoding/Filetypes/EOL {{{2
 set encoding=utf-8
 set ffs=unix,dos,mac                   " Default type UNIX then DOS then MAC
@@ -380,7 +342,6 @@ set fileencodings=ucs-bom,utf-8,latin1
 if &termencoding == ""
     let &termencoding = &encoding
 endif
-" }}}2
 " Settings: Mouse/Selection {{{2
 set mouse      =a                     " Use mouse in All modes
 set mousefocus                         " Activate windows on mouseover
@@ -389,7 +350,6 @@ set mousemodel =popup
 set keymodel   =startsel,stopsel
 set selection  =exclusive
 set ttymouse=xterm2
-" }}}2
 " Settings: Interface {{{2
 set title                              " Set window title automatically
 set history=1000                       " Remember more commands and search history
@@ -421,7 +381,7 @@ set splitbelow                         " New horizontal split always at the bott
 set diffopt+=iwhite
 
 " Status line
-set fillchars=vert:│                   " Separator for status window
+set fillchars=fold:─,vert:│            " Separator for status window
 set laststatus=2                       " Always the status of the last window
 set showcmd                            " Show commands being typed in the bottom right corner
 
@@ -436,18 +396,15 @@ set showbreak=⌐
 " Auto complete setting
 set completeopt=menuone,longest
 
-" }}}2
 " Settings: Performances {{{2
 set ttyfast                            " Send more chars to redraw in CTERM
 set lazyredraw                         " Buffer screen updates instead of updating al the time
 "let loaded_matchparen = 1
-" }}}2
 " Settings: Alerts {{{2
 set noerrorbells
 set novisualbell
 set t_vb=
 set tm=500
-" }}}2
 " Settings: Search/Find/Replace {{{2
 set hlsearch                           " No Highlight search results
 let @/=""
@@ -458,7 +415,6 @@ set showmatch                          " Show matching brackets
 set ignorecase                         " Ignore case when searching
 set smartcase                          " Override ignorecase if search contains upper chars
 set mat=2                              " How many tenth of a second to blink when matching brackets
-" }}}2
 " Settings: Format/Linebreak {{{2
 set linebreak                          " Break at a char in "breakat"
 set autoindent                         " Copy indent form current line when starting a new line
@@ -472,44 +428,30 @@ set formatoptions+=q                   " Allow to reformat comments with "gq"
 set formatoptions-=a                   " Automatically formatting paragraph
 set formatoptions+=n                   " Recognize numbered lists and wrap correctly
 set formatoptions+=j                   " Remove comment leader when joining lines.
-" }}}2
 " Settings: Indentation/Tabs {{{2
 set tabstop=4                          " How many spaces a tab worth
 set expandtab                          " Insert spaces instead of tabs
 set shiftwidth=4                       " Used for reindent operations
 set softtabstop=4                      " How many columns are used when <Tab> is hit in insert mode
 set smarttab                           " A <BS> will delete a space not a tab
-" }}}2
 " Settings: Folds {{{2
 set foldenable
 set foldlevelstart=10
 set foldnestmax=10
 set foldmethod=indent
 set foldcolumn=3
-" }}}2
 " Settings: Backup {{{2
 set nobackup                           " Disable backup
 set noswapfile                         " Disable swap because sometime swapfile is in readonly
-" }}}2
-" Settings: Conceal
+" Settings: Conceal {{{2
 set conceallevel=3        " Hide conceal chars
 set concealcursor="nvic"    " Show conceal chars on cursorline for all modes
+let g:tex_conceal="agm"
+" Settings: Encryption {{{2
+set cryptmethod=blowfish2
 
-" }}}1
 " Mappings {{{1
 
-" Mappings: Mouse {{{2
-if s:is_cygwin
-    " <2-LeftMouse> Allow to select a word with a double click in cygwin
-    inoremap <2-LeftMouse> <esc>viw
-
-    " <3-LeftMouse> Allow to select the whole line
-    inoremap <3-LeftMouse> <esc>V
-endif
-
-" <2-LeftMouse> Highlight the word under cursor
-nnoremap <silent> <2-LeftMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
-" }}}2
 " Mappings: VIM Specific {{{2
 
 " Correct cursor movement for long lines
@@ -547,7 +489,6 @@ noremap zz       zMzvzz
 noremap zt       zMzvzt
 noremap zb       zMzvzb
 
-" }}}2
 " Mappings: One char {{{2
 
 " <tab> Tabbing visual selection
@@ -588,7 +529,6 @@ map                <c-k>   <Plug>(easymotion-k)
 map                ö       <Plug>(expand_region_expand)
 map                ä       <Plug>(expand_region_shrink)
 
-" }}}2
 " Mappings: CTRL {{{2
 
 " <C-Tab> <C-S-Tab> Next/Previous buffer
@@ -728,7 +668,6 @@ nnoremap <silent> <c-y> :<c-u>call AddSubtract("\<c-a>", '')<CR>
 
 " <C--> [1;5m
 
-" }}}2
 " Mappings: Alt {{{2
 " <A-j> Move screen down
 set <f32>=j
@@ -795,7 +734,6 @@ noremap  <silent> <F12> :FixWhitespace<CR>
 vnoremap <silent> <F12> <c-C>:FixWhitespace<CR>
 inoremap <silent> <F12> <c-O>:FixWhitespace<CR>
 
-" }}}2
 " Mappings: Leader {{{2
 " Save session
 nnoremap <leader>s :mksession<cr>
@@ -853,7 +791,6 @@ noremap <leader>gu  :GitGutterReverHunk<cr>
 noremap <leader>gv  :GitGutterPreviewHunk<cr>
 " }}}2
 
-" }}}1
 
 " Tmux {{{1
 if &term =~ '^screen'
@@ -916,6 +853,7 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 " }}}1
 
 " Functions {{{1
+" paste#paste {{{2
 func! paste#Paste()
     let ove = &ve
     set ve=all
@@ -930,18 +868,16 @@ func! paste#Paste()
     endif
     let &ve = ove
 endfunc
-
+" FixWhitespace {{{2
 function! s:FixWhitespace(line1,line2)
     let l:save_cursor = getpos(".")
     silent! execute ':' . a:line1 . ',' . a:line2 . 's/\s\+$//'
     call setpos('.', l:save_cursor)
 endfunction
 
-" Run :FixWhitespace to remove end of line white space
 command! -range=% FixWhitespace call <SID>FixWhitespace(<line1>,<line2>)
 
-" Add/Substract value to a number
-" -------------------------------
+" AddSubstract (Add/Substract value to a number) {{{2
 function! AddSubtract(char, back)
     let pattern = &nrformats =~ 'alpha' ? '[[:alpha:][:digit:]]' : '[[:digit:]]'
     call search(pattern, 'cw' . a:back)
@@ -949,18 +885,7 @@ function! AddSubtract(char, back)
     silent! call repeat#set(":\<C-u>call AddSubtract('" .a:char. "', '" .a:back. "')\<CR>")
 endfunction
 
-"
-" Trailing spaces while editing
-" -----------------------------
-fun! StripTrailingWhitespaces()
-    let original_cursor = getpos('.')
-    exe b:insert_start . ',.s/\s\+$//e'
-    call setpos('.', original_cursor)
-endfun
-
-" Automatic adjust quickfix window height
-" ---------------------------------------
-au FileType qf call AdjustWindowHeight(3, 20)
+" AdjustWindowHeight (Automatic adjust quickfix window height) {{{2
 function! AdjustWindowHeight(minheight, maxheight)
     let l = 1
     let n_lines = 0
@@ -974,9 +899,9 @@ function! AdjustWindowHeight(minheight, maxheight)
     endw
     exe max([min([n_lines, a:maxheight]), a:minheight]) . "wincmd _"
 endfunction
+au FileType qf call AdjustWindowHeight(3, 20)
 
-" Toggle mouse between terminal and vim mode
-" ------------------------------------------
+" ToggleMouse (Toggle mouse between terminal and vim mode) {{{2
 fun! s:ToggleMouse()
     if !exists("s:old_mouse")
         let s:old_mouse = "a"
@@ -992,8 +917,6 @@ fun! s:ToggleMouse()
     endif
 endfunction
 
-let s:mycolors     = ['hybrid', 'eclipse', 'automation']
-let s:airlinetheme = ['wombat', 'base16', 'base16']
 
 " Improved Yank Mode
 " ------------------
@@ -1057,7 +980,7 @@ function! Escape(stuff)
     return substitute(escape(a:stuff, '\/.*$^~[]'), "\n", '\\n', "g")
 endfunction
 
-" Present colorscheme
+" Present Colorscheme {{{2
 function! Present()
     set background=light
     colorscheme summerfruit256
@@ -1065,10 +988,14 @@ function! Present()
     AirlineToggle
     set nocursorline
     set nonu
+    set colorcolumn=
+    set foldcolumn=0
 endfunction
 
-" Next colorscheme
-" ----------------
+" NextColor (Next colorscheme) {{{2
+let s:mycolors     = ['hybrid', 'eclipse', 'automation']
+let s:airlinetheme = ['wombat', 'base16', 'base16']
+
 function! NextColor(how)
     call s:NextColor(a:how, 1)
 endfunction
@@ -1114,4 +1041,9 @@ endfunction
 
 " }}}1
 
+" New Stuff: {{{1
+" This part concerns things that I recently added to vim. In this way I can
+" easily revert things that don't work as expected.
+
+" }}}1
 " vim:foldmethod=marker:foldlevel=0:tw=80
