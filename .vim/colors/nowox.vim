@@ -363,7 +363,7 @@ call <SID>X("TabLineFill"  , s:foreground , s:darkcolumn , "reverse")
 call <SID>X("TabLineSel"   , s:foreground , s:darkcolumn , "reverse")
 
 call <SID>X("Title"        , s:yellow     , ""           , "")
-call <SID>X("Visual"       , ""           , s:selection  , "")
+call <SID>X("Visual"       , ""           , s:selection  , "reverse")
 call <SID>X("VisualNos"    , ""           , s:selection  , "")
 
 call <SID>X("WarningMsg"   , s:red        , ""           , "")

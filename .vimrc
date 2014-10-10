@@ -1,3 +1,4 @@
+
 " File:   .vimrc
 " Author: Yves Chevallier <nowox@x0x.ch>
 " Date:   2014-10-03
@@ -299,6 +300,7 @@ Plugin 'prurigro/vim-markdown-concealed'
 " Plugin: Improve f F T {{{2
 Plugin 'chrisbra/improvedft'
 
+
 " End Bundle {{{2
 
 call vundle#end()
@@ -342,12 +344,18 @@ if s:is_windows && !s:is_cygwin
     set viminfo+=n~/.viminfo
     cd ~
 endif
+" Settings: Terminal {{{2
+if exists("$TMUX") 
+    set term=screen-256color
+endif
+
 " Settings: Encoding/Filetypes/EOL {{{2
 set encoding=utf-8
 set ffs=unix,dos,mac                   " Default type UNIX then DOS then MAC
 setglobal fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,latin1
 set termencoding=utf-8
+
 " Settings: Mouse/Selection {{{2
 set mouse      =a                     " Use mouse in All modes
 set mousefocus                         " Activate windows on mouseover
@@ -460,24 +468,45 @@ set cryptmethod=blowfish2
 
 " Mappings {{{1
 
-" Mappings: VIM Specific {{{2
+" Mappings: VIM Unconsistancies {{{2
+" Some default behavior of vim that is not logical anymore in our modern and technological world. 
 
 " Correct cursor movement for long lines
 noremap j gj
 noremap k gk
 
-" Backspace in Visual deletes selection
-vnoremap <BS> d
+" Backspace will delete the char before cursor
+vnoremap <BS> X
+nnoremap <BS> X
 
-" Backspace in Normal mode deletes a char
-" then goes in insert mode
-nnoremap <BS> Xi
-
-" jk is back to normal mode
-inoremap jk <esc><right>
+" $ to move physically at the end of the line
+" (Virtualedit must be enabled)
+nmap <End>    $l
 
 " Insertion mode on enter
-noremap <cr> i<cr>
+nmap <cr> i<cr>
+
+" In visual mode arrows don't work as expected
+vmap <Up> k
+vmap <Down> j
+vmap <Left> h
+vmap <Right> l
+
+§
+" In Select mode arrows keys cancel the selection
+smap <Up> <esc><Up>
+smap <Down> <esc><Down>
+smap <Left> <esc><Left>
+smap <Right> <esc><Right>
+
+" zz center the current line and fold everything but the current fold
+noremap zz       zMzvzz
+noremap zt       zMzvzt
+noremap zb       zMzvzb
+
+" jk and jj is back to normal mode (try to use Ctrl-AltGr-è instead)
+inoremap jk <esc>
+inoremap jj <esc>
 
 " In the case sudo is needed
 cmap w!! w !sudo tee % >/dev/null
@@ -488,14 +517,6 @@ noremap <silent> à mP*N`P
 " Disable highlight search
 noremap <silent> é :noh<cr>
 
-" $ to move physically at the end of the line
-" (Virtualedit must be enabled)
-noremap <End>    $l
-
-" zz center the current line and fold everything but the current fold
-noremap zz       zMzvzz
-noremap zt       zMzvzt
-noremap zb       zMzvzb
 
 " Mappings: One char {{{2
 
@@ -543,15 +564,26 @@ map                ä       <Plug>(expand_region_shrink)
 if s:is_cygwin
     " <C-Tab> Next buffer
     set <f26>=[1;5I
-    map <silent> <f26> :bn<cr>
-    imap <silent> <f26> <c-o>:bn<cr>
-    vmap <silent> <f26> <c-c>:bn<cr>
+    map <silent> <f26> :bn!<cr>
+    imap <silent> <f26> <c-o>:bn!<cr>
+    vmap <silent> <f26> <c-c>:bn!<cr>
 
     " <C-S-Tab> Previous buffer
     set <f27>=[1;6I
-    map <silent> <f27> :bp<cr>
-    imap <silent> <f27> <c-o>:bp<cr>
-    vmap <silent> <f27> <c-c>:bp<cr>
+    map <silent> <f27> :bp!<cr>
+    imap <silent> <f27> <c-o>:bp!<cr>
+    vmap <silent> <f27> <c-c>:bp!<cr>
+else 
+    " <C-Tab> Next buffer
+    map <silent> <C-Tab> :bn!<cr>
+    imap <silent> <C-Tab> <c-o>:bn!<cr>
+    vmap <silent> <C-Tab> <c-c>:bn!<cr>
+
+    " <C-S-Tab> Previous buffer
+    set <f27>=[1;6I
+    map <silent> <C-S-Tab> :bp!<cr>
+    imap <silent> <C-S-Tab> <c-o>:bp!<cr>
+    vmap <silent> <C-S-Tab> <c-c>:bp!<cr>
 endif
 
 " <c-a> Select all (like every modern editor)
@@ -1006,8 +1038,8 @@ function! Present()
 endfunction
 
 " NextColor (Next colorscheme) {{{2
-let s:mycolors     = ['hybrid', 'eclipse', 'automation']
-let s:airlinetheme = ['wombat', 'base16', 'base16']
+let s:mycolors     = ['hybrid', 'eclipse', 'automation','256-jungle', 'bvemu', '256-grayvim', 'bubblegum']
+let s:airlinetheme = ['wombat', 'base16', 'base16', 'base16', 'base16', 'base16', 'base16']
 
 function! NextColor(how)
     call s:NextColor(a:how, 1)
