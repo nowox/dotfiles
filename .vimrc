@@ -4,6 +4,13 @@
 " Date:   2014-10-03
 " Source: https://github.com/nowox/dotfiles
 
+" First things to do {{{1
+" Reset all settings
+set all&
+
+" Not on Vi anymore
+set nocompatible                       " be Vi iMproved
+
 " Plateform {{{1
 " On which OS are we are ?
 let s:is_windows = has("win16") || has("win32") || has("win64")|| has("win95")
@@ -25,12 +32,6 @@ Plugin 'gmarik/Vundle.vim'
 
 " Plugins {{{2
 
-" Color table xterm (256 colors)
-Plugin 'guns/xterm-color-table.vim'
-
-" Colorizer
-Plugin 'lilydjwg/colorizer'
-let g:colorizer_nomap=1
 
 " A lot of colorschemes (including hybrid)
 Plugin 'flazz/vim-colorschemes'
@@ -44,9 +45,6 @@ Plugin 'flazz/vim-colorschemes'
 
 "Plugin 'vim-scripts/LanguageTool'
 "let g:languagetool_jar='$HOME/languagetool/languagetool-commandline.jar'
-
-"Plugin 'chrisbra/NrrwRgn'              " Focus on selected regions, making the rest inaccessible
-"Plugin 'scrooloose/<F7>syntastic'          " Syntax checker
 
 "Plugin 'airblade/vim-gitgutter'        " Show changed
 "let g:gitgutter_enabled = 0            " BufEnter much slower with gitgutter. I disabled it !
@@ -79,7 +77,7 @@ Plugin 'vim-scripts/bufkill.vim'
 
 " Plugin: Prompt Airline {{{2
 Plugin 'edkolev/promptline.vim'
-let g:promptline_theme = 'jelly'
+let g:promptline_theme = 'nowox'
 let g:promptline_preset = {
       \'a'    : [ '$(hostname)' ],
       \'b'    : [ '$(whoami)' ],
@@ -289,8 +287,10 @@ Plugin 'mihaifm/bufstop'               " Easy way to switch buffers
 Plugin 'godlygeek/tabular'             " Select, then :Tabularize /= to align to equal sign
 " Plugin: Goyo (Distraction free) {{{2
 Plugin 'junegunn/goyo.vim'
+
 " Plugin: Expand-region (ö: expand ä: shrink) {{{2
-Plugin 'terryma/vim-expand-region'     " Allow to visually select increasingly larger region of text {{{2
+Plugin 'terryma/vim-expand-region'  " Allow to visually select increasingly larger region of text 
+
 " Plugin: Markdown fold {{{2
 "Plugin 'nelstrom/vim-markdown-folding'
 "Plugin 'plasticboy/vim-markdown'
@@ -300,6 +300,23 @@ Plugin 'prurigro/vim-markdown-concealed'
 " Plugin: Improve f F T {{{2
 Plugin 'chrisbra/improvedft'
 
+" Plugin: Color table xterm (256 colors) {{{2
+Plugin 'guns/xterm-color-table.vim'
+"}}}2
+" Plugin: Unite {{{2
+Plugin 'Shougo/unite.vim'
+
+" Plugin: GoldenView {{{2
+Plugin 'zhaocai/GoldenView.Vim'
+
+" Colorizer (Cost too much in performances) {{{2
+Plugin 'lilydjwg/colorizer'
+let g:colorizer_startup = 0
+let g:colorizer_nomap=1
+
+" *** Disabled Plugins *** {{{2
+
+" }}}2
 
 " End Bundle {{{2
 
@@ -309,9 +326,6 @@ call vundle#end()
 " Settings {{{1
 " Important settings {{{2
 
-" Not on Vi anymore
-set nocompatible                       " be Vi iMproved
-
 " Reenable filetypes
 filetype plugin on                     " Enable Plugins
 filetype indent on                     " Enable Automatic Indent
@@ -319,10 +333,12 @@ filetype indent on                     " Enable Automatic Indent
 " Remap leader
 let mapleader = ","                    " Use a more convenient leader key
 
-" Vim's language
+" Vim's language and vim
 if s:is_windows && has('gui')
     language messages en
+    set rtp+=~/.vim
 endif
+                                                                           
 
 " Settings: GUI {{{2
 
@@ -348,6 +364,7 @@ endif
 if exists("$TMUX") 
     set term=screen-256color
 endif
+set noshelltemp
 
 " Settings: Encoding/Filetypes/EOL {{{2
 set encoding=utf-8
@@ -375,18 +392,29 @@ set ruler                              " See number of lines
 set cmdheight=2                        " Height of the command-line
 set wildignore=*.o,*~,*.pyc,*.doj      " Ignore some files for wildmenu
 set hidden                             " Not unload buffer when it is abandoned
-set number                             " Show line number on the left
+set relativenumber                     " Show line number on the left
 set whichwrap+=<,>,h,l                 " Allow to use arrow keys to move in Visual Mode
 set virtualedit=all                    " Allow to place cursor at any location
+
 set cursorline                         " Highlight current line
-set nocursorcolumn
+autocmd WinLeave * setlocal nocursorline
+autocmd WinEnter * setlocal cursorline
+
+"set cursorcolumn
+"autocmd WinLeave * setlocal nocursorcolumn
+"autocmd WinEnter * setlocal cursorcolumn
+
 set colorcolumn=90
+autocmd WinLeave * setlocal colorcolumn=0
+autocmd WinEnter * setlocal colorcolumn=90
+
 set writeany                           " Allow writing to any file with no need for "!" override
 set backspace=eol,start,indent         " Allow backspacing over CR autoindent and start of insert
 set helpheight=999
 set winminheight=0
 set ttimeoutlen=0                      " Reduce the delay with <esc> when escaping from insert mode
 set shortmess=aoA
+set nrformats-=octal
 
 " Split Windows
 set splitright                         " New vertical split always at the right of the current window
@@ -430,6 +458,16 @@ set showmatch                          " Show matching brackets
 set ignorecase                         " Ignore case when searching
 set smartcase                          " Override ignorecase if search contains upper chars
 set mat=2                              " How many tenth of a second to blink when matching brackets
+
+if executable('ack')
+    set grepprg=ack\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow\ $*
+    set grepformat=%f:%l:%c:%m
+endif
+if executable('ag')
+    set grepprg=ag\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow
+    set grepformat=%f:%l:%c:%m
+endif
+
 " Settings: Format/Linebreak {{{2
 set linebreak                          " Break at a char in "breakat"
 set autoindent                         " Copy indent form current line when starting a new line
@@ -459,11 +497,15 @@ set foldcolumn=3
 set nobackup                           " Disable backup
 set noswapfile                         " Disable swap because sometime swapfile is in readonly
 " Settings: Conceal {{{2
-set conceallevel=2        " Hide conceal chars
-set concealcursor="nvic"    " Show conceal chars on cursorline for all modes
+if has('conceal')
+    set conceallevel=2        " Hide conceal chars
+    set concealcursor="nvic"    " Show conceal chars on cursorline for all modes
+    set listchars+=conceal:Δ
+endif
+
 "let g:tex_conceal="abdmgsS"
 " Settings: Encryption {{{2
-set cryptmethod=blowfish2
+set cryptmethod=blowfish
 " }}}1
 
 " Mappings {{{1
@@ -492,7 +534,6 @@ vmap <Down> j
 vmap <Left> h
 vmap <Right> l
 
-§
 " In Select mode arrows keys cancel the selection
 smap <Up> <esc><Up>
 smap <Down> <esc><Down>
@@ -841,6 +882,13 @@ if &term =~ '^screen'
     execute "set <xLeft>=\e[1;*D"
 endif
 "}}}1
+
+" Abbreviattion
+iab xxdate <c-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
+iab xxfile <c-r>=echo expand('%:t')<cr>
+iab xxdir  <c-r>=echo expand('%:p:h')<cr>
+iab xxpath <c-r>=echo expand('%:p')<cr>
+iab shebang #!/usr/env perl
 
 " Autocommands {{{1
 augroup configgroup
