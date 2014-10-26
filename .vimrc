@@ -315,7 +315,7 @@ if s:is_windows && has('gui')
     language messages en
 endif
 
-" Settings: GUI {{{2
+" Settings: GUI, Shell, Runtime {{{2
 
 if s:is_windows
     set guifont=Powerline_Consolas:h9:cANSI
@@ -324,16 +324,15 @@ else
     set guifont=Powerline\ Consolas\ 10
 endif
 
-syntax on                              " Enable Syntax
-colorscheme nowox                      " Best colorscheme ever
-
-" Settings: Shell/System {{{2
 " Shell, runtime and enviromnent
-if s:is_windows && !s:is_cygwin
+if s:is_windows
     set shell=c:\windows\system32\cmd.exe
-    set runtimepath^=~/.vim
+    set runtimepath^=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
     cd ~
 endif
+
+syntax on                              " Enable Syntax
+colorscheme nowox                      " Best colorscheme ever
 " Settings: Terminal {{{2
 if exists("$TMUX") 
     set term=screen-256color
