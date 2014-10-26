@@ -1,25 +1,18 @@
-
 " File:   .vimrc
 " Author: Yves Chevallier <nowox@x0x.ch>
 " Date:   2014-10-03
 " Source: https://github.com/nowox/dotfiles
 
 " First things to do {{{1
-" Reset all settings
-set all&
+set all&                                    " Reset all settings
+set nocompatible                            " be Vi iMproved
 
-" Not on Vi anymore
-set nocompatible                       " be Vi iMproved
-
-" Plateform {{{1
-" On which OS are we are ?
 let s:is_windows = has("win16") || has("win32") || has("win64")|| has("win95")
 let s:is_cygwin  = has('win32unix')
 let s:is_macvim  = has('gui_macvim')
 
 " Plugins {{{1
 " ------------
-
 " Init Bundle {{{2
 filetype off                           " Required for Vundle
 
@@ -30,62 +23,34 @@ call vundle#begin()
 " Let Vundle manage Vundle
 Plugin 'gmarik/Vundle.vim'
 
-" Plugins {{{2
-
-
-" A lot of colorschemes (including hybrid)
-Plugin 'flazz/vim-colorschemes'
-
-"Plugin 'dbakker/vim-projectroot'       " Set default path to root project by detecting .git for instance
-"au BufEnter * if &ft != 'help' | call ProjectRootCD() | endif
-
-"Plugin 'Shougo/vimproc.vim'
-"Plugin 'Shougo/vimshell.vim'
-
-
-"Plugin 'vim-scripts/LanguageTool'
-"let g:languagetool_jar='$HOME/languagetool/languagetool-commandline.jar'
-
-"Plugin 'airblade/vim-gitgutter'        " Show changed
-"let g:gitgutter_enabled = 0            " BufEnter much slower with gitgutter. I disabled it !
-"let $GIT_DISCOVERY_ACROSS_FILESYSTEM=1 " Require on Windows/Cygwin to avoid :system() error
 
 
 
 
+" Plugin: Vim-surround/Vim-unimpaired {{{2
 Plugin 'tpope/vim-surround'            " Easy delete, change on surroundings in pairs
 Plugin 'tpope/vim-unimpaired'
 
-
-"Plugin 'vim-scripts/Txtfmt-The-Vim-Highlighter'
+" Plugin: ClearCase configspecs ft {{{2
 Plugin 'vim-scripts/ccase.vim'
 
+" Plugin: Lorem Ipsum {{{2
 Plugin 'vim-scripts/loremipsum'        " Insert Lipsum text
 
-
-
+" Plugin: Zoomwin with <C-w>o {{{2
 Plugin 'vim-scripts/ZoomWin'           " <C-w>o get full screen then <C-w>o again will restore the windows.
 
+" Plugin: Toggle quickfix (vim-togglelist) {{{2
 Plugin 'milkypostman/vim-togglelist'   " Allow to toggle quickfix and location list window
 let g:toggle_list_no_mappings = 1
-" Togglequickfix called by <F10>
 
-"Plugin 'xolox/vim-easytags'            " To test
-
-"Plugin 'skammer/vim-css-color'         " Very slow plugin not usable
+" Plugin: bufkill {{{2
 Plugin 'vim-scripts/bufkill.vim'
 
-" Plugin: Prompt Airline {{{2
-Plugin 'edkolev/promptline.vim'
-let g:promptline_theme = 'nowox'
-let g:promptline_preset = {
-      \'a'    : [ '$(hostname)' ],
-      \'b'    : [ '$(whoami)' ],
-      \'c'    : [ '$(pwd)' ],
-      \'options': {
-          \'left_sections' : [ 'b', 'a' ],
-          \'right_sections' : [ 'c' ],
-          \'left_only_sections' : [ 'b', 'a', 'c' ]}}
+" Plugin: flazz/vim-colorschemes {{{2
+" A lot of colorschemes (including hybrid)
+Plugin 'flazz/vim-colorschemes'
+
 " Plugin: Fakeclip {{{2
 " Allow to use clipboard under cygwin
 " Fakeclip is a Vim plugin to provide a pseudo |clipboard| register for
@@ -149,7 +114,7 @@ let g:UltiSnipsEditSplit="vertical"
 " Plugin: Vim-Airline {{{2
 " Fancy status and tab bar, very good plugin
 Plugin 'bling/vim-airline'                        " Best status line ever (needs Powerline Consolas font)
-let g:airline_theme                      = 'wombat' " With brighter split separators
+let g:airline_theme                      = 'nowox' " With brighter split separators
 let g:airline#extensions#tabline#enabled = 1      " Allows to view windows/tabs
 let g:airline_powerline_fonts            = 1      " Fancy fonts
 let g:airline#extensions#tabline#enabled = 1
@@ -239,10 +204,12 @@ Plugin 'scrooloose/nerdcommenter'
 " Plugin: SuperTab {{{2
 " Supertab is a vim plugin which allows you to use <Tab> for all your insert
 " completion needs (:help ins-completion).
-Plugin 'ervandew/supertab'
+Plugin 'nowox/supertab'
 let g:SuperTabDefaultCompletionType = 'context'
 let g:SuperTabMappingForward = '<C-@>'
 let g:SuperTabMappingBackward = '<S-C-@>'
+let g:SuperTabMappingTabManual = '<leader>sm'
+
 " Plugin: Ag/Ack {{{2
 
 if executable('ag')
@@ -285,11 +252,13 @@ Plugin 'mihaifm/bufstop'               " Easy way to switch buffers
 " :Tabularize /=
 " :Tabularize /=\ \d
 Plugin 'godlygeek/tabular'             " Select, then :Tabularize /= to align to equal sign
+" Plugin: Eunuch (Rename buffer) {{{2
+Plugin 'tpope/vim-eunuch'
+
 " Plugin: Goyo (Distraction free) {{{2
 Plugin 'junegunn/goyo.vim'
-
 " Plugin: Expand-region (ö: expand ä: shrink) {{{2
-Plugin 'terryma/vim-expand-region'  " Allow to visually select increasingly larger region of text 
+Plugin 'terryma/vim-expand-region'     " Allow to visually select increasingly larger region of text
 
 " Plugin: Markdown fold {{{2
 "Plugin 'nelstrom/vim-markdown-folding'
@@ -305,18 +274,21 @@ Plugin 'guns/xterm-color-table.vim'
 "}}}2
 " Plugin: Unite {{{2
 Plugin 'Shougo/unite.vim'
+" Use ag for search
+if executable('ag')
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  let g:unite_source_grep_recursive_opt = ''
+endif
 
 " Plugin: GoldenView {{{2
 Plugin 'zhaocai/GoldenView.Vim'
 
 " Colorizer (Cost too much in performances) {{{2
-Plugin 'lilydjwg/colorizer'
-let g:colorizer_startup = 0
-let g:colorizer_nomap=1
+"Plugin 'lilydjwg/colorizer'
+"let g:colorizer_startup = 0
+"let g:colorizer_nomap=1
 
-" *** Disabled Plugins *** {{{2
-
-" }}}2
 
 " End Bundle {{{2
 
@@ -326,6 +298,9 @@ call vundle#end()
 " Settings {{{1
 " Important settings {{{2
 
+" Not on Vi anymore
+set nocompatible                       " be Vi iMproved
+
 " Reenable filetypes
 filetype plugin on                     " Enable Plugins
 filetype indent on                     " Enable Automatic Indent
@@ -333,12 +308,10 @@ filetype indent on                     " Enable Automatic Indent
 " Remap leader
 let mapleader = ","                    " Use a more convenient leader key
 
-" Vim's language and vim
+" Vim's language
 if s:is_windows && has('gui')
     language messages en
-    set rtp+=~/.vim
 endif
-                                                                           
 
 " Settings: GUI {{{2
 
@@ -357,7 +330,6 @@ colorscheme nowox                      " Best colorscheme ever
 if s:is_windows && !s:is_cygwin
     set shell=c:\windows\system32\cmd.exe
     set runtimepath^=~/.vim
-    set viminfo+=n~/.viminfo
     cd ~
 endif
 " Settings: Terminal {{{2
@@ -372,7 +344,6 @@ set ffs=unix,dos,mac                   " Default type UNIX then DOS then MAC
 setglobal fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,latin1
 set termencoding=utf-8
-
 " Settings: Mouse/Selection {{{2
 set mouse      =a                     " Use mouse in All modes
 set mousefocus                         " Activate windows on mouseover
@@ -395,7 +366,6 @@ set hidden                             " Not unload buffer when it is abandoned
 set relativenumber                     " Show line number on the left
 set whichwrap+=<,>,h,l                 " Allow to use arrow keys to move in Visual Mode
 set virtualedit=all                    " Allow to place cursor at any location
-
 set cursorline                         " Highlight current line
 autocmd WinLeave * setlocal nocursorline
 autocmd WinEnter * setlocal cursorline
@@ -427,7 +397,7 @@ set diffopt+=filler,iwhite,icase,vertical
 set fillchars=fold:─,vert:│            " Separator for status window
 set laststatus=2                       " Always the status of the last window
 set showcmd                            " Show commands being typed in the bottom right corner
-
+set viminfo='1000,<50,f100,s10,:100,@10,h
 " Display unprintable chars
 set list
 set listchars=tab:▸\ "
@@ -492,7 +462,7 @@ set foldenable
 set foldlevelstart=10
 set foldnestmax=10
 set foldmethod=indent
-set foldcolumn=3
+set foldcolumn=0
 " Settings: Backup {{{2
 set nobackup                           " Disable backup
 set noswapfile                         " Disable swap because sometime swapfile is in readonly
@@ -518,7 +488,7 @@ noremap j gj
 noremap k gk
 
 " Backspace will delete the char before cursor
-vnoremap <BS> X
+"vnoremap <BS> X
 nnoremap <BS> X
 
 " $ to move physically at the end of the line
@@ -549,6 +519,9 @@ noremap zb       zMzvzb
 inoremap jk <esc>
 inoremap jj <esc>
 
+" Insertion mode on enter
+noremap <cr> i<cr>
+
 " In the case sudo is needed
 cmap w!! w !sudo tee % >/dev/null
 
@@ -558,6 +531,25 @@ noremap <silent> à mP*N`P
 " Disable highlight search
 noremap <silent> é :noh<cr>
 
+" $ to move physically at the end of the line
+" (Virtualedit must be enabled)
+noremap <End>    $l
+
+vnoremap <Down> j
+vnoremap <Up> k
+vnoremap <Left> h
+vnoremap <Right> l
+snoremap <Down> <Esc>
+snoremap <Up> <Esc>
+snoremap <Right> <Esc>
+snoremap <Left> <Esc>
+snoremap <Bs>  <Bs>
+
+" zz center the current line and fold everything but the current fold
+" [TODO] Only if fold enabled
+noremap <silent> zz       zMzvzz
+noremap <silent> zt       zMzvzt
+noremap <silent> zb       zMzvzb
 
 " Mappings: One char {{{2
 
@@ -593,8 +585,9 @@ map                s       <Plug>(easymotion-s)
 "map                f       <Plug>(easymotion-bd-wl)
 "map                F       <Plug>(easymotion-bd-el)
 map                <c-j>   <Plug>(easymotion-j)
+imap                <c-j>   <esc><Plug>(easymotion-j)
 map                <c-k>   <Plug>(easymotion-k)
-
+imap                <c-k>   <esc><Plug>(easymotion-k)
 " Expand-region
 map                ö       <Plug>(expand_region_expand)
 map                ä       <Plug>(expand_region_shrink)
@@ -655,10 +648,10 @@ nnoremap           <c-f>   /<C-u><C-r>=Escape(expand('<cword>'))<CR>
 inoremap           <c-f>   <esc>/<C-u><C-r>=Escape(expand('<cword>'))<CR>
 vnoremap           <c-f>   /<C-u><C-r>=GetVisualSelection()<CR>
 
-" <c-g> Buffer switch (Previous buffer)
-nnoremap <c-g> :bn<cr>
-inoremap <c-g> <c-o>:bn<cr>
-vnoremap <c-g> <c-c>:bn<cr>
+" <c-g> Alternate buffer
+nnoremap <c-g> <C-^>
+inoremap <c-g> <C-^>
+vnoremap <c-g> <C-^>
 
 " <c-h> Replacement
 nnoremap <c-h> :<C-u>%s/<C-r>=Escape(expand('<cword>'))<CR>//g<left><left>
@@ -738,7 +731,9 @@ vmap <S-Insert>     <C-v>
 "noremap  <C-w>     :BD<CR>
 
 " <C-x> Cut
-vnoremap <C-x>   "+x
+inoremap <C-x> <esc>m`viw"+y``"_diwa
+nnoremap <silent>  <C-x> <esc>m`viw"+y``"_diw
+vnoremap <C-x> "+x
 
 " <c-y> Increment closest number
 nnoremap <silent> <c-y> :<c-u>call AddSubtract("\<c-a>", '')<CR>
@@ -749,6 +744,13 @@ nnoremap <silent> <c-y> :<c-u>call AddSubtract("\<c-a>", '')<CR>
 
 " <C--> [1;5m
 
+" <C-Home> Real start of a line
+inoremap <C-Home>   <C-c>^i
+nnoremap <C-Home>   ^
+inoremap <C-End>    <C-c>$gea
+nnoremap <C-End>    $gel
+
+"
 " Mappings: Alt {{{2
 " <A-j> Move screen down
 set <f32>=j
@@ -760,6 +762,7 @@ noremap <f33> <C-e>j
 inoremap <f33> <C-e><C-o>j
 " }}}2
 " Mappings: F Functions {{{2
+
 " Help in full screen
 nnoremap <c-F1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<CR>
 
@@ -816,10 +819,15 @@ vnoremap <silent> <F12> <c-C>:FixWhitespace<CR>
 inoremap <silent> <F12> <c-O>:FixWhitespace<CR>
 
 " Mappings: Leader {{{2
-" Save session
-nnoremap <leader>s :mksession<cr>
 
-" Edit vimrc
+" Toggle things
+nnoremap <silent> <leader>tn :call Togglenumber()<cr>
+
+" Save/Load session
+nnoremap <leader>ss :mksession<cr>
+nnoremap <leader>sl :s Session.vim<cr>
+
+" Edit/Reload .vimrc
 noremap <leader>v :edit ~/.vimrc<cr>
 noremap <leader>V :source ~/.vimrc<cr>
 
@@ -831,10 +839,10 @@ noremap <leader>bn :bn<cr>
 noremap <leader>bp :bp<cr>
 
 " Useful mapping
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove<cr>
+"map <leader>tn :tabnew<cr>
+"map <leader>to :tabonly<cr>
+"map <leader>tc :tabclose<cr>
+"map <leader>tm :tabmove<cr>
 
 " Set path of current file
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
@@ -871,24 +879,47 @@ noremap <leader>ga  :GitGutterStageHunk<cr>
 noremap <leader>gu  :GitGutterReverHunk<cr>
 noremap <leader>gv  :GitGutterPreviewHunk<cr>
 " }}}2
+" Mappings: Mouse {{{2
 
+" <2-RightMouse> Highlight the word under cursor
+noremap <silent> <2-RightMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
+
+" }}}2
 
 " Tmux {{{1
-if &term =~ '^screen'
-    " tmux will send xterm-style keys when its xterm-keys option is on
+if &term =~ '^screen' && exists('$TMUX')
+    set mouse+=a
+    " tmux knows the extended mouse mode
+    set ttymouse=xterm2
+    " tmux will send xterm-style keys when xterm-keys is on
     execute "set <xUp>=\e[1;*A"
     execute "set <xDown>=\e[1;*B"
     execute "set <xRight>=\e[1;*C"
     execute "set <xLeft>=\e[1;*D"
+    execute "set <xHome>=\e[1;*H"
+    execute "set <xEnd>=\e[1;*F"
+    execute "set <Insert>=\e[2;*~"
+    execute "set <Delete>=\e[3;*~"
+    execute "set <PageUp>=\e[5;*~"
+    execute "set <PageDown>=\e[6;*~"
+    execute "set <xF1>=\e[1;*P"
+    execute "set <xF2>=\e[1;*Q"
+    execute "set <xF3>=\e[1;*R"
+    execute "set <xF4>=\e[1;*S"
+    execute "set <F5>=\e[15;*~"
+    execute "set <F6>=\e[17;*~"
+    execute "set <F7>=\e[18;*~"
+    execute "set <F8>=\e[19;*~"
+    execute "set <F9>=\e[20;*~"
+    execute "set <F10>=\e[21;*~"
+    execute "set <F11>=\e[23;*~"
+    execute "set <F12>=\e[24;*~"
 endif
 "}}}1
 
-" Abbreviattion
-iab xxdate <c-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
-iab xxfile <c-r>=echo expand('%:t')<cr>
-iab xxdir  <c-r>=echo expand('%:p:h')<cr>
-iab xxpath <c-r>=echo expand('%:p')<cr>
-iab shebang #!/usr/env perl
+" Abbreviation {{{1
+ab xxdate <C-R>=DateTime()<cr>
+ab xxfile <C-R>=Filename()<cr>
 
 " Autocommands {{{1
 augroup configgroup
@@ -919,11 +950,20 @@ augroup configgroup
     autocmd BufEnter *.def setlocal filetype=c
     autocmd BufEnter *.ldf setlocal filetype=ldf
     autocmd BufEnter *.tex map <leader>ll :Latexmk<cr>
+    autocmd BufEnter *.ldf setlocal foldmethod=marker | set foldlevel=0
+    autocmd BufEnter *.c   setlocal foldmethod=syntax
 augroup END
 
 augroup vimrc
     autocmd!
     autocmd BufEnter .vimrc setlocal foldmethod=marker | set foldlevel=0
+augroup END
+
+augroup shebang                    
+"  autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python\<nl># Author: Yves Chevallier<nl># Date:\".strftime("%d/%m/%y %H:%M:%S")|$
+  autocmd BufNewFile *.rb 0put =\"#!/usr/bin/env ruby\<nl># -*- coding: None -*-\<nl>\"|$
+  autocmd BufNewFile *.pl 0put =\"#!/usr/bin/env perl\<nl># -*- coding: None -*-\<nl>\"|$
+  autocmd BufNewFile *.tex 0put =\"%&plain\<nl>\"|$
 augroup END
 "}}}1
 " .vimrc Plugins {{{1
@@ -1151,6 +1191,15 @@ function! ToggleNumber()
         set norelativenumber
     endif
 endfunction
+"Insert current filename {{{1
+fun! Filename()
+    return expand("%:t")
+endfun
+
+"Insert time {{{1
+fun! DateTime()
+    return strftime("%Y-%m-%d %a %I:%M %p")
+endfun
 " }}}1
 
 " New Stuff {{{1
@@ -1217,7 +1266,7 @@ if has("folding")
           let l:start = strpart(l:start , 0, l:width - strlen(substitute(l:end, '.', 'x', 'g')) - l:separatorlen)
           let l:text = l:start . ' … ' . l:end
 
-          return l:text . repeat(' ', l:width - strlen(substitute(l:text, ".", "x", "g"))) . l:info          
+          return l:text . repeat(' ', l:width - strlen(substitute(l:text, ".", "x", "g"))) . l:info
       else
           let l:line = substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{{\d*\s*', '', 'g')
           if &ft == 'mkdc'
@@ -1237,7 +1286,7 @@ if has("folding")
   endfunction
   set foldtext=MyFoldText()
 
-endif       
+endif
 " }}}2
 
 " }}}1
