@@ -23,10 +23,6 @@ call vundle#begin()
 " Let Vundle manage Vundle
 Plugin 'gmarik/Vundle.vim'
 
-
-
-
-
 " Plugin: Vim-surround/Vim-unimpaired {{{2
 Plugin 'tpope/vim-surround'            " Easy delete, change on surroundings in pairs
 Plugin 'tpope/vim-unimpaired'
@@ -128,8 +124,10 @@ let g:EasyMotion_startofline        = 0 " Keep cursor colum when JK motion
 let g:EasyMotion_smartcase          = 1 " Same as smartcase in vim
 let g:EasyMotion_do_shade           = 1 " Shade text to better see the keys
 let g:EasyMotion_enter_jump_first   = 1 " When search, jump directly on enter
+let g:EasyMotion_space_jump_first   = 1
 let g:EasyMotion_do_special_mapping = 1 " {operator}<leader>l (select, yank, paste ...)
-let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz123456789éà$,.-è<'
+
+let g:EasyMotion_keys = 'asdfjkléghqwertuiopzyxcvnm,.b1234567890'
 " Plugin: CtrlP <C-p> {{{2
 " Inspired from Sublime. Provide a nice solution to navigate and load files.
 Plugin 'kien/ctrlp.vim'                           " Sublime's <C-P> feature
@@ -224,6 +222,7 @@ let g:eregex_default_enable = 0
 
 " Plugin: Mark--Karkat {{{2
 Plugin 'vim-scripts/Mark--Karkat'
+
 " Plugin: Voom {{{2
 Plugin 'vim-scripts/VOoM'
 " Plugin: Gundo {{{2
@@ -272,7 +271,7 @@ Plugin 'chrisbra/improvedft'
 " Plugin: Color table xterm (256 colors) {{{2
 Plugin 'guns/xterm-color-table.vim'
 "}}}2
-" Plugin: Unite {{{2
+" Plugin: Shougo - Unite {{{2
 Plugin 'Shougo/unite.vim'
 " Use ag for search
 if executable('ag')
@@ -280,6 +279,9 @@ if executable('ag')
   let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
   let g:unite_source_grep_recursive_opt = ''
 endif
+
+" Plugin: Shougo - Vimproc {{{2
+Plugin 'Shougo/vimproc.vim'
 
 " Plugin: GoldenView {{{2
 Plugin 'zhaocai/GoldenView.Vim'
@@ -397,7 +399,7 @@ set diffopt+=filler,iwhite,icase,vertical
 set fillchars=fold:─,vert:│            " Separator for status window
 set laststatus=2                       " Always the status of the last window
 set showcmd                            " Show commands being typed in the bottom right corner
-set viminfo='1000,<50,f100,s10,:100,@10,h
+set viminfo='1000,<50,f100,s10,:1000,@10,h
 " Display unprintable chars
 set list
 set listchars=tab:▸\ "
@@ -581,7 +583,7 @@ noremap            -       :
 noremap            §       :redraw<cr>
 
 " Easymotion
-map                s       <Plug>(easymotion-s)
+map                s       <Plug>(easymotion-sn)
 "map                f       <Plug>(easymotion-bd-wl)
 "map                F       <Plug>(easymotion-bd-el)
 map                <c-j>   <Plug>(easymotion-j)
@@ -687,6 +689,9 @@ inoremap           <C-o>    <C-o>:CtrlPBuffer<CR>
 " <C-q> Blockwise visual mode
 noremap            <C-q>    <C-v>
 
+" Use CTRL-Q to do what CTRL-V used to do
+inoremap           <C-q>    <c-v>
+
 " <C-r> Redo
 
 " <C-s> Save
@@ -698,6 +703,7 @@ inoremap           <C-s>    <C-o>:update!<CR>
 inoremap <c-t> <c-x><c-]>
 
 " <C-u> Interrupt current search
+noremap <c-u> <c-c>
 
 " <c-v> Paste
 noremap            <C-v>    "+gP
@@ -855,29 +861,17 @@ nmap <leader>d :bprevious<CR>:bdelete! #<CR>
 nnoremap <leader>. :CtrlPTag<cr>
 
 " Ag search
-noremap <leader>a  :Ag! <c-R><c-W><cr>
-noremap <leader>A  :Ag! <c-R><c-W><cr>
-
-" Use CTRL-Q to do what CTRL-V used to do
-noremap <c-q> <c-v>
+noremap <leader>a  :Ag! <c-R><c-W>
 
 " Disable highlight search
-map     <silent> <leader><cr> :noh<cr>
+map  <silent> <leader><cr> :noh<cr>
 
-" Leader Shortcuts
-nmap <leader>w :w!<cr>
+" <leader>n     NERDTree Toggle
+" Mark-karkat
 
-" Remap interrupt search command
-noremap <c-u> <c-c>
+" <leader>w     Force save
+noremap <silent>    <leader>w       :w!<cr>
 
-" GitGutter
-noremap <leader>gh  :GitGutterLineHighlightsToggle<cr>
-noremap <leader>gg  :GitGutterToggle<cr>
-noremap <leader>gj  :GitGutterNextHunk<cr>
-noremap <leader>gk  :GitGutterPrevHunk<cr>
-noremap <leader>ga  :GitGutterStageHunk<cr>
-noremap <leader>gu  :GitGutterReverHunk<cr>
-noremap <leader>gv  :GitGutterPreviewHunk<cr>
 " }}}2
 " Mappings: Mouse {{{2
 
