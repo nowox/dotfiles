@@ -595,6 +595,13 @@ map                ä       <Plug>(expand_region_shrink)
 
 " Mappings: CTRL {{{2
 
+" Bubble single lines
+nmap <C-Up> ddkP
+nmap <C-Down> ddp
+" Bubble multiple lines
+vmap <C-Up> xkP`[V`]
+vmap <C-Down> xp`[V`]
+
 " <C-Tab> <C-S-Tab> Next/Previous buffer
 if s:is_cygwin
     " <C-Tab> Next buffer

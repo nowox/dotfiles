@@ -1,13 +1,13 @@
 [user]
-	email = "nowox@x0x.ch"
-	name = Yves Chevallier
+    email = "nowox@x0x.ch"
+    name = Yves Chevallier
 [code]
-	editor = vim
+    editor = vim
 [core]
-	ignorecase = false
-	whitespace = cr-at-eol
+    ignorecase = false
+    whitespace = cr-at-eol
 [diff]
-	tool = vimdiff
+    tool = vimdiff
 [alias]
     tree = log --graph --decorate --pretty=oneline --abbrev-commit
     co = checkout
@@ -15,4 +15,18 @@
     st = status
     br = branch
 [color]
-	ui = true
+    ui = true
+
+[diff]
+    tool = bc3
+[difftool]
+    prompt = false
+[difftool "bc3"]
+    cmd = \"/cygdrive/c/Program Files (x86)/Beyond Compare 4/BComp.exe\" "$(cygpath -w $LOCAL)" "$REMOTE"
+[merge]
+    tool = bc3
+[mergetool]
+    prompt = false
+[mergetool "bc3"]
+    trustExitCode = true
+    cmd = \"/cygdrive/c/Program Files (x86)/Beyond Compare 4/BComp.exe\" "$LOCAL" "$REMOTE" "$BASE" "$MERGED" 
