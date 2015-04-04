@@ -2,6 +2,7 @@
 "" Maintainer:  Yves Chevallier <nowox@x0x.ch>
 "" Last Change: 2015-04-01
 "" Source:      https://github.com/nowox/dotfiles/.vimrc
+" '''
 "     _                _   _
 "    / \   _ __   ___ | |_| |__   ___ _ __
 "   / _ \ | '_ \ / _ \| __| '_ \ / _ \ '__|
@@ -10,6 +11,7 @@
 "                                          \ \ / / | '_ ` _ \| '__/ __|
 "                                           \ V /| | | | | | | | | (__
 "                                         (_)\_/ |_|_| |_| |_|_|  \___|
+" '''
 "
 " #Motivations
 " I am not convinced traditional vim users are more efficient than sublime's or atom's
