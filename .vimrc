@@ -14,10 +14,11 @@
 " ```
 "
 " #Motivations
-" I am not convinced traditional vim users are more efficient than sublime's or atom's
+" I am not convinced that traditional vim users are more efficient than sublime's or atom's
 " users. However, I am truly convinced that vim can be configured to be used in a more
-" modern way. For instance, I feel using `<C-c>` and `<C-v>` for copy/paste is the first
-" step in this tiny revolution. Almost every terminal emulators can now capture Ctrl + key
+" modern way. For instance, I feel that using `<C-c>` and `<C-v>` for copy/paste is the first
+" step in this tiny revolution. Almost every terminal emulators can capture Ctrl + key now.
+"
 " Why not to start using them extensively?
 "
 " The Markdown output is generated with vim2doc Perl script:
@@ -966,13 +967,15 @@ endif
 "}}}1
 " #Abbreviation {{{1
 
-" ##xxfile {{{2
+" ##`xxfile` {{{2
+" Automatically insert the filename
 ab xxfile <C-R>=Filename()<cr>
 fun! Filename()
     return expand("%:t")
 endfun
 
-" ##xxdate {{{2
+" ##`xxdate` {{{2
+" Automatically insert the current date
 ab xxdate <C-R>=DateTime()<cr>
 fun! DateTime()
     return strftime("%Y-%m-%d %a %I:%M %p")
@@ -1163,17 +1166,17 @@ endif
 " | `<Space>`      | Search                                                |            |
 " | `Q`            | Format selected paragraph                             |            |
 " | `Z`            | Ag search                                             |            |
-"
-
-" <C-a>                 Select all
-" <C-n>                 Select cursor under cursor                     (multiple-cursors)
-" <C-p>                 Full path fuzzy file finder                               (ctrlp)
-" <C-Up>                Bubble up line/selection
-" <C-Down>              Bubble down line/selection
-" <C-Tab>               Next bufofber
-" <C-S-Tab>             Previous fbuffer
+" | `<C-a>`        | Select all                                            |            |
+" | `<C-n>`        | Select cursor under cursor                            | multiple-cursors|
+" | `<C-p>`        | Full path fuzzy file finder                           | ctrlp      |
+" | `<C-Up>`       | Bubble up line/selection                              |            |
+" | `<C-Down>`     | Bubble down line/selection                            |            |
+" | `<C-Tab>`      | Next bufofber                                         |            |
+" | `<C-S-Tab>`    | Previous fbuffer                                      |            |
 "
 " ##Command Mode
 "
-" <C-r>                 Regex search                                              (ctrlp)
-" <C-d>                 Search by filename enable/disable                         (ctrlp)
+" |    Mapping     |     Description                                       |   Plugin   |
+" |:---------------|:------------------------------------------------------|:----------:|
+" | <C-r>          | Regex search                                          | ctrlp      |
+" | <C-d>          | Search by filename enable/disable                     | ctrlp      |

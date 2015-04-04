@@ -12,10 +12,11 @@
 
 <a name="Motivations"></a>
 #1. Motivations
-I am not convinced traditional vim users are more efficient than sublime's or atom's
+I am not convinced that traditional vim users are more efficient than sublime's or atom's
 users. However, I am truly convinced that vim can be configured to be used in a more
-modern way. For instance, I feel using `<C-c>` and `<C-v>` for copy/paste is the first
-step in this tiny revolution. Almost every terminal emulators can now capture Ctrl + key
+modern way. For instance, I feel that using `<C-c>` and `<C-v>` for copy/paste is the first
+step in this tiny revolution. Almost every terminal emulators can capture Ctrl + key now.
+
 Why not to start using them extensively?
 
 The Markdown output is generated with vim2doc Perl script:
@@ -133,15 +134,15 @@ The Markdown output is generated with vim2doc Perl script:
 6.6.1. [`<2-RightMouse>` Highlight the word under cursor](#__2_RightMouse___Highlight_the_word_under_cursor)  
 7.6. [Tmux](#Tmux)  
 8.6. [Abbreviation](#Abbreviation)  
-8.7. [xxfile](#xxfile)  
-8.8. [xxdate](#xxdate)  
+8.7. [`xxfile`](#_xxfile_)  
+8.8. [`xxdate`](#_xxdate_)  
 9. [Functions](#Functions)  
 10. [Autocommands](#Autocommands)  
 10.1. [Config group](#Config_group)  
 10.2. [Vimrc](#Vimrc)  
 10.3. [Shebang](#Shebang)  
 10.4. [GPG Encryption](#GPG_Encryption)  
-11. [Functions](#Functions7)  
+11. [Functions](#FunctionsC)  
 11.1. [Folding text format](#Folding_text_format)  
 12. [Keyboard mapping summary](#Keyboard_mapping_summary)  
 12.1. [Any modes](#Any_modes)  
@@ -1607,11 +1608,12 @@ endif
 <a name="Abbreviation"></a>
 #8.6. Abbreviation
 
-<a name="xxfile"></a>
-##8.7. xxfile
+<a name="_xxfile_"></a>
+##8.7. `xxfile`
+Automatically insert the filename
 
-<a name="xxdate"></a>
-##8.8. xxdate
+<a name="_xxdate_"></a>
+##8.8. `xxdate`
 
 ```vimscript
 ab xxfile <C-R>=Filename()<cr>
@@ -1620,6 +1622,7 @@ fun! Filename()
 endfun
 ```
 
+Automatically insert the current date
 
 <a name="Functions"></a>
 #9. Functions
@@ -1726,7 +1729,7 @@ augroup END
 Transparent editing of gpg encrypted files (by Wouter Hanegraaff)
 
 
-<a name="Functions7"></a>
+<a name="FunctionsC"></a>
 #11. Functions
 
 ```vimscript
@@ -1859,18 +1862,19 @@ endif
 | `<Space>`      | Search                                                |            |
 | `Q`            | Format selected paragraph                             |            |
 | `Z`            | Ag search                                             |            |
-
-<C-a>                 Select all
-<C-n>                 Select cursor under cursor                     (multiple-cursors)
-<C-p>                 Full path fuzzy file finder                               (ctrlp)
-<C-Up>                Bubble up line/selection
-<C-Down>              Bubble down line/selection
-<C-Tab>               Next bufofber
-<C-S-Tab>             Previous fbuffer
+| `<C-a>`        | Select all                                            |            |
+| `<C-n>`        | Select cursor under cursor                            | multiple-cursors|
+| `<C-p>`        | Full path fuzzy file finder                           | ctrlp      |
+| `<C-Up>`       | Bubble up line/selection                              |            |
+| `<C-Down>`     | Bubble down line/selection                            |            |
+| `<C-Tab>`      | Next bufofber                                         |            |
+| `<C-S-Tab>`    | Previous fbuffer                                      |            |
 
 
 <a name="Command_Mode"></a>
 ##12.3. Command Mode
 
-<C-r>                 Regex search                                              (ctrlp)
-<C-d>                 Search by filename enable/disable                         (ctrlp)
+|    Mapping     |     Description                                       |   Plugin   |
+|:---------------|:------------------------------------------------------|:----------:|
+| <C-r>          | Regex search                                          | ctrlp      |
+| <C-d>          | Search by filename enable/disable                     | ctrlp      |
