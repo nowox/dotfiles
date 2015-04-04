@@ -627,7 +627,7 @@ inoremap dd7 <C-c>dv7bi
 inoremap dd8 <C-c>dv8bi
 inoremap dd9 <C-c>dv9bi
 
-" ##<C-?> Control + key {{{2
+" ##<C> Control + key {{{2
 " ###<C-Tab> <C-S-Tab> Next/Previous buffer {{{3
 if s:is_cygwin
     " <C-Tab> Next buffer

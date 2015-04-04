@@ -25,7 +25,7 @@ while (<>) {
 $markdown .= codeblock(@code);
 
 #print $markdown;
-print toc($markdown); 
+print escape(toc($markdown)); 
 
 sub codeblock {
     shift @_ while @_ > 0 and $_[0]   =~ /^\s*$/;
@@ -34,10 +34,18 @@ sub codeblock {
     "$/```vimscript$/".join($/, @_)."$/```$/$/"
 }
 
+sub escape {
+    local $_ = shift;
+    s/</&lt;/g;
+    s/>/&gt;/g;
+    $_;
+}
+
 sub header {
     pop @_ while @_ > 0 and $_[$#_] eq 0;
     join '.', @_;
 }
+
 sub toc {
     # Parse the code once to get the sections tree
     my $out = '';
