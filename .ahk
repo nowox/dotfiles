@@ -4,6 +4,10 @@
 ; ()()\___)(_____)(____)(_)\_)()()
 ; My Own Autohotkeys script
 
+LShift & RShift::
+    Send #{Space}
+    Return
+
 ; Win+<char> quick mappings
 ; -------------------------
 #v::

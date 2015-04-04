@@ -1,0 +1,28 @@
+#!/usr/bin/env perl
+#Author: Yves Chevallier <nowox@x0x.ch>
+#Date:   2015-04-04 Sat 11:26 AM 
+#Desc:   Extract documentation from VimScript scripts.
+use 5.010;
+use strict;
+
+my @code = ();
+while (<>) {
+    my $say = '';
+    next if /^""/;                  # Double quote is undocumented section
+    s/[{}]{3}\d//;                  # Remove vim's folding markers
+    s/^(.*?)\s*"<!(.*)$/"`$1` $2/;  # Comment inline code
+
+    if (/^"(?!")/) {
+        if(@code > 0) {
+            $_ = $/.join($/, @code).$/;
+            @code = ();
+        }
+        s|^" ?||g;
+        s|^\s+$|$/|gm;
+        print;
+    } else {
+        push @code, (' ' x 4).($_ =~ s/[\n\r]//gr);
+    }
+}
+print $/.join($/, @code).$/ if(@code > 0);
+

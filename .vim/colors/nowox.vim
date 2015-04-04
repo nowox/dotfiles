@@ -342,7 +342,7 @@ call <SID>X("CursorLineNr" , "#f0c674"    , s:gray_dark  , "bold")
 call <SID>X("MatchParen"   , s:background , s:changebg   , "")
 call <SID>X("ModeMsg"      , s:green      , ""           , "")
 call <SID>X("MoreMsg"      , s:green      , ""           , "")
-call <SID>X("NonText"      , "#81a2be"    , ""           , "")
+call <SID>X("NonText"      , s:keyword    , ""           , "")
 call <SID>X("Pmenu"        , s:foreground , s:selection  , "")
 call <SID>X("PmenuSel"     , s:foreground , s:selection  , "reverse")
 
@@ -351,7 +351,7 @@ call <SID>X("PmenuThumb"   , s:foreground , s:selection  , "reverse")
 
 call <SID>X("Question"     , s:green      , ""           , "")
 
-call <SID>X("SpecialKey"   , s:blue       , ""           , "")
+call <SID>X("SpecialKey"   , s:gray_middle       , ""           , "")
 call <SID>X("SpellCap"     , s:blue       , s:darkblue   , "underline")
 call <SID>X("SpellLocal"   , s:aqua       , s:darkcyan   , "underline")
 call <SID>X("SpellBad"     , s:red        , s:darkred    , "underline")
@@ -363,7 +363,7 @@ call <SID>X("TabLineFill"  , s:foreground , s:darkcolumn , "reverse")
 call <SID>X("TabLineSel"   , s:foreground , s:darkcolumn , "reverse")
 
 call <SID>X("Title"        , s:yellow     , ""           , "")
-call <SID>X("Visual"       , ""           , s:selection  , "reverse")
+call <SID>X("Visual"       , ""           , ""  , "reverse")
 call <SID>X("VisualNos"    , ""           , s:selection  , "")
 
 call <SID>X("WarningMsg"   , s:red        , ""           , "")

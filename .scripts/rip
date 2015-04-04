@@ -1,0 +1,146 @@
+#!/bin/perl
+# Author: Yves Chevallier
+# Date:   2014-06-03
+# Desc:   Find and replace strings using or not regexp
+use 5.010;
+use strict;
+use warnings;
+use autodie;
+use File::Find;
+use Getopt::Long qw(:config no_ignore_case bundling);
+
+my $search;
+my $replace;
+my @files;
+my %settings;
+
+# Process Command Line arguments
+GetOptions('h|help'   => \&help,
+           'version', => \&version,
+           't'        => \$settings{test},
+           'e|pcre'   => \$settings{pcre},   # Use Perl regexp
+           'script=s' => \$settings{file},   # External script
+           'ext=s'    => \$settings{ext},
+) or pod2usage("Try --help for usage informations");
+
+# An external script is given
+if($settings{file})
+{
+    die "Error: Unable to read the input script" unless -f $settings{file};
+
+    $settings{script} = do {
+        open my $fh, '<', $settings{file};
+        local $/;
+        <$fh>;
+    };
+    chomp($settings{script});
+    say "\n--- [BEGIN-SCRIPT] ---". "-" x 30;
+    say $settings{script};
+    say "--- [END-SCRIPT] -----". "-" x 30 . "\n";
+}
+else
+{
+    die "Error: Invalid values!" if @ARGV < 2;
+    $search  = shift(@ARGV);
+    $replace = shift(@ARGV);
+}
+
+
+@files   = @ARGV;
+for(@files) {
+    next unless -f;
+    next unless -d;
+    die "Error: invalid location $_";
+}
+
+# File extensions regex
+my $exts = $settings{ext};
+$exts =~ s/[ ,]+/ /g;       # " .c,.h,, .cpp  " --> " .c .h .cpp  "
+$exts =~ s/^\s+|\s+$//;     # " .c .h .cpp  "   --> ".c .h .cpp"
+$exts =~ s/\.//;            # " .c .h .cpp  "   --> "c .h cpp"
+$exts =~ s/[ ]/|/g;          # "c h cpp"         --> "c|h|cpp"
+
+die "Error: A forbiden extension was detected!" if $exts =~ /$settings{forbidded_ext}/;
+
+my $mask = qr/[.](?:$exts)$/i;
+undef $exts;
+
+# Do the job
+push @files, '.' unless scalar @files > 0;
+for(@files) {
+    find(\&process, $_);
+}
+
+# Main subroutine
+sub process {
+    # Check files
+    return if !-f;
+    return if !/$mask/;
+    my $filename = $_;
+
+    # Load file
+    $_ = do {
+        open my $fh, '<', $_;
+        local $/;
+        <$fh>;
+    };
+
+    # Count replacements
+    if($settings{file})
+    {
+        my $count = 0;
+        eval $settings{script};
+        print " [$filename] ". ' ' x ($settings{pad}-length($_)) . "$count occurence". ($count > 1 ? 's':'') . "\n" if $count > 0;
+
+    } else {
+        my $count = $_ =~ s/$search/$replace/g or return;
+        if ($count > 0) {
+        print $settings{test} ? '*TEST*' : '';
+        say " [$filename] ". ' ' x ($settings{pad}-length($_)) . "$count occurence". ($count > 1 ? 's':'') . " found of $search";
+        }
+    }
+
+    # If not in test mode
+    unless($settings{test}) {
+        open my $fh, '>', $filename;
+        print $fh $_;
+        close $fh;
+    }
+}
+
+sub version {
+    say "rip 0.1a";
+    exit;
+}
+
+sub help {
+    say STDERR help;
+    exit 0;
+}
+
+=help
+usage: rip [OPTIONS] PATTERN [PATH]
+
+    Recursively search and replace in-place PATTERN in PATH
+
+ -e   --pcre      Use PCRE regexp
+ -t               Test mode, do not replace anything
+      --script=   Execute an external script
+ -i   --name=     Match only certain files --name='/[.](c|h)/'
+
+ -i               Ignore case
+      --keep=     Keep a backup file default .keep
+ -v   --version   Script version
+ -h   --help      Print this help
+
+examples:
+  rip -t --file=replacements.pl
+  rip foo bar
+  rip foo bar accuret.c accuret.h
+  rip -e 's/fo[a-z]/ba\$1/'
+
+  replace --name='*.c *.h'
+
+author:  Yves Chevallier <nowox\@x0x.ch>
+=cut
+
