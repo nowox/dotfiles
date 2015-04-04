@@ -5,6 +5,7 @@
 use 5.010;
 use strict;
 
+my $markdown = '';
 my @code = ();
 while (<>) {
     my $say = '';
@@ -13,19 +14,65 @@ while (<>) {
     s/^(.*?)\s*"<!(.*)$/"`$1` $2/;  # Comment inline code
 
     if (/^"(?!")/) {
-        $_ = code(@code) and @code = () if @code > 0;
+        $_ .= codeblock(@code) and @code = () if @code > 0;
         s|^" ?||g;
         s|^\s+$|$/|gm;
-        print;
+        $markdown .= $_;
     } else { 
         push @code, $_ =~ s/[\n\r]//gr;
     }
 }
-print code(@code);
+$markdown .= codeblock(@code);
 
-sub code {
+#print $markdown;
+print toc($markdown); 
+
+sub codeblock {
     shift @_ while @_ > 0 and $_[0]   =~ /^\s*$/;
     pop   @_ while @_ > 0 and $_[$#_] =~ /^\s*$/;
     return unless @_ > 0;
     "$/```vimscript$/".join($/, @_)."$/```$/$/"
+}
+
+sub header {
+    pop @_ while @_ > 0 and $_[$#_] eq 0;
+    join '.', @_;
+}
+sub toc {
+    # Parse the code once to get the sections tree
+    my $out = '';
+    my $toc = '';
+    my %link = ();
+    my @counters = (0,0,0,0,0,0,0);
+    my @sections = (); 
+    my $old_lvl = 0;
+    for(split "\n", shift) {
+        if (/^\s*(#+)\s*(.+?)\s*$/) {
+            my $sharp = $1;
+            my $cur_lvl = length($sharp) - 1;
+            $counters[$cur_lvl]++;
+            $counters[$old_lvl] = 0 if($cur_lvl < $old_lvl);
+            $old_lvl = $cur_lvl;
+
+            # Append toc
+            my $txt = $2;
+            my $lnk = $txt;
+            $lnk =~ s/[^0-9A-Za-z]/_/g;
+            my $header = header(@counters);
+            $lnk.= chr(0x30 + rand(40)) while ( $link{$lnk} eq 1 );
+            $link{$lnk} = 1;
+            $toc .= $header.". [$txt](#$lnk)$/";
+
+            # Adjust header
+            $out .= "$/<a name=\"$lnk\"></a>$/";
+            $out .= $sharp.$header.". $txt$/";
+        }
+        else {
+            $out .= $_.$/;
+        }        
+    }
+
+    $toc = "\n- - -\n\n$toc\n\n";
+    $out =~ s/\Q[TOC]\E/$toc/g;
+    $out; 
 }
