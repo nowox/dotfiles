@@ -1,7 +1,9 @@
-#Another .vimrc
 
-##Motivations
-I am not convinced traditional vim users are more efficient than sublime's or atom's
+<center> <h1>Another .vimrc</h1> </center>
+
+
+<a name="Motivations"></a>
+#1. MotivationsI am not convinced traditional vim users are more efficient than sublime's or atom's
 users. However, I am truly convinced that vim can be configured to be used in a more
 modern way. For instance, I feel using `<C-c>` and `<C-v>` for copy/paste is the first
 step in this tiny revolution. Almost every terminal emulators can now capture Ctrl + key
@@ -11,16 +13,39 @@ The Markdown output is generated with vim2doc Perl script:
 
     ~/.scripts/vim2doc ~/.vimrc > ~/.doc/vimrc.md
 
-##Table of contents
 
-[TOC]
+<a name="Table of contents"></a>
+#2. Table of contents
+1. (Motivations)[Motivations]
+2. (Table of contents)[Table of contents]
+3. (At first )[At first ]
+4. (Plugins )[Plugins ]
+4.1. (Lorem Ipsum )[Lorem Ipsum ]
+4.2. (Zoomwin )[Zoomwin ]
+4.3. (Mark by Ingo Karkat )[Mark by Ingo Karkat ]
+4.4. (Autocommands )[Autocommands ]
+4.4.1. (Config group )[Config group ]
+4.4.2. (Vimrc )[Vimrc ]
+4.4.3. (Shebang )[Shebang ]
+4.4.4. (GPG Encryption )[GPG Encryption ]
+5.4.4. (Functions )[Functions ]
+5.5.4. (Folding text format )[Folding text format ]
+6.5.4. (Keyboard mapping summary )[Keyboard mapping summary ]
+6.6.4. (Any modes)[Any modes]
+6.7.4. (Normal mode)[Normal mode]
+6.8.4. (Command Mode)[Command Mode]
 
-##At first 
-We reset all the previous settings and enter in no-compatible mode. We stop using vim
+
+
+<a name="At first "></a>
+#3. At first We reset all the previous settings and enter in no-compatible mode. We stop using vim
 in legacy mode.
 
 `set all&`  Reset all settings
 `set nocompatible`  be Vi iMproved
+Depending on the architecure, one has setup vim differently. Let's discover which is
+the used architecture. I am mainly using Vim on Windows, Cygwin and Linux.
+Start Vundle our package manager.
 
 ```vimscript
 let s:is_windows = has("win16") || has("win32") || has("win64")|| has("win95")
@@ -36,6 +61,8 @@ To install a new package just type `:BundleInstall` and for update `:BundleUpdat
 Before anything, we need to disable `filetype`.
 
 
+<a name="Plugins "></a>
+#4. Plugins 
 ```vimscript
 filetype off
 set  runtimepath +=~/.vim/bundle/Vundle.vim
@@ -45,6 +72,24 @@ Plugin 'gmarik/Vundle.vim'
 
 This section contains all the plugins I am using with Vim.
 
+<a name="Lorem Ipsum "></a>
+##4.1. Lorem Ipsum (LoremIpsum)[http://lipsum.com/] is simply dummy text of the printing and typesetting 
+industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+when an unknown printer took a galley of type and scrambled it to make a type specimen 
+book. It has survived not only five centuries, but also the leap into electronic 
+typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
+release of Letraset sheets containing Lorem Ipsum passages, and more recently with 
+desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+Usage is
+
+    :Loremipsum[!] [WORDCOUNT] [PARAGRAPH_TEMPLATE] [PREFIX POSTFIX]
+
+For example you can use `:Loremipsum 42` to generate 42 words.
+
+
+<a name="Zoomwin "></a>
+##4.2. Zoomwin 
 ```vimscript
 Plugin 'loremipsum'
 ```
@@ -57,6 +102,8 @@ plugin provide this with `<C-w>o` to enable/disable the full screen mode.
 - ZoomWin will clean up any temporary files it generates upon exit.
 
 
+<a name="Mark by Ingo Karkat "></a>
+##4.3. Mark by Ingo Karkat 
 ```vimscript
 Plugin 'ZoomWin'
 ```
@@ -76,12 +123,14 @@ group `[N]`. When that group is not empty, the word is added as an alternative m
 so you can highlight multiple words with the same color. When the word is already 
 contained in the list of alternatives, it is removed. 
 
+Colorschemes collection 
 
 ```vimscript
 Plugin 'Mark'
 ```
 
 Flazz provide a nice collection of colorschemes
+Bufkill (improve buffers navigation) 
 
 ```vimscript
 Plugin 'flazz/vim-colorschemes'
@@ -104,6 +153,7 @@ To move backwards/forwards through recently accessed buffers, use:
 To move to the alternate buffer whilst preserving cursor column use:
 :BA
 <Leader>ba
+Toggle quickfix (vim-togglelist) 
 
 ```vimscript
 Plugin 'bufkill.vim'
@@ -117,6 +167,7 @@ the Quickfix List.
 <Leader>l             Toggle location list
 <Leader>q             Toggle Quickfix list
 
+Fakeclip 
 
 ```vimscript
 Plugin 'milkypostman/vim-togglelist'
@@ -138,6 +189,7 @@ plugin.
 Under Windows, the * and + registers are equivalent. For X11 systems, though, they
 differ. For X11 systems, * is the selection, and + is the cut buffer (like clipboard).
 
+Taglist 
 
 ```vimscript
 Plugin 'kana/vim-fakeclip'
@@ -154,6 +206,7 @@ The taglist plugin groups and displays the functions, classes, structures,
 enumerations, macro definitions and other parts of a source code file in a Vim window.
 The taglist plugin will automatically highlight the current tag. You can jump to the
 definition of a tag by selecting the tag name from the taglist window.
+Tagbar 
 
 ```vimscript
 Plugin 'taglist.vim'
@@ -171,6 +224,7 @@ the class they are defined in.
 
 It is a promising alternative to Taglist.
 
+Jedi Python 
 
 ```vimscript
 Plugin 'majutsushi/tagbar'
@@ -188,6 +242,7 @@ jedi-vim is a VIM binding to the autocompletion library.
 <Leader>r             Renaming                                               (jedi-vim)
 <Leader>n             Usages                                                 (jedi-vim)
 
+Autochmodx 
 
 ```vimscript
 Plugin 'davidhalter/jedi-vim'
@@ -200,6 +255,7 @@ If a current file looks like an executable script, make it executable by running
 
 It works perfectly with bash, perl, python scripts. It also detects shebang tag.
 
+CtrlP (<C-p>) 
 
 ```vimscript
 Plugin 'tyru/autochmodx.vim'
@@ -216,6 +272,7 @@ let g:autochmodx_scriptish_file_patterns = [
 Inspired from Sublime. Provide a nice solution to navigate and load files.
 
 Regex mode can be toggled on/off by pressing <c-r> inside the prompt.
+c     Directory of the current file
 
 ```vimscript
 Plugin 'kien/ctrlp.vim'
@@ -224,17 +281,20 @@ Plugin 'kien/ctrlp.vim'
 r     Nearest ancestor that contains .git, .hg, .svn
 a     like c but only if the current wd ouside of ctrp is not a direct ancestor
 0     Disable this feature
+Jump when <cr> is pressed
 
 ```vimscript
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_cache_dir         = '~/.cache/ctrlp'
 ```
 
+By default set searching by filename (as opposed to full path)
 
 ```vimscript
 let g:ctrlp_switch_buffer     = 'e'
 ```
 
+CtrlP Command Palette 
 
 ```vimscript
 let g:ctrlp_by_filename       = 1
@@ -260,6 +320,7 @@ This extension adds a new CtrlP command, the :CtrlPCmdPalette, which allows you 
 find and run vim commands (internal or custom).
 
 Now you can call :CtrlPCmdPalette, or map it to a keybinding
+NERDTree 
 
 ```vimscript
 Plugin 'fisadev/vim-ctrlp-cmdpalette'  " Command palette for ctrlp
@@ -270,6 +331,7 @@ let g:ctrlp_cmdpalette_execute=1
 
 File Explorer
 
+Open NERDTree automatically when vim starts up if no files were specified
 
 ```vimscript
 Plugin 'scrooloose/nerdtree'           " File explorer
@@ -281,6 +343,8 @@ let g:NERDTreeWinSize    = 50          " Width of the NERDTree sidebar
 
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+Close vim if NERDTree is the last window
+Multiple-cursors 
 
 ```vimscript
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -295,6 +359,7 @@ vim-multiple-cursors is yet another attempt at that.
 
 <C-n>                 Select cursor under cursor
 
+let g:multi_cursor_use_default_mapping=1
 
 ```vimscript
 Plugin 'terryma/vim-multiple-cursors'  " Sublime's multiple selection feature
@@ -303,6 +368,11 @@ Plugin 'terryma/vim-multiple-cursors'  " Sublime's multiple selection feature
 let g:multi_cursor_next_key  = '<C-b>'
 let g:multi_cursor_start_key = '<C-b>'
 let g:multi_cursor_quit_key  = '<Esc>'
+Ag/Ack 
+
+Ag the silver searcher is a faster alternative to ack which is better than grep.
+Depending on your installation. Load the corresponding plugin.
+Goyo 
 
 ```vimscript
 if executable('ag')
@@ -315,6 +385,7 @@ endif
 
 Distraction-free writing in Vim.
 
+PCRE regex for Vim 
 
 ```vimscript
 Plugin 'junegunn/goyo.vim'
@@ -324,6 +395,7 @@ Plugin 'junegunn/goyo.vim'
 
 Will remap the default / search with :M/
 
+Voom 
 
 ```vimscript
 Plugin 'othree/eregex.vim'
@@ -341,6 +413,7 @@ pandoc    -- Pandoc Markdown;
 latex  -- LaTeX sectioning and some other commands;
 html  -- HTML heading tags, single line only;
 python  -- Python code browser, blocks between 'class' and 'def' are also nodes.
+Eunuch (Rename buffer) 
 
 ```vimscript
 Plugin 'vim-scripts/VOoM'
@@ -361,6 +434,7 @@ Vim sugar for the UNIX shell commands that need it the most. Features include:
 :Wall: Write every open window. Handy for kicking off tools like guard.
 :SudoWrite: Write a privileged file with sudo.
 :SudoEdit: Edit a privileged file with sudo.
+Markdown conceal 
 
 ```vimscript
 Plugin 'tpope/vim-eunuch'
@@ -375,6 +449,7 @@ later, and seems to make the most sense in use alongside things like less.vim an
 vimpager.
 
 
+
 ```vimscript
 Plugin 'prurigro/vim-markdown-concealed'
 
@@ -386,6 +461,8 @@ filetype indent on
 
 Settings 
 =========
+Misc options
+Alerts
 
 ```vimscript
 set title                              " Set window title automatically
@@ -421,6 +498,7 @@ set lazyredraw                         " Buffer screen updates instead of updati
 set cryptmethod=blowfish
 ```
 
+Search/Find/Replace
 
 ```vimscript
 set noerrorbells
@@ -429,6 +507,7 @@ set t_vb=
 set tm=500
 ```
 
+Format/Linebreak 
 
 ```vimscript
 set hlsearch                           " No Highlight search results
@@ -451,6 +530,7 @@ if executable('ag')
 endif
 ```
 
+Settings: Indentation/Tabs 
 
 ```vimscript
 set linebreak                          " Break at a char in "breakat"
@@ -467,6 +547,7 @@ set formatoptions+=n                   " Recognize numbered lists and wrap corre
 set formatoptions+=j                   " Remove comment leader when joining lines.
 ```
 
+Settings: Folds 
 
 ```vimscript
 set tabstop=4                          " How many spaces a tab worth
@@ -476,6 +557,7 @@ set softtabstop=4                      " How many columns are used when <Tab> is
 set smarttab                           " A <BS> will delete a space not a tab
 ```
 
+Settings: Backup 
 
 ```vimscript
 set foldenable
@@ -485,12 +567,14 @@ set foldmethod=indent
 set foldcolumn=0
 ```
 
+Settings: Conceal 
 
 ```vimscript
 set nobackup                           " Disable backup
 set noswapfile                         " Disable swap because sometime swapfile is in readonly
 ```
 
+Split Windows
 
 ```vimscript
 if has('conceal')
@@ -500,17 +584,20 @@ if has('conceal')
 endif
 ```
 
+Diff
 
 ```vimscript
 set splitright                         " New vertical split always at the right of the current window
 set splitbelow                         " New horizontal split always at the bottom of the current window
 ```
 
+Status line
 
 ```vimscript
 set diffopt+=filler,iwhite,icase,vertical
 ```
 
+Display unprintable chars
 
 ```vimscript
 set fillchars=fold:─,vert:│            " Separator for status window
@@ -519,6 +606,7 @@ set showcmd                            " Show commands being typed in the bottom
 set viminfo='1000,<50,f100,s10,:1000,@10,h
 ```
 
+Auto complete setting
 
 ```vimscript
 set list
@@ -529,11 +617,13 @@ set listchars+=nbsp:˽
 set showbreak=⌐
 ```
 
+Vim's language
 
 ```vimscript
 set completeopt=menuone,longest
 ```
 
+Default font and encoding 
 
 ```vimscript
 if s:is_windows && has('gui')
@@ -542,6 +632,8 @@ endif
 ```
 
 -------------------------
+Default font
+Encoding
 
 ```vimscript
 if s:is_windows
@@ -552,6 +644,7 @@ else
 endif
 ```
 
+Filetypes
 
 ```vimscript
 set encoding=utf8
@@ -560,12 +653,14 @@ set fileencodings=ucs-bom,utf-8,latin1
 set termencoding=utf-8
 ```
 
+Default shell and directories 
 
 ```vimscript
 set ffs=unix,dos,mac
 ```
 
 -----------------------------
+Colorscheme 
 
 ```vimscript
 if s:is_windows
@@ -576,6 +671,7 @@ endif
 ```
 
 -----------
+Terminal 
 
 ```vimscript
 syntax on
@@ -583,6 +679,7 @@ colorscheme nowox
 ```
 
 --------
+Prefer using pipe instead of temp files for shell commands.
 
 ```vimscript
 if exists("$TMUX")
@@ -590,12 +687,14 @@ if exists("$TMUX")
 endif
 ```
 
+Mouse 
 
 ```vimscript
 set noshelltemp
 ```
 
 -----
+
 
 ```vimscript
 set mouse      =a                     " Use mouse in All modes
@@ -609,6 +708,14 @@ set ttymouse=xterm2
 
 Mapping 
 =======
+Improve vim's behavior, get rid of legacies 
+-------------------------------------------
+
+Some default behavior of vim that is not logical anymore in our modern and
+technological world.
+
+Correct cursor movement for long lines
+Backspace will delete the char before cursor
 
 ```vimscript
 noremap j gj
@@ -616,22 +723,26 @@ noremap k gk
 ```
 
 vnoremap <BS> X
+$ to move physically at the end of the line
 
 ```vimscript
 nnoremap <BS> X
 ```
 
 (Virtualedit must be enabled)
+Insertion mode on enter
 
 ```vimscript
 nmap <End>    $l
 ```
 
+In visual mode arrows don't work as expected
 
 ```vimscript
 nmap <cr> i<cr>
 ```
 
+In Select mode arrows keys cancel the selection
 
 ```vimscript
 vmap <Up> k
@@ -640,6 +751,7 @@ vmap <Left> h
 vmap <Right> l
 ```
 
+jj is back to normal mode
 
 ```vimscript
 smap <Up> <esc><Up>
@@ -648,32 +760,38 @@ smap <Left> <esc><Left>
 smap <Right> <esc><Right>
 ```
 
+Insertion mode on enter
 
 ```vimscript
 inoremap <silent> jj <C-O>:stopinsert<CR>
 ```
 
+Current word highlight
 
 ```vimscript
 noremap <cr> i<cr>
 ```
 
+Disable highlight search
 
 ```vimscript
 noremap <silent> à mP*N`P
 ```
 
+$ to move physically at the end of the line
 
 ```vimscript
 noremap <silent> é :noh<cr>
 ```
 
 (Virtualedit must be enabled)
+Displacement using arrows
 
 ```vimscript
 noremap <End>    $l
 ```
 
+<tab> Tabbing visual selection
 
 ```vimscript
 vnoremap <Down> j
@@ -687,6 +805,7 @@ snoremap <Left> <Esc>
 snoremap <Bs>  <Bs>
 ```
 
+Search with <space>
 
 ```vimscript
 nnoremap           <Tab>        >>
@@ -696,51 +815,60 @@ vnoremap           <Tab>        >gv
 vnoremap           <S-Tab>      <gv
 ```
 
+Home goes to the first non white space of the line
 
 ```vimscript
 map                <space> /
 ```
 
+Ag/Ack search
 
 ```vimscript
 noremap <Home> ^
 inoremap <silent> <Home> <C-c>^i
 ```
 
+Use Q for formatting the current paragraph (or selection)
 
 ```vimscript
 nnoremap           Z            :Ag!<space>
 vnoremap           Z            :Ag!<space><C-u><C-r>=GetVisualSelection()<CR>
 ```
 
+Go back to marker position (the swiss french keyboard sucks)
 
 ```vimscript
 vnoremap           Q       gq
 nnoremap           Q       gqap
 ```
 
+- is :
 
 ```vimscript
 noremap            '       `
 ```
 
+Bubble single lines
 
 ```vimscript
 noremap            -       :
 ```
 
+Bubble multiple lines
 
 ```vimscript
 nmap <C-Up> ddkP
 nmap <C-Down> ddp
 ```
 
+Delete words in insert mode
 
 ```vimscript
 vmap <C-Up> xkP`[V`]
 vmap <C-Down> xp`[V`]
 ```
 
+Mappings: CTRL 
 
 ```vimscript
 inoremap dda <C-c>dv1bi
@@ -764,6 +892,8 @@ inoremap dd8 <C-c>dv8bi
 inoremap dd9 <C-c>dv9bi
 ```
 
+<C-Tab> <C-S-Tab> Next/Previous buffer 
+<C-a> Select all 
 
 ```vimscript
 if s:is_cygwin
@@ -791,6 +921,7 @@ else
 endif
 ```
 
+<C-b> Reserved for Tmux prefix 
 
 ```vimscript
 inoremap           <C-a>   <esc>ggVG
@@ -800,6 +931,10 @@ nnoremap           <C-a>        ggVG
 
 Nothing here
 
+<C-c> Copy word/selection 
+ - Copy word under cursor if no selection
+ - Copy selection
+<C-d> Replace word under cursor (Delete a word with no yank) 
 
 ```vimscript
 inoremap <silent>  <c-c> <esc>m`viw"+y``a
@@ -807,12 +942,14 @@ nnoremap <silent>  <c-c> <esc>m`viw"+y``
 vnoremap           <c-c> "+y
 ```
 
+<C-e> Decrement the next number on current line 
 
 ```vimscript
 inoremap <silent>  <c-d>   <c-c>"_ciw
 nnoremap <silent>  <c-d>   "_ciw
 ```
 
+<C-f> Search for work/selection 
 
 ```vimscript
 nnoremap <silent>  <c-e>   :<c-u>call AddSubtract("\<c-x>", '')<CR>
@@ -824,6 +961,7 @@ function! AddSubtract(char, back)
 endfunction
 ```
 
+<C-g> Alternate buffer 
 
 ```vimscript
 nnoremap           <c-f>   /<C-u><C-r>=Escape(expand('<cword>'))<CR>
@@ -831,6 +969,7 @@ inoremap           <c-f>   <esc>/<C-u><C-r>=Escape(expand('<cword>'))<CR>
 vnoremap           <c-f>   /<C-u><C-r>=GetVisualSelection()<CR>
 ```
 
+<C-h> Replacement 
 
 ```vimscript
 nnoremap <c-g> <C-^>
@@ -838,6 +977,7 @@ inoremap <c-g> <C-^>
 vnoremap <c-g> <C-^>
 ```
 
+<C-i> 
 
 ```vimscript
 nnoremap <c-h> :<C-u>%s/<C-r>=Escape(expand('<cword>'))<CR>//g<left><left>
@@ -848,6 +988,23 @@ vnoremap <c-h> :<C-u>%s/<C-r>=GetVisualSelection()<CR>//g<left><left>
 
 Cannot be mapped, already binded to <Tab>
 
+<C-j> Add an empty line below the cursor [Disabled] 
+nnoremap <silent> <C-j> m`o<esc>``
+inoremap <silent> <C-j> <esc>m`o<esc>``a
+<C-k> Add an empty line above the cursor [Disabled] 
+nnoremap <silent> <c-k> m`O<esc>``
+inoremap <silent> <c-k> <esc>m`O<esc>``a
+<C-l> (free) 
+<C-m> 
+
+Cannot be mapped, same as <CR>
+
+<C-n> Multiple cursors start 
+
+Start multiple cursor mode
+
+<C-o> 
+<C-P> CtrlP 
 
 ```vimscript
 noremap            <C-o>    :CtrlPBuffer<CR>
@@ -858,16 +1015,21 @@ inoremap           <C-o>    <C-o>:CtrlPBuffer<CR>
 
 Previously loaded with ctrlp plugin
 
+<C-q> Blockwise visual mode 
+<C-q> what did <C-v> before 
 
 ```vimscript
 noremap            <C-q>    <C-v>
 ```
 
+<C-r> Redo 
 
 ```vimscript
 inoremap           <C-q>    <c-v>
 ```
 
+<C-s> Save 
+<C-t> Tag completion (Ctags) 
 
 ```vimscript
 noremap            <C-s>    :update!<CR>
@@ -875,16 +1037,19 @@ vnoremap           <C-s>    <C-c>:update!<CR>
 inoremap           <C-s>    <C-o>:update!<CR>
 ```
 
+<C-u> Interrupt current search 
 
 ```vimscript
 inoremap <c-t> <c-x><c-]>
 ```
 
+<c-v> Paste 
 
 ```vimscript
 noremap <c-u> <c-c>
 ```
 
+Pasting blockwise and linewise selections is not possible in Insert and
 
 ```vimscript
 noremap            <C-v>    "+gP
@@ -894,6 +1059,7 @@ cmap               <C-v>    <C-R>+
 Visual mode without the +virtualedit feature.  They are pasted as if they
 were characterwise instead.
 Uses the paste.vim autoload script.
+<C-w> Window command (Split)
 
 ```vimscript
 exe 'inoremap <script> <C-V>' paste#paste_cmd['i']
@@ -929,6 +1095,9 @@ Used to split vim's environmnent in multiple workspaces called windows.
       <C-w>[jklh]  Move cursor to Nth window down/left/right/up
       <C-w>j   Move cursor to Nth window below
       :help split
+noremap  <C-w>     :BD<CR>
+<C-x> Cut word/selection 
+<C-y> Increment closest number 
 
 ```vimscript
 inoremap <C-x> <esc>m`viw"+y``"_diwa
@@ -936,6 +1105,7 @@ nnoremap <silent>  <C-x> <esc>m`viw"+y``"_diw
 vnoremap <C-x> "+x
 ```
 
+<C-z> Suspend vim 
 
 ```vimscript
 nnoremap <silent> <c-y> :<c-u>call AddSubtract("\<c-a>", '')<CR>
@@ -944,6 +1114,8 @@ nnoremap <silent> <c-y> :<c-u>call AddSubtract("\<c-a>", '')<CR>
 
 Suspend and goes to shell. Can come back with |fg|
 
+<C-Home> Real start of a line 
+<A-?> 
 
 ```vimscript
 inoremap <C-Home>   <C-c>0i
@@ -953,6 +1125,8 @@ nnoremap <C-End>    $gel
 ```
 
 -----
+<A-j> Move screen down 
+<A-k> Move screen up 
 
 ```vimscript
 set <f32>=j
@@ -960,6 +1134,7 @@ noremap <f32> <C-y>j
 inoremap <f32> <C-y><C-o>j
 ```
 
+<F?> 
 
 ```vimscript
 set <f33>=k
@@ -968,17 +1143,25 @@ inoremap <f33> <C-e><C-o>k
 ```
 
 ----
+<F1> Help 
+
+Already mapped by default
+
+<C-F1> Help in full screen 
+<F2> File explorer (NERD Tree) 
 
 ```vimscript
 nnoremap <c-F1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<CR>
 ```
 
+<F3> Taglist pane 
 
 ```vimscript
 noremap  <silent> <F2> :NERDTreeToggle<CR>
 inoremap <silent> <F2> <c-O>:NERDTreeToggle<CR>
 ```
 
+<F4> Tagbar 
 
 ```vimscript
 noremap  <silent> <F3> :TlistToggle<CR>
@@ -986,6 +1169,7 @@ vnoremap <silent> <F3> <c-C>:TlistToggle<CR>
 inoremap <silent> <F3> <c-O>:TlistToggle<CR>
 ```
 
+<F6> Toggle Voom 
 
 ```vimscript
 noremap  <silent> <F4> :TagbarToggle<CR>
@@ -993,6 +1177,7 @@ vnoremap <silent> <F4> <c-C>:TagbarToggle<CR>
 inoremap <silent> <F4> <c-O>:TagbarToggle<CR>
 ```
 
+<F7> Toggle GUI options (menu, tools, scrollbars) 
 
 ```vimscript
 nnoremap <silent> <F6> :VoomToggle<CR>
@@ -1000,12 +1185,14 @@ vnoremap <silent> <F6> <c-C>:VoomToggle<CR>
 inoremap <silent> <F6> <c-O>:VoomToggle<CR>
 ```
 
+<F8> Toggle colorscheme 
 
 ```vimscript
 nnoremap <F7> :call ToggleFlag('guioptions','mrT')<cr>
 inoremap <F7> <c-C>:call ToggleFlag('guioptions','mrT')<cr>
 ```
 
+<F10> Toggle quickfix window 
 
 ```vimscript
 nnoremap <F8> :call NextColor(1)<CR>
@@ -1013,6 +1200,7 @@ nnoremap <S-F8> :call NextColor(-1)<CR>
 nnoremap <A-F8> :call NextColor(0)<CR>
 ```
 
+<F11> Toggle numbers 
 
 ```vimscript
 noremap  <silent> <F10> :call ToggleQuickfixList()<CR>
@@ -1020,6 +1208,7 @@ vnoremap <silent> <F10> <C-C>:call ToggleQuickfixList()<CR>
 inoremap <silent> <F10> <C-O>:call ToggleQuickfixList()<CR>
 ```
 
+<F12> Remove trailing spaces 
 
 ```vimscript
 noremap  <silent> <F11> :call ToggleNumber()<CR>
@@ -1044,6 +1233,7 @@ function! ToggleNumber()
 endfunction
 ```
 
+<Leader> 
 
 ```vimscript
 noremap  <silent> <F12> :FixWhitespace<CR>
@@ -1058,25 +1248,33 @@ command! -range=% FixWhitespace call <SID>FixWhitespace(<line1>,<line2>)
 ```
 
 --------
+<Leader>v Edit .vimrc 
+<Leader>V Reload .vimrc 
 
 ```vimscript
 noremap <leader>v :edit ~/.vimrc<cr>
 ```
 
+<Leader>w Wrap/Nowrap toggle 
 
 ```vimscript
 noremap <leader>V :source ~/.vimrc<cr>
 ```
 
+<Mouse> 
 
 ```vimscript
 noremap <silent>    <leader>w       :set wrap!<cr>
 ```
 
+<2-RightMouse> Highlight the word under cursor 
+
 
 ```vimscript
 noremap <silent> <2-RightMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
 ```
+
+Tmux 
 
 
 ```vimscript
@@ -1111,6 +1309,8 @@ endif
 ```
 
 Abbreviation 
+xxfile 
+xxdate 
 
 ```vimscript
 ab xxfile <C-R>=Filename()<cr>
@@ -1119,6 +1319,7 @@ fun! Filename()
 endfun
 ```
 
+Functions 
 
 ```vimscript
 ab xxdate <C-R>=DateTime()<cr>
@@ -1127,7 +1328,10 @@ fun! DateTime()
 endfun
 ```
 
+Present Colorscheme (light) 
 
+<a name="Autocommands "></a>
+##4.4. Autocommands 
 ```vimscript
 function! Present()
     set background=light
@@ -1142,6 +1346,10 @@ endfunction
 ```
 
 
+<a name="Config group "></a>
+###4.4.1. Config group 
+<a name="Vimrc "></a>
+###4.4.2. Vimrc 
 ```vimscript
 augroup configgroup
     autocmd!
@@ -1180,6 +1388,8 @@ augroup END
 Here I set foldmethod for my .vimrc
 
 
+<a name="Shebang "></a>
+###4.4.3. Shebang 
 ```vimscript
 augroup vimrc
     autocmd!
@@ -1189,12 +1399,15 @@ augroup END
 
 Automatically add shebang to specific filetypes.
 
+ autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python\<nl># Author: Yves Chevallier<nl># Date:\".strftime("%d/%m/%y %H:%M:%S")|$
 
 ```vimscript
 augroup shebang
 ```
 
 
+<a name="GPG Encryption "></a>
+###4.4.4. GPG Encryption 
 ```vimscript
   autocmd BufNewFile *.rb 0put =\"#!/usr/bin/env ruby\<nl># Author: Yves Chevallier\<nl>Date: \<nl>\"|$
   autocmd BufNewFile *.pl 0put =\"#!/usr/bin/env perl\<nl># Author: Yves Chevallier\<nl>Date: \<nl>\"|$
@@ -1205,6 +1418,8 @@ augroup END
 Transparent editing of gpg encrypted files (by Wouter Hanegraaff)
 
 
+<a name="Functions "></a>
+#5.4.4. Functions 
 ```vimscript
 augroup encrypted
   au!
@@ -1238,7 +1453,9 @@ augroup END
 ```
 
 
-###Folding text format 
+
+<a name="Folding text format "></a>
+##5.5.4. Folding text format 
 
 ```vimscript
 if has("folding")
@@ -1299,10 +1516,12 @@ endif
 ```
 
 
-##Keyboard mapping summary 
 
-###Any modes
+<a name="Keyboard mapping summary "></a>
+#6.5.4. Keyboard mapping summary 
 
+<a name="Any modes"></a>
+##6.6.4. Any modes
 |    Mapping     |     Description                                       |   Plugin   |
 |:---------------|:------------------------------------------------------|:----------:|
 | `<Leader>bb`   | Previous buffer (with cursor preserve position)       | bufkill    |
@@ -1315,8 +1534,9 @@ endif
 | `<Leader>n`    | Remove mark on word/selection                         | mark       |
 | `<Leader>q`    | Toggle Quickfix list                                  | togglelist |
 
-###Normal mode
 
+<a name="Normal mode"></a>
+##6.7.4. Normal mode
 |    Mapping     |     Description                                       |   Plugin   |
 |:---------------|:------------------------------------------------------|:----------:|
 | `à`            | Highlight current word                                |            |
@@ -1327,3 +1547,16 @@ endif
 | `Q`            | Format selected paragraph                             |            |
 | `Z`            | Ag search                                             |            |
 
+<C-a>                 Select all
+<C-n>                 Select cursor under cursor                     (multiple-cursors)
+<C-p>                 Full path fuzzy file finder                               (ctrlp)
+<C-Up>                Bubble up line/selection
+<C-Down>              Bubble down line/selection
+<C-Tab>               Next bufofber
+<C-S-Tab>             Previous fbuffer
+
+
+<a name="Command Mode"></a>
+##6.8.4. Command Mode
+<C-r>                 Regex search                                              (ctrlp)
+<C-d>                 Search by filename enable/disable                         (ctrlp)
