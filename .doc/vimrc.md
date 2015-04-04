@@ -1,4 +1,4 @@
-'''
+```
     _                _   _
    / \   _ __   ___ | |_| |__   ___ _ __
   / _ \ | '_ \ / _ \| __| '_ \ / _ \ '__|
@@ -7,7 +7,7 @@
                                          \ \ / / | '_ ` _ \| '__/ __|
                                           \ V /| | | | | | | | | (__
                                         (_)\_/ |_|_| |_| |_|_|  \___|
-'''
+```
 
 
 <a name="Motivations"></a>
@@ -141,7 +141,7 @@ The Markdown output is generated with vim2doc Perl script:
 10.2. [Vimrc](#Vimrc)  
 10.3. [Shebang](#Shebang)  
 10.4. [GPG Encryption](#GPG_Encryption)  
-11. [Functions](#Functions<)  
+11. [Functions](#Functions7)  
 11.1. [Folding text format](#Folding_text_format)  
 12. [Keyboard mapping summary](#Keyboard_mapping_summary)  
 12.1. [Any modes](#Any_modes)  
@@ -1726,7 +1726,7 @@ augroup END
 Transparent editing of gpg encrypted files (by Wouter Hanegraaff)
 
 
-<a name="Functions<"></a>
+<a name="Functions7"></a>
 #11. Functions
 
 ```vimscript
