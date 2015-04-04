@@ -1021,9 +1021,9 @@ function! Present()
     set foldcolumn=0
 endfunction
 
-" Autocommands {{{1
-" ------------
+" ##Autocommands {{{1
 
+" ###Config group {{{2
 augroup configgroup
     autocmd!
     autocmd VimEnter * highlight clear SignColumn
@@ -1057,11 +1057,17 @@ augroup configgroup
     autocmd BufEnter *.c   setlocal foldmethod=syntax
 augroup END
 
+" ###Vimrc {{{2
+" Here I set foldmethod for my .vimrc
+"
 augroup vimrc
     autocmd!
     autocmd BufEnter .vimrc setlocal foldmethod=marker | set foldlevel=0
 augroup END
 
+" ###Shebang {{{2
+" Automatically add shebang to specific filetypes.
+"
 augroup shebang
 "  autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python\<nl># Author: Yves Chevallier<nl># Date:\".strftime("%d/%m/%y %H:%M:%S")|$
   autocmd BufNewFile *.rb 0put =\"#!/usr/bin/env ruby\<nl># Author: Yves Chevallier\<nl>Date: \<nl>\"|$
@@ -1069,13 +1075,11 @@ augroup shebang
   autocmd BufNewFile *.tex 0put =\"%&plain\<nl>\"|$
 augroup END
 
-" Encryption GPG
-
-" Transparent editing of gpg encrypted files.
-" By Wouter Hanegraaff
+" ###GPG Encryption {{{2
+" Transparent editing of gpg encrypted files (by Wouter Hanegraaff)
+"
 augroup encrypted
   au!
- 
   " First make sure nothing is written to ~/.viminfo while editing
   " an encrypted file.
   autocmd BufReadPre,FileReadPre *.gpg set viminfo=
@@ -1101,7 +1105,9 @@ augroup encrypted
   autocmd BufWritePost,FileWritePost *.gpg u
 augroup END
 
-" Fold text function {{{2
+" ##Functions {{{1
+"
+" ###Folding text format {{{2
 if has("folding")
   function! MyFoldText()
       if &foldmethod == 'syntax'
@@ -1157,7 +1163,8 @@ if has("folding")
   set foldtext=MyFoldText()
 
 endif  
-
+"
+"
 " ##Keyboard mapping summary {{{1
 "
 " ###Any modes

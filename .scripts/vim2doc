@@ -13,16 +13,19 @@ while (<>) {
     s/^(.*?)\s*"<!(.*)$/"`$1` $2/;  # Comment inline code
 
     if (/^"(?!")/) {
-        if(@code > 0) {
-            $_ = $/.join($/, @code).$/;
-            @code = ();
-        }
+        $_ = code(@code) and @code = () if @code > 0;
         s|^" ?||g;
         s|^\s+$|$/|gm;
         print;
-    } else {
-        push @code, (' ' x 4).($_ =~ s/[\n\r]//gr);
+    } else { 
+        push @code, $_ =~ s/[\n\r]//gr;
     }
 }
-print $/.join($/, @code).$/ if(@code > 0);
+print code(@code);
 
+sub code {
+    shift @_ while @_ > 0 and $_[0]   =~ /^\s*$/;
+    pop   @_ while @_ > 0 and $_[$#_] =~ /^\s*$/;
+    return unless @_ > 0;
+    "$/```vimscript$/".join($/, @_)."$/```$/$/"
+}
