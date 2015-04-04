@@ -1,4 +1,5 @@
 # dotfiles
 
-[.vimrc](.doc/vimrc.md)
+- Clic [here](.doc/vimrc.md) for the documentation of my `.vimrc`
+
 
