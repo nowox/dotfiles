@@ -16,24 +16,29 @@ The Markdown output is generated with vim2doc Perl script:
 
 <a name="Table of contents"></a>
 #2. Table of contents
-1. (Motivations)[Motivations]
-2. (Table of contents)[Table of contents]
-3. (At first )[At first ]
-4. (Plugins )[Plugins ]
-4.1. (Lorem Ipsum )[Lorem Ipsum ]
-4.2. (Zoomwin )[Zoomwin ]
-4.3. (Mark by Ingo Karkat )[Mark by Ingo Karkat ]
-4.4. (Autocommands )[Autocommands ]
-4.4.1. (Config group )[Config group ]
-4.4.2. (Vimrc )[Vimrc ]
-4.4.3. (Shebang )[Shebang ]
-4.4.4. (GPG Encryption )[GPG Encryption ]
-5.4.4. (Functions )[Functions ]
-5.5.4. (Folding text format )[Folding text format ]
-6.5.4. (Keyboard mapping summary )[Keyboard mapping summary ]
-6.6.4. (Any modes)[Any modes]
-6.7.4. (Normal mode)[Normal mode]
-6.8.4. (Command Mode)[Command Mode]
+
+- - -
+
+1. (Motivations)[#Motivations]
+2. (Table of contents)[#Table of contents]
+3. (At first )[#At first ]
+4. (Plugins )[#Plugins ]
+4.1. (Lorem Ipsum )[#Lorem Ipsum ]
+4.2. (Zoomwin )[#Zoomwin ]
+4.3. (Mark by Ingo Karkat )[#Mark by Ingo Karkat ]
+4.4. (Autocommands )[#Autocommands ]
+4.4.1. (Config group )[#Config group ]
+4.4.2. (Vimrc )[#Vimrc ]
+4.4.3. (Shebang )[#Shebang ]
+4.4.4. (GPG Encryption )[#GPG Encryption ]
+5.4.4. (Functions )[#Functions ]
+5.5.4. (Folding text format )[#Folding text format ]
+6.5.4. (Keyboard mapping summary )[#Keyboard mapping summary ]
+6.6.4. (Any modes)[#Any modes]
+6.7.4. (Normal mode)[#Normal mode]
+6.8.4. (Command Mode)[#Command Mode]
+
+
 
 
 
