@@ -25,7 +25,7 @@ while (<>) {
 $markdown .= codeblock(@code);
 
 #print $markdown;
-print escape(toc($markdown)); 
+print toc($markdown); 
 
 sub codeblock {
     shift @_ while @_ > 0 and $_[0]   =~ /^\s*$/;

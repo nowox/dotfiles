@@ -97,7 +97,8 @@ Plugin 'Mark'
 
 " ##Colorschemes collection {{{2
 " (Flazz)[https://github.com/flazz/vim-colorschemes] provide a nice collection of 
-" colorschemes. I personnally like base16 and monokai.
+" colorschemes. I personnally like [hybrid](https://github.com/w0ng/vim-hybrid), base16 
+" and monokai.
 Plugin 'flazz/vim-colorschemes'
 
 " ##Bufkill (improve buffers navigation) {{{2
@@ -627,8 +628,8 @@ inoremap dd7 <C-c>dv7bi
 inoremap dd8 <C-c>dv8bi
 inoremap dd9 <C-c>dv9bi
 
-" ##<C> Control + key {{{2
-" ###<C-Tab> <C-S-Tab> Next/Previous buffer {{{3
+" ##`<C>` Control + key {{{2
+" ###`<C-Tab>` `<C-S-Tab>` Next/Previous buffer {{{3
 if s:is_cygwin
     " <C-Tab> Next buffer
     set <f26>=[1;5I
@@ -653,27 +654,27 @@ else
     vmap <silent> <C-S-Tab> <c-c>:bp!<cr>
 endif
 
-" ###<C-a> Select all {{{3
+" ###`<C-a>` Select all {{{3
 inoremap           <C-a>   <esc>ggVG
 nnoremap           <C-a>        ggVG
 
-" ###<C-b> Reserved for Tmux prefix {{{3
+" ###`<C-b>` Reserved for Tmux prefix {{{3
 "
 " Nothing here
 "
 
-" ###<C-c> Copy word/selection {{{3
+" ###`<C-c>` Copy word/selection {{{3
 "  - Copy word under cursor if no selection
 "  - Copy selection
 inoremap <silent>  <c-c> <esc>m`viw"+y``a
 nnoremap <silent>  <c-c> <esc>m`viw"+y``
 vnoremap           <c-c> "+y
 
-" ###<C-d> Replace word under cursor (Delete a word with no yank) {{{3
+" ###`<C-d>` Replace word under cursor (Delete a word with no yank) {{{3
 inoremap <silent>  <c-d>   <c-c>"_ciw
 nnoremap <silent>  <c-d>   "_ciw
 
-" ###<C-e> Decrement the next number on current line {{{3
+" ###`<C-e>` Decrement the next number on current line {{{3
 nnoremap <silent>  <c-e>   :<c-u>call AddSubtract("\<c-x>", '')<CR>
 function! AddSubtract(char, back)
     let pattern = &nrformats =~ 'alpha' ? '[[:alpha:][:digit:]]' : '[[:digit:]]'
@@ -682,76 +683,76 @@ function! AddSubtract(char, back)
     silent! call repeat#set(":\<C-u>call AddSubtract('" .a:char. "', '" .a:back. "')\<CR>")
 endfunction
 
-" ###<C-f> Search for work/selection {{{3
+" ###`<C-f>` Search for work/selection {{{3
 nnoremap           <c-f>   /<C-u><C-r>=Escape(expand('<cword>'))<CR>
 inoremap           <c-f>   <esc>/<C-u><C-r>=Escape(expand('<cword>'))<CR>
 vnoremap           <c-f>   /<C-u><C-r>=GetVisualSelection()<CR>
 
-" ###<C-g> Alternate buffer {{{3
+" ###`<C-g>` Alternate buffer {{{3
 nnoremap <c-g> <C-^>
 inoremap <c-g> <C-^>
 vnoremap <c-g> <C-^>
 
-" ###<C-h> Replacement {{{3
+" ###`<C-h>` Replacement {{{3
 nnoremap <c-h> :<C-u>%s/<C-r>=Escape(expand('<cword>'))<CR>//g<left><left>
 inoremap <c-h> <esc>:%s/<C-r>=Escape(expand('<cword>'))<CR>//g<left><left>
 vnoremap <c-h> :<C-u>%s/<C-r>=GetVisualSelection()<CR>//g<left><left>
 
-" ###<C-i> {{{3
+" ###`<C-i>` {{{3
 "
 " Cannot be mapped, already binded to `<Tab>`
 "
 
-" ###<C-j> Add an empty line below the cursor [Disabled] {{{3
+" ###`<C-j>` Add an empty line below the cursor [Disabled] {{{3
 "nnoremap <silent> <C-j> m`o<esc>``
 "inoremap <silent> <C-j> <esc>m`o<esc>``a
 
-" ###<C-k> Add an empty line above the cursor [Disabled] {{{3
+" ###`<C-k>` Add an empty line above the cursor [Disabled] {{{3
 "nnoremap <silent> <c-k> m`O<esc>``
 "inoremap <silent> <c-k> <esc>m`O<esc>``a
 
-" ###<C-l> (free) {{{3
+" ###`<C-l>` (free) {{{3
 
-" ###<C-m> {{{3
+" ###`<C-m>` {{{3
 "
 " Cannot be mapped, same as `<CR>`
 "
 
-" ###<C-n> Multiple cursors start {{{3
+" ###`<C-n>` Multiple cursors start {{{3
 "
 " Start multiple cursor mode
 "
 
-" ###<C-o> {{{3
+" ###`<C-o>` {{{3
 noremap            <C-o>    :CtrlPBuffer<CR>
 vnoremap           <C-o>    <C-c>:CtrlPBuffer<CR>
 inoremap           <C-o>    <C-o>:CtrlPBuffer<CR>
 
-" ###<C-P> CtrlP {{{3
+" ###`<C-P>` CtrlP {{{3
 "
 " Previously loaded with ctrlp plugin
 "
 
-" ###<C-q> Blockwise visual mode {{{3
+" ###`<C-q>` Blockwise visual mode {{{3
 noremap            <C-q>    <C-v>
 
-" ###<C-q> what did <C-v> before {{{3
+" ###`<C-q>` what did `<C-v>` before {{{3
 inoremap           <C-q>    <c-v>
 
-" ###<C-r> Redo {{{3
+" ###`<C-r>` Redo {{{3
 
-" ###<C-s> Save {{{3
+" ###`<C-s>` Save {{{3
 noremap            <C-s>    :update!<CR>
 vnoremap           <C-s>    <C-c>:update!<CR>
 inoremap           <C-s>    <C-o>:update!<CR>
 
-" ###<C-t> Tag completion (Ctags) {{{3
+" ###`<C-t>` Tag completion (Ctags) {{{3
 inoremap <c-t> <c-x><c-]>
 
-" ###<C-u> Interrupt current search {{{3
+" ###`<C-u>` Interrupt current search {{{3
 noremap <c-u> <c-c>
 
-" ###<c-v> Paste {{{3
+" ###`<c-v>` Paste {{{3
 noremap            <C-v>    "+gP
 cmap               <C-v>    <C-R>+
 
@@ -780,7 +781,7 @@ endfunc
 imap <S-Insert>     <C-v>
 vmap <S-Insert>     <C-v>
 
-" ###<C-w> Window command (Split)
+" ###`<C-w>` Window command (Split)
 " Used to split vim's environmnent in multiple workspaces called windows.
 "       `<C-w>v`   Vertical Split
 "       `<C-w>s`   Horizontal Split
@@ -794,83 +795,83 @@ vmap <S-Insert>     <C-v>
 "       `<C-w>j`   Move cursor to Nth window below
 "       `:help split`
 
-"noremap  <C-w>     :BD<CR>
+"noremap  `<C-w>`     :BD<CR>
 
-" ###<C-x> Cut word/selection {{{3
+" ###`<C-x>` Cut word/selection {{{3
 inoremap <C-x> <esc>m`viw"+y``"_diwa
 nnoremap <silent>  <C-x> <esc>m`viw"+y``"_diw
 vnoremap <C-x> "+x
 
-" ###<C-y> Increment closest number {{{3
+" ###`<C-y>` Increment closest number {{{3
 nnoremap <silent> <c-y> :<c-u>call AddSubtract("\<c-a>", '')<CR>
 
-" ###<C-z> Suspend vim {{{3
+" ###`<C-z>` Suspend vim {{{3
 "
 " Suspend and goes to shell. Can come back with |fg|
 "
 
-" ###<C-Home> Real start of a line {{{3
+" ###`<C-Home>` Real start of a line {{{3
 inoremap <C-Home>   <C-c>0i
 nnoremap <C-Home>   0
 inoremap <C-End>    <C-c>$gea
 nnoremap <C-End>    $gel
 
-" ##<A-?> Alt + key {{{2
+" ##`<A-?>` Alt + key {{{2
 
-" ###<A-j> Move screen down {{{3
+" ###`<A-j>` Move screen down {{{3
 set <f32>=j
 noremap <f32> <C-y>j
 inoremap <f32> <C-y><C-o>j
 
-" ###<A-k> Move screen up {{{3
+" ###`<A-k>` Move screen up {{{3
 set <f33>=k
 noremap <f33> <C-e>k
 inoremap <f33> <C-e><C-o>k
 
-" ##<F?> Function number {{{2
+" ##`<F?>` Function number {{{2
 
-" ###<F1> Help {{{3
+" ###`<F1>` Help {{{3
 "
 " Already mapped by default
 "
 
-" ###<C-F1> Help in full screen {{{3
+" ###`<C-F1>` Help in full screen {{{3
 nnoremap <c-F1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<CR>
 
-" ###<F2> File explorer (NERD Tree) {{{3
+" ###`<F2>` File explorer (NERD Tree) {{{3
 noremap  <silent> <F2> :NERDTreeToggle<CR>
 inoremap <silent> <F2> <c-O>:NERDTreeToggle<CR>
 
-" ###<F3> Taglist pane {{{3
+" ###`<F3>` Taglist pane {{{3
 noremap  <silent> <F3> :TlistToggle<CR>
 vnoremap <silent> <F3> <c-C>:TlistToggle<CR>
 inoremap <silent> <F3> <c-O>:TlistToggle<CR>
 
-" ###<F4> Tagbar {{{3
+" ###`<F4>` Tagbar {{{3
 noremap  <silent> <F4> :TagbarToggle<CR>
 vnoremap <silent> <F4> <c-C>:TagbarToggle<CR>
 inoremap <silent> <F4> <c-O>:TagbarToggle<CR>
 
-" ###<F6> Toggle Voom {{{3
+" ###`<F6>` Toggle Voom {{{3
 nnoremap <silent> <F6> :VoomToggle<CR>
 vnoremap <silent> <F6> <c-C>:VoomToggle<CR>
 inoremap <silent> <F6> <c-O>:VoomToggle<CR>
 
-" ###<F7> Toggle GUI options (menu, tools, scrollbars) {{{3
+" ###`<F7>` Toggle GUI options (menu, tools, scrollbars) {{{3
 nnoremap <F7> :call ToggleFlag('guioptions','mrT')<cr>
 inoremap <F7> <c-C>:call ToggleFlag('guioptions','mrT')<cr>
 
-" ###<F8> Toggle colorscheme {{{3
+" ###`<F8>` Toggle colorscheme {{{3
 nnoremap <F8> :call NextColor(1)<CR>
 nnoremap <S-F8> :call NextColor(-1)<CR>
 nnoremap <A-F8> :call NextColor(0)<CR>
 
-" ###<F10> Toggle quickfix window {{{3
+" ###`<F10>` Toggle quickfix window {{{3
 noremap  <silent> <F10> :call ToggleQuickfixList()<CR>
 vnoremap <silent> <F10> <C-C>:call ToggleQuickfixList()<CR>
 inoremap <silent> <F10> <C-O>:call ToggleQuickfixList()<CR>
 
-" ###<F11> Toggle numbers {{{3
+" ###`<F11>` Toggle numbers {{{3
 noremap  <silent> <F11> :call ToggleNumber()<CR>
 vnoremap <silent> <F11> <c-C>:call ToggleNumber()<CR>
 inoremap <silent> <F11> <c-O>:call ToggleNumber()<CR>
@@ -893,7 +894,7 @@ function! ToggleNumber()
     endif
 endfunction
 
-" ###<F12> Remove trailing spaces {{{3
+" ###`<F12>` Remove trailing spaces {{{3
 noremap  <silent> <F12> :FixWhitespace<CR>
 vnoremap <silent> <F12> <c-C>:FixWhitespace<CR>
 inoremap <silent> <F12> <c-O>:FixWhitespace<CR>
@@ -904,23 +905,23 @@ function! s:FixWhitespace(line1,line2)
 endfunction
 command! -range=% FixWhitespace call <SID>FixWhitespace(<line1>,<line2>)
 
-" ##<Leader> Vim's prefix{{{2
+" ##`<Leader>` Vim's prefix{{{2
 
-" ###<Leader>v Edit .vimrc {{{3
+" ###`<Leader>v` Edit .vimrc {{{3
 noremap <leader>v :edit ~/.vimrc<cr>
 
-" ###<Leader>vd Generate the .vimrc documentation {{{3
+" ###`<Leader>vd` Generate the .vimrc documentation {{{3
 noremap <leader>vd :! ~/.scripts/vim2doc ~/.vimrc > ~/.doc/vimrc.md<cr>
 
-" ###<Leader>V Reload .vimrc {{{3
+" ###`<Leader>V` Reload .vimrc {{{3
 noremap <leader>V :source ~/.vimrc<cr>
 
-" ###<Leader>w Wrap/Nowrap toggle {{{3
+" ###`<Leader>w` Wrap/Nowrap toggle {{{3
 noremap <silent>    <leader>w       :set wrap!<cr>
 
-" ##<Mouse> Mouse key binding {{{2
+" ##`<Mouse>` Mouse key binding {{{2
 
-" ###<2-RightMouse> Highlight the word under cursor {{{3
+" ###`<2-RightMouse>` Highlight the word under cursor {{{3
 noremap <silent> <2-RightMouse> :let @/='\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
 
 " }}}1
