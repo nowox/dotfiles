@@ -1,26 +1,113 @@
+# ~/.bashrc
+# Author: Yves Chevallier <nowox@x0x.ch>
+# Date:   2015-04-05 Sun 11:35 PM 
 
 # If not running interactively, don't do anything
 [[ "$-" != *i* ]] && return
 
+# Conditionals
+_iscygwin=0
+[[ $( uname -s ) == *"CYGWIN"* ]] && _iscygwin=1
+
+_isroot=0
+[[ $UID -eq 0 ]] && _isroot=1
+
+_color=0
+[[ "$TERM" =~ xterm_color ]] && _color=1
+
 # Umask
 umask 027
 
-#export PYTHONHOME='/usr/bin'
-#export PYTHONPATH='/usr/lib/python2.7/'
-export VIMRUNTIME='/usr/share/vim/vim74'
+# History
+export HOSTCONTROL=ignoredups:ignorespace
+export HISTSIZE=1000
+export HISTFILESIZE=2000
+export HISTIGNORE='&:ls:ll:la:cd:exit:clear:history'
 
+# Shelloptions (shopt)
+shopt -s cdspell                 # Autocorrect mistyped directory
+shopt -s autocd                  # Automatically add cd before known dir names
+shopt -s dirspell
+shopt -s globstar
+shopt -s extglob
+shopt -s histappend              # Append history instead of overwriting file
+shopt -s checkwinsize            # Check window size after each command
+shopt -s no_empty_cmd_completion # No empty completion
+
+# Misc Exports
+export PAGER=less
+export VIMRUNTIME='/usr/share/vim/vim74'
 export PATH="~/bin:~/.scripts:$PATH"
 
 # Mintty
 bind -r '\C-s'
 stty -ixon
 
-
 # Xorg
 export DISPLAY=:0.0
 
 # Prompt
-export PS1="\033]2;\W\007\[\033[0;32m\]\u$\[\033[0;92m\]@\h\[\033[0;33m\] \w\[\033[0m\]\n$ "
+short_pwd() {
+    # How many characters of the $PWD should be kept
+    local pwdmaxlen=40
+
+    # Indicate that there has been dir truncation
+    local trunc_symbol=".."
+
+    local dir=${PWD##*/}
+    pwdmaxlen=$(( ( pwdmaxlen < ${#dir} ) ? ${#dir} : pwdmaxlen ))
+    NEW_PWD=${PWD/#$HOME/\~}
+    local pwdoffset=$(( ${#NEW_PWD} - pwdmaxlen ))
+    if [ ${pwdoffset} -gt "0" ]
+    then
+        NEW_PWD=${NEW_PWD:$pwdoffset:$pwdmaxlen}
+        echo ${trunc_symbol}/${NEW_PWD#*/}
+    fi
+}
+
+title () {
+    echo -ne "\e]0;$1\a"
+}
+
+# Title Window
+ts='\033]0;'  # Start
+te='\007'     # End
+
+r0='\e[0;30m' # Black - Regular
+r2='\e[0;31m' # Red
+r5='\e[0;32m' # Green
+r4='\e[0;33m' # Yellow
+r6='\e[0;34m' # Blue
+r7='\e[0;35m' # Purple
+r8='\e[0;36m' # Cyan
+r9='\e[0;37m' # White
+
+b0='\e[1;30m' # Black - Bold
+b2='\e[1;31m' # Red
+b5='\e[1;32m' # Green
+b4='\e[1;33m' # Yellow
+b6='\e[1;34m' # Blue
+b7='\e[1;35m' # Purple
+b8='\e[1;36m' # Cyan
+b9='\e[1;37m' # White
+
+# Underline  [4;30m
+# Background [40m
+#
+rst='\e[0m'   # Text reset color
+
+# Prompt Colors
+c=($r6 $b6 $r8)
+[[ $_iscygwin -eq 1 ]] && c=($r5 $b5 $r4)
+[[ $_isroot   -eq 1 ]] && c=($r2 $b2 $r7)
+
+# Prompt
+p="${rst}$( title \W )" # Title: basename
+p="${p}${c[0]}\u@"      # User
+p="${p}${c[1]}\h "      # Host
+p="${p}${c[2]}\w"       # Path
+p="${p}${rst}\n$( [[ $UID == 0 ]] && echo \# || echo \$ ) "
+export PS1="${p}"
 
 # Aliases
 alias browse='explorer $(cygpath --windows $(pwd))'
@@ -29,7 +116,6 @@ alias df='df -h'
 alias du='du'
 
 alias less='less -r'                          # raw control characters
-alias whence='type -a'                        # where, of a sort
 alias grep='grep --color'                     # show differences in colour
 alias egrep='egrep --color=auto'              # show differences in colour
 alias fgrep='fgrep --color=auto'              # show differences in colour
@@ -43,6 +129,9 @@ alias lu='ls -ltur'   # Sort by/show access time, most recent last.
 alias ll='ls -lv --group-directories-first'
 alias lr='ll -R'
 alias la='ll -a'
+
+alias svim='sudo vim'
+alias root='sudo su'
 
 alias vi='vim'
 alias tree='tree -Csuh' # Nice alternative to 'recursive ls'
@@ -59,18 +148,8 @@ alias etreg='etreg.bat'
 alias etver='etver.bat'
 alias ct="cleartool"
 
-# Shelloptions (shopt)
-shopt -s cdspell                              # Autocorrect mistyped directory
-shopt -s autocd                               # Automatically add cd before known dir names
-shopt -s dirspell
-shopt -s globstar
-shopt -s extglob
 
 # Functions
-title () {
-    echo -ne "\e]0;$1\a"
-}
-
 setenv () {
     PWD=`pwd -P`/scripts
     if [ -d "$PWD" ] && [[ ":$PATH:" != *":$PWD:"* ]]; then
@@ -198,9 +277,9 @@ colorscheme () {
         echo -ne   '\e]4;7;#FFFFFF\a' # White
         echo -ne  '\e]4;15;#FFEBCD\a' # BoldWhite
     fi
-
-
-
 }
 
 colorscheme 0
+
+alias dark="colorscheme 0"
+alias light="colorscheme 4"

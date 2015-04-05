@@ -352,6 +352,10 @@ Plugin 'tpope/vim-eunuch'
 "
 Plugin 'prurigro/vim-markdown-concealed'
 
+" ##Vim GNUPG {{{2
+" A secure alternative to VimCrypt
+Plugin 'jamessan/vim-gnupg'
+
 " End of Bundle. We load all the plugins and re-enable the indentation
 call vundle#end()
 filetype plugin on
@@ -420,6 +424,29 @@ if executable('ag')
     set grepformat=%f:%l:%c:%m
 endif
 
+" ##Vim's language {{{2
+if s:is_windows && has('gui')
+    language messages en
+endif
+
+" ##Default font and encoding {{{2
+
+" ###Default font {{{3
+if s:is_windows
+    set guifont=Powerline_Consolas:h9:cANSI
+    set guioptions=                      " No menu, no toolbar, no scrollbars
+else
+    set guifont=Powerline\ Consolas\ 10
+endif
+
+" ###Encoding {{{3
+set encoding=utf8
+setglobal fileencoding=utf-8
+set fileencodings=ucs-bom,utf-8,latin1
+set termencoding=utf-8
+
+" ###Filetypes {{{3
+set ffs=unix,dos,mac
 " ##Format/Linebreak {{{2
 set linebreak                          " Break at a char in "breakat"
 set autoindent                         " Copy indent form current line when starting a new line
@@ -483,29 +510,7 @@ set showbreak=⌐
 " ##Auto complete setting {{{2
 set completeopt=menuone,longest
 
-" ##Vim's language {{{2
-if s:is_windows && has('gui')
-    language messages en
-endif
 
-" ##Default font and encoding {{{2
-
-" ###Default font {{{3
-if s:is_windows
-    set guifont=Powerline_Consolas:h9:cANSI
-    set guioptions=                      " No menu, no toolbar, no scrollbars
-else
-    set guifont=Powerline\ Consolas\ 10
-endif
-
-" ###Encoding {{{3
-set encoding=utf8
-setglobal fileencoding=utf-8
-set fileencodings=ucs-bom,utf-8,latin1
-set termencoding=utf-8
-
-" ###Filetypes {{{3
-set ffs=unix,dos,mac
 
 " ##Default shell and directories {{{2
 if s:is_windows
@@ -1063,38 +1068,27 @@ augroup shebang
   autocmd BufNewFile *.tex 0put =\"%&plain\<nl>\"|$
 augroup END
 
-" ##GPG Encryption {{{2
-" Transparent editing of gpg encrypted files (by Wouter Hanegraaff)
-"
-augroup encrypted
-  au!
-  " First make sure nothing is written to ~/.viminfo while editing
-  " an encrypted file.
-  autocmd BufReadPre,FileReadPre *.gpg set viminfo=
-  " We don't want a swap file, as it writes unencrypted data to disk
-  autocmd BufReadPre,FileReadPre *.gpg set noswapfile
- 
-  " Switch to binary mode to read the encrypted file
-  autocmd BufReadPre,FileReadPre *.gpg set bin
-  autocmd BufReadPre,FileReadPre *.gpg let ch_save = &ch|set ch=2
-  " (If you use tcsh, you may need to alter this line.)
-  autocmd BufReadPost,FileReadPost *.gpg '[,']!gpg --decrypt 2> /dev/null
- 
-  " Switch to normal mode for editing
-  autocmd BufReadPost,FileReadPost *.gpg set nobin
-  autocmd BufReadPost,FileReadPost *.gpg let &ch = ch_save|unlet ch_save
-  autocmd BufReadPost,FileReadPost *.gpg execute ":doautocmd BufReadPost " . expand("%:r")
- 
-  " Convert all text to encrypted text before writing
-  " (If you use tcsh, you may need to alter this line.)
-  autocmd BufWritePre,FileWritePre *.gpg '[,']!gpg --default-recipient-self -ae 2>/dev/null
-  " Undo the encryption so we are back in the normal text, directly
-  " after the file has been written.
-  autocmd BufWritePost,FileWritePost *.gpg u
-augroup END
+
 
 " #Functions {{{1
 "
+" ##Get Visual Selection {{{2
+" Used in `<C-f>` and `<C-h>`, I get the current selection to put in into the search
+" bar. 
+fu! GetVisualSelection()
+    let old_reg = @v
+    normal! gv"vy
+    let raw_search = @v
+    let @v = old_reg
+    return substitute(escape(raw_search, '\/.*$^~[]'), "\n", '\\n', "g")
+endfunction
+
+" ##Escape special chars for a regexp search
+"
+function! Escape(stuff)
+    return substitute(escape(a:stuff, '\/.*$^~[]'), "\n", '\\n', "g")
+endfunction
+
 " ##Folding text format {{{2
 if has("folding")
   function! MyFoldText()
