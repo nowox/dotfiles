@@ -9,7 +9,7 @@ umask 027
 #export PYTHONPATH='/usr/lib/python2.7/'
 export VIMRUNTIME='/usr/share/vim/vim74'
 
-export PATH="~/.scripts:$PATH"
+export PATH="~/bin:~/.scripts:$PATH"
 
 # Mintty
 bind -r '\C-s'

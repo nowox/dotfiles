@@ -59,6 +59,17 @@ Plugin 'gmarik/Vundle.vim'
 " #Plugins {{{1
 " This section contains all the plugins I am using with Vim.
 
+" ##LaTeX-Box {{{2
+Plugin 'LaTeX-Box-Team/LaTeX-Box'
+let g:LatexBox_latexmk_options='-xelatex'
+ 
+" ##Vim-Airline {{{2
+" Fancy status and tab bar, very good plugin
+Plugin 'bling/vim-airline'                        " Best status line ever (needs Powerline Consolas font)
+let g:airline_theme                      = 'zenburn' " With brighter split separators
+let g:airline#extensions#tabline#enabled = 1      " Allows to view windows/tabs
+let g:airline_powerline_fonts            = 1      " Fancy fonts
+let g:airline#extensions#tabline#enabled = 1    
 " ##Lorem Ipsum {{{2
 " [LoremIpsum](http://lipsum.com/) is simply dummy text of the printing and typesetting 
 " industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
@@ -86,7 +97,7 @@ Plugin 'loremipsum'
 "
 Plugin 'ZoomWin'
 
-" ## Mark by Ingo Karkat {{{2
+" ##Mark by Ingo Karkat {{{2
 " This plugin adds mappings and a `:Mark` command to highlight several words in 
 " different colors simultaneously, similar to the built-in `hlsearch`
 " highlighting of search results and the `*` command. For example, when you 
@@ -291,8 +302,11 @@ Plugin 'junegunn/goyo.vim'
 
 " ##PCRE regex for Vim {{{2
 " Will remap the default `/` search with `:M/`
+"
+" I don't activate this plugin by default because otherwise I lose the instant highlight 
+" during the search.
 Plugin 'othree/eregex.vim'
-let g:eregex_default_enable = 1
+let g:eregex_default_enable = 0
 
 " ##Voom {{{2
 " An outliner for vim. It works like Tagbar or Taglist but without ctags.
