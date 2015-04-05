@@ -102,7 +102,7 @@ c=($r6 $b6 $r8)
 [[ $_isroot   -eq 1 ]] && c=($r2 $b2 $r7)
 
 # Prompt
-p="${rst}$( title \W )" # Title: basename
+p="${rst}$( title '\W' )" # Title: basename
 p="${p}${c[0]}\u@"      # User
 p="${p}${c[1]}\h "      # Host
 p="${p}${c[2]}\w"       # Path
