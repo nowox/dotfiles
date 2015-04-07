@@ -1,34 +1,155 @@
 [user]
-    email = "nowox@x0x.ch"
-    name = Yves Chevallier
+    name  = Yves Chevallier
+    email = nowox@x0x.ch
 [code]
     editor = vim
+    whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+    excludesfile = ~/.gitignore
 [core]
     ignorecase = false
     whitespace = cr-at-eol
-[diff]
-    tool = vimdiff
-[alias]
-    tree = log --graph --decorate --pretty=oneline --abbrev-commit
-    co = checkout
-    ci = commit
-    st = status
-    br = branch
-[color]
-    ui = true
-
+    autocrlf = false
+    fileMode = false
 [diff]
     tool = bc3
+[difftool "bc3"]
+    cmd = "/cygdrive/c/BeyondCompare3/BComp.exe \"$(cygpath -w \"$LOCAL\")\" \"$(cygpath -w \"$REMOTE\")\" /lefttitle=\"$(cygpath -w \"$LOCAL\")\" /righttitle=\"$(cygpath -w \"$REMOTE\")\""
+[difftool "colordiff"]
+    cmd = "colordiff -NuBbwi \"$LOCAL\" \"$REMOTE\" | less -R"
 [difftool]
     prompt = false
-[difftool "bc3"]
-    cmd = \"/cygdrive/c/Program Files (x86)/Beyond Compare 4/BComp.exe\" "$(cygpath -w $LOCAL)" "$REMOTE"
 [merge]
     tool = bc3
 [mergetool]
     prompt = false
 [mergetool "bc3"]
-    trustExitCode = true
-    cmd = \"/cygdrive/c/Program Files (x86)/Beyond Compare 4/BComp.exe\" "$LOCAL" "$REMOTE" "$BASE" "$MERGED" 
-[credential]
-	helper = cache --timeout=3600
+    cmd = "/cygdrive/c/BeyondCompare3/BComp.exe \"$(cygpath -w \"$LOCAL\")\" \"$(cygpath -w \"$REMOTE\")\" \"$(cygpath -w \"$BASE\")\" \"$(cygpath -w \"$MERGED\")\""
+[color]
+    ui = true
+[color "branch"]
+    #current = yellow bold
+    #local = green bold
+    #remote = cyan bold
+[color "diff"]
+    #meta = yellow bold
+    #frag = magenta bold
+    #old = red bold
+    #new = green bold
+    #whitespace = red reverse
+[color "status"]
+    #added = green bold
+    #changed = yellow bold
+    #untracked = red bold
+[apply]
+    whitespace = nowarn
+[web]
+    browser = google-chrome
+[alias]
+    # Add files
+    a  = add --all          # Add all files to the git repository
+    ai = add -i             # Add files interactively
+
+    # Apply a patch
+    ap = apply              # Apply a patch
+    as = apply --stat
+    ac = apply --check
+
+    # Checkout
+    o  = checkout
+    ob = checkout -b
+
+    # Branches
+    b  = branch
+    ba = branch -a          # List local and remote branches
+    bd = branch -d          # Delete a branch
+
+    # Commit
+    c   = commit
+    ca  = commit -a               # Stage all modified files
+    cm  = commit -m               # Commit with message
+    cem = commit --allow-empty -m # Empty commit with a message
+    cd  = commit --amend          # Update the previous commit
+
+    # Status
+    s   = status
+    ss  = status -s -b            # Status in short format
+
+    # Diff
+    d   = diff                    # Diff Staged     <-> Filesystem
+    dc  = diff --cached           # Diff Staged     <-> HEAD
+    dh  = diff HEAD               # Diff Filesystem <-> HEAD
+    dt  = difftool
+    dtc = difftool --cached
+    dp  = diff --patience
+
+    # Integrity
+    fk = fsck                     # Verifies the connectivity and validity of the db
+    fu = fsck --unreachable       # List commits unlinked to any reference nodes
+
+    # Grep
+    ag = grep --perl-regexp --line-number --heading --show-function -i
+    g  = grep --perl-regexp --line-number --heading --show-function -i
+
+    # Log / Tree
+    l = log \
+         --all \
+         -n30 \
+         --graph \
+         --abbrev-commit \
+         --decorate \
+         --date=relative \
+         --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)'
+
+    lp = log graph abbrev-commit decorate date=relative format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' all lg2 = log graph abbrev-commit decorate format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n'' %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' all lg = !"git lg1" 
+
+    # Files
+    ls = ls-files
+    lsf = "!git ls-files | grep --perl-regexp --line-number --heading --show-function -i"
+
+    flush = "!git reset HEAD && git checkout . && git clean -f"
+    # Merge
+    m = merge
+    ma = merge --abort
+    mc = merge --continue
+    ms = merge --skip
+
+    # Reset
+    re = reset
+    rh = reset HEAD
+    reh = reset --hard
+    rem = reset --mixed
+    res = reset --soft
+    rehh = reset --hard HEAD
+    remh = reset --mixed HEAD
+    resh = reset --soft HEAD
+
+    #############
+    sa = stash apply
+    sc = stash clear
+    sd = stash drop
+    sl = stash list
+    sp = stash pop
+    ss = stash save
+    sw = stash show
+
+    # My advanced tricks
+    pie = "!git ls-files | pie"
+
+    # To underestand (Advanced)
+    assume = update-index --assume-unchanged
+    unassume = update-index --no-assume-unchanged
+    assumed = "!git ls-files -v | grep ^h | cut -c 3-"
+    unassumeall = !git assumed | xargs git update-index --no-assume-unchanged
+    assumeall = "!git st -s | awk {'print $2'} | xargs git assume"
+
+    ours = "!f() { git checkout --ours $@ && git add $@; }; f"
+    theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"
+
+    barebranch = !sh -c 'git symbolic-ref HEAD refs/heads/$1 && git rm --cached -r . && git clean -xfd' -
+    flat = clone --depth 1
+    subpull = !git submodule foreach git pull --tags origin master
+    subrepo = !sh -c 'filter-branch --prune-empty --subdirectory-filter $1 master' -
+    human = name-rev --name-only --refs=refs/heads/*
+    serve = !git daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
+    snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+
