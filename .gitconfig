@@ -11,35 +11,23 @@
     autocrlf = false
     fileMode = false
 [diff]
-    tool = bc3
-[difftool "bc3"]
-    cmd = "/cygdrive/c/BeyondCompare3/BComp.exe \"$(cygpath -w \"$LOCAL\")\" \"$(cygpath -w \"$REMOTE\")\" /lefttitle=\"$(cygpath -w \"$LOCAL\")\" /righttitle=\"$(cygpath -w \"$REMOTE\")\""
+    tool = mydiff
+[difftool "bc4"]
+    cmd = "/cygdrive/c/Program Files (x86)/Beyond Compare 4/BComp.exe \"$(cygpath -w \"$LOCAL\")\" \"$(cygpath -w \"$REMOTE\")\" /lefttitle=\"$(cygpath -w \"$LOCAL\")\" /righttitle=\"$(cygpath -w \"$REMOTE\")\""
 [difftool "colordiff"]
     cmd = "colordiff -NuBbwi \"$LOCAL\" \"$REMOTE\" | less -R"
+[difftool "mydiff"]
+    cmd = "~/mydiff \"$LOCAL\" \"$REMOTE\""
 [difftool]
     prompt = false
 [merge]
-    tool = bc3
+    tool = bc4
 [mergetool]
     prompt = false
 [mergetool "bc3"]
-    cmd = "/cygdrive/c/BeyondCompare3/BComp.exe \"$(cygpath -w \"$LOCAL\")\" \"$(cygpath -w \"$REMOTE\")\" \"$(cygpath -w \"$BASE\")\" \"$(cygpath -w \"$MERGED\")\""
+    cmd = "/cygdrive/c/Program Files (x86)/Beyond Compare 4/BComp.exe \"$(cygpath -w \"$LOCAL\")\" \"$(cygpath -w \"$REMOTE\")\" \"$(cygpath -w \"$BASE\")\" \"$(cygpath -w \"$MERGED\")\""
 [color]
     ui = true
-[color "branch"]
-    #current = yellow bold
-    #local = green bold
-    #remote = cyan bold
-[color "diff"]
-    #meta = yellow bold
-    #frag = magenta bold
-    #old = red bold
-    #new = green bold
-    #whitespace = red reverse
-[color "status"]
-    #added = green bold
-    #changed = yellow bold
-    #untracked = red bold
 [apply]
     whitespace = nowarn
 [web]
@@ -152,4 +140,3 @@
     human = name-rev --name-only --refs=refs/heads/*
     serve = !git daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
     snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
-
