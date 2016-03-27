@@ -1,7 +1,7 @@
 "" File:        .vimrc
 "" Maintainer:  Yves Chevallier <nowox@x0x.ch>
-"" Last Change: 2015-04-01
 "" Source:      https://github.com/nowox/dotfiles/.vimrc
+"
 " #Motivations
 " I am not convinced that traditional vim users are more efficient than sublime's or atom's
 " users. However, I am truly convinced that vim can be configured to be used in a more
