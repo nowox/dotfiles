@@ -2,17 +2,6 @@
 "" Maintainer:  Yves Chevallier <nowox@x0x.ch>
 "" Last Change: 2015-04-01
 "" Source:      https://github.com/nowox/dotfiles/.vimrc
-" ```
-"     _                _   _
-"    / \   _ __   ___ | |_| |__   ___ _ __
-"   / _ \ | '_ \ / _ \| __| '_ \ / _ \ '__|
-"  / ___ \| | | | (_) | |_| | | |  __/ |          _
-" /_/   \_\_| |_|\___/ \__|_| |_|\___|_|   __   _(_)_ __ ___  _ __ ___                                      
-"                                          \ \ / / | '_ ` _ \| '__/ __|
-"                                           \ V /| | | | | | | | | (__
-"                                         (_)\_/ |_|_| |_| |_|_|  \___|
-" ```
-"
 " #Motivations
 " I am not convinced that traditional vim users are more efficient than sublime's or atom's
 " users. However, I am truly convinced that vim can be configured to be used in a more
