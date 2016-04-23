@@ -180,6 +180,11 @@ colorscheme () {
         echo -ne  '\e]4;14;#97C7BE\a' # BoldCyan
         echo -ne   '\e]4;7;#D0D0D0\a' # White
         echo -ne  '\e]4;15;#F5F5F5\a' # BoldWhite
+
+        # Cursor color for gnome-terminal
+        if [ "$TERM" = "xterm" ]; then
+            echo -ne '\e]12;#ffcc00\a'
+        fi
     fi
 
     if [ "$1" = "1" ]; then

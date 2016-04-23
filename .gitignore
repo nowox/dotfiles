@@ -1,2 +1,10 @@
 *
 !.*
+.ICEauthority
+.Xauthority
+.bash_history
+.bash_logout
+.dmrc
+.gksu.lock
+.viminfo
+.xsession-errors

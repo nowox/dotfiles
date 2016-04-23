@@ -54,11 +54,14 @@ let g:LatexBox_latexmk_options='-xelatex'
  
 " ##Vim-Airline {{{2
 " Fancy status and tab bar, very good plugin
-Plugin 'bling/vim-airline'                        " Best status line ever (needs Powerline Consolas font)
+Plugin 'vim-airline/vim-airline'                        " Best status line ever (needs Powerline Consolas font)
 let g:airline_theme                      = 'zenburn' " With brighter split separators
 let g:airline#extensions#tabline#enabled = 1      " Allows to view windows/tabs
 let g:airline_powerline_fonts            = 1      " Fancy fonts
 let g:airline#extensions#tabline#enabled = 1    
+
+Plugin 'vim-airline/vim-airline-themes.git'
+
 " ##Lorem Ipsum {{{2
 " [LoremIpsum](http://lipsum.com/) is simply dummy text of the printing and typesetting 
 " industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
@@ -426,6 +429,7 @@ if s:is_windows
     set guioptions=                      " No menu, no toolbar, no scrollbars
 else
     set guifont=Powerline\ Consolas\ 10
+    set guioptions=
 endif
 
 " ###Encoding {{{3
