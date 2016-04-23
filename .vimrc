@@ -517,6 +517,10 @@ if exists("$TMUX")
     set term=screen-256color
 endif
 
+if $COLORTERM == 'gnome-terminal'
+    set t_Co=256
+endif
+
 " Prefer using pipe instead of temp files for shell commands.
 set noshelltemp
 
