@@ -203,13 +203,14 @@ Plugin 'davidhalter/jedi-vim'
 " `chmod +x %`. It works perfectly with bash, perl, python scripts. It also detects 
 " the shebang.
 "
-Plugin 'tyru/autochmodx.vim'
-let g:autochmodx_scriptish_file_patterns = [
-\  '\c.*\.pl$',
-\  '\c.*\.rb$',
-\  '\c.*\.py$',
-\  '\c.*\.sh$',
-\ ]
+" I notice a bug with vimairline when autochmodx add the flag
+"Plugin 'tyru/autochmodx.vim'
+"let g:autochmodx_scriptish_file_patterns = [
+"\  '\c.*\.pl$',
+"\  '\c.*\.rb$',
+"\  '\c.*\.py$',
+"\  '\c.*\.sh$',
+"\ ]
 
 " ##CtrlP {{{2
 " Inspired from SublimeText. Provide a nice solution to navigate and load files.
@@ -353,6 +354,10 @@ call vundle#end()
 filetype plugin on
 filetype indent on
 
+" ##Vim Flake8
+" Syntaxic analyser for Python
+Plugin 'nvie/vim-flake8'
+
 " }}}1
 
 " #Settings {{{1
@@ -428,7 +433,7 @@ if s:is_windows
     set guifont=Powerline_Consolas:h9:cANSI
     set guioptions=                      " No menu, no toolbar, no scrollbars
 else
-    set guifont=Powerline\ Consolas\ 10
+    set guifont=Sauce\ Code\ Powerline\ Regular
     set guioptions=
 endif
 
@@ -668,15 +673,23 @@ if s:is_cygwin
     imap <silent> <f27> <esc>:bp!<cr>a
     vmap <silent> <f27> <c-c>:bp!<cr>
 else
+
+    " For Xterm, the .Xresources must contain:
+    " xterm*VT100.Translations: #override \
+    "   Ctrl ~Shift <Key>Tab: string(0x1b) string("[27;5;9~") \n\
+    "   Ctrl Shift <Key>Tab: string(0x1b) string("[27;6;9~")
+
     " <C-Tab> Next buffer
-    map <silent> <C-Tab> :bn!<cr>
-    imap <silent> <C-Tab> <esc>:bn!<cr>a
-    vmap <silent> <C-Tab> <c-c>:bn!<cr>
+    set <f26>=[27;5;9~
+    map <silent> <f26> :bn!<cr>
+    imap <silent> <f26> <esc>:bn!<cr>a
+    vmap <silent> <f26> <c-c>:bn!<cr>
 
     " <C-S-Tab> Previous buffer
-    map <silent> <C-S-Tab> :bp!<cr>
-    imap <silent> <C-S-Tab> <esc>:bp!<cr>a
-    vmap <silent> <C-S-Tab> <c-c>:bp!<cr>
+    set <f27>=[27;6;9~
+    map <silent> <f27> :bp!<cr>
+    imap <silent> <f27> <esc>:bp!<cr>a
+    vmap <silent> <f27> <c-c>:bp!<cr>
 endif
 
 " ###`<C-a>` Select all {{{3
@@ -1062,7 +1075,6 @@ augroup shebang
 "  autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python\<nl># Author: Yves Chevallier<nl># Date:\".strftime("%d/%m/%y %H:%M:%S")|$
   autocmd BufNewFile *.rb 0put =\"#!/usr/bin/env ruby\<nl># Author: Yves Chevallier\<nl>Date: \<nl>\"|$
   autocmd BufNewFile *.pl 0put =\"#!/usr/bin/env perl\<nl># Author: Yves Chevallier\<nl>Date: \<nl>\"|$
-  autocmd BufNewFile *.tex 0put =\"%&plain\<nl>\"|$
 augroup END
 
 

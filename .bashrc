@@ -16,7 +16,7 @@ _color=0
 [[ "$TERM" =~ xterm_color ]] && _color=1
 
 # Umask
-umask 027
+umask 022
 
 # History
 export HOSTCONTROL=ignoredups:ignorespace
@@ -120,7 +120,7 @@ alias grep='grep --color'                     # show differences in colour
 alias egrep='egrep --color=auto'              # show differences in colour
 alias fgrep='fgrep --color=auto'              # show differences in colour
 
-alias ls='ls -h --color=auto'                # classify files in colour
+alias ls='ls -h --color=auto --hide="*.pyc"'
 alias lx='ls -lXB'    # Sort by extensions.
 alias lk='ls -lSr'    # Sort by size, biggest last.
 alias lt='ls -ltr'    # Sort by date, most recent last.
@@ -134,7 +134,7 @@ alias svim='sudo vim'
 alias root='sudo su'
 
 alias vi='vim'
-alias tree='tree -Csuh' # Nice alternative to 'recursive ls'
+alias tree='tree -Csh' # Nice alternative to 'recursive ls'
 alias tmux="tmux -u"
 alias ..='cd ..'
 
