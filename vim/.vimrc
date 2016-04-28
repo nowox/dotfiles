@@ -11,7 +11,7 @@
 " Why not to start using them extensively?
 "
 " The Markdown output is generated with vim2doc Perl script:
-" 
+"
 "     ~/.scripts/vim2doc ~/.vimrc > ~/.doc/vimrc.md
 "
 " #Table of contents
@@ -48,27 +48,35 @@ Plugin 'gmarik/Vundle.vim'
 " #Plugins {{{1
 " This section contains all the plugins I am using with Vim.
 
+" ##OrgMode (Text outlining and task management) {{{2
+Plugin 'jceb/vim-orgmode'
+
 " ##LaTeX-Box {{{2
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
 let g:LatexBox_latexmk_options='-xelatex'
- 
+
+" ##IndentLine {{{2
+"Plugin 'Yggdroot/indentLine'
+"let g:indentLine_color_term = 238
+"let g:indentLine_char = '│'
+
 " ##Vim-Airline {{{2
 " Fancy status and tab bar, very good plugin
 Plugin 'vim-airline/vim-airline'                        " Best status line ever (needs Powerline Consolas font)
 let g:airline_theme                      = 'zenburn' " With brighter split separators
 let g:airline#extensions#tabline#enabled = 1      " Allows to view windows/tabs
 let g:airline_powerline_fonts            = 1      " Fancy fonts
-let g:airline#extensions#tabline#enabled = 1    
+let g:airline#extensions#tabline#enabled = 1
 
 Plugin 'vim-airline/vim-airline-themes.git'
 
 " ##Lorem Ipsum {{{2
-" [LoremIpsum](http://lipsum.com/) is simply dummy text of the printing and typesetting 
-" industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-" when an unknown printer took a galley of type and scrambled it to make a type specimen 
-" book. It has survived not only five centuries, but also the leap into electronic 
+" [LoremIpsum](http://lipsum.com/) is simply dummy text of the printing and typesetting
+" industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+" when an unknown printer took a galley of type and scrambled it to make a type specimen
+" book. It has survived not only five centuries, but also the leap into electronic
 " typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
-" release of Letraset sheets containing Lorem Ipsum passages, and more recently with 
+" release of Letraset sheets containing Lorem Ipsum passages, and more recently with
 " desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 "
 " Usage is
@@ -79,8 +87,11 @@ Plugin 'vim-airline/vim-airline-themes.git'
 "
 Plugin 'loremipsum'
 
+" ##Ansible {{{2
+Plugin 'chase/vim-ansible-yaml'
+
 " ##Zoomwin {{{2
-" When working with windows (splits), it is sometime nice to go in full screen. This 
+" When working with windows (splits), it is sometime nice to go in full screen. This
 " plugin provide this with `<C-w>o` to enable/disable the full screen mode.
 "
 " - Files are made hidden during zoom-in and restored upon zoom-out
@@ -90,31 +101,31 @@ Plugin 'loremipsum'
 Plugin 'ZoomWin'
 
 " ##Mark by Ingo Karkat {{{2
-" This plugin adds mappings and a `:Mark` command to highlight several words in 
+" This plugin adds mappings and a `:Mark` command to highlight several words in
 " different colors simultaneously, similar to the built-in `hlsearch`
-" highlighting of search results and the `*` command. For example, when you 
-" are browsing a big program file, you could highlight multiple identifiers in 
-" parallel. This will make it easier to trace the source code. 
+" highlighting of search results and the `*` command. For example, when you
+" are browsing a big program file, you could highlight multiple identifiers in
+" parallel. This will make it easier to trace the source code.
 "
 " `<Leader>m` Mark the word under the cursor, similar to the star command. The next free
 " highlight group is used. If already on a mark: Clear the mark, like `<Leader>n`.
 " Works also with visual selection in visual mode
 "
-" `[N]<Leader>m` With `[N]`, mark the word under the cursor with the named highlight 
-" group `[N]`. When that group is not empty, the word is added as an alternative match, 
-" so you can highlight multiple words with the same color. When the word is already 
-" contained in the list of alternatives, it is removed. 
+" `[N]<Leader>m` With `[N]`, mark the word under the cursor with the named highlight
+" group `[N]`. When that group is not empty, the word is added as an alternative match,
+" so you can highlight multiple words with the same color. When the word is already
+" contained in the list of alternatives, it is removed.
 "
-Plugin 'Mark'
+Plugin 'vim-scripts/Mark--Karkat'
 
 " ##Colorschemes collection {{{2
-" (Flazz)[https://github.com/flazz/vim-colorschemes] provide a nice collection of 
-" colorschemes. I personnally like [hybrid](https://github.com/w0ng/vim-hybrid), base16 
+" (Flazz)[https://github.com/flazz/vim-colorschemes] provide a nice collection of
+" colorschemes. I personnally like [hybrid](https://github.com/w0ng/vim-hybrid), base16
 " and monokai.
 Plugin 'flazz/vim-colorschemes'
 
 " ##Bufkill (improve buffers navigation) {{{2
-" When a buffer is deleted, the current window is also deleted is this was the last 
+" When a buffer is deleted, the current window is also deleted is this was the last
 " buffer into it. This can be avoided with `:BD` instead of `:bd`
 "
 "     <Leader>bd            " Delete a buffer
@@ -148,7 +159,7 @@ Plugin 'milkypostman/vim-togglelist'
 " several versions of Vim without `+clipboard` support, especially for non-GUI
 " version of Vim.
 "
-" Vim has 26 normal registers `"a` .. `"z`. The blackhole register `_` is not touched 
+" Vim has 26 normal registers `"a` .. `"z`. The blackhole register `_` is not touched
 " by this plugin.
 "
 " Under Windows, `*` and `+` registers are equivalent. For X11 systems, though, they
@@ -189,18 +200,18 @@ let g:tagbar_iconchars = ['►', '▼'] " Set for consolas powerline
 " ##Jedi Python {{{2
 " jedi-vim is a VIM binding to the autocompletion library.
 "
-"     <C-Space>             " Completion       
-"     <Leader>g             " Goto assignment  
-"     <Leader>d             " Goto definitions 
-"     <Leader>r             " Renaming         
-"     <Leader>n             " Usages           
-" 
+"     <C-Space>             " Completion
+"     <Leader>g             " Goto assignment
+"     <Leader>d             " Goto definitions
+"     <Leader>r             " Renaming
+"     <Leader>n             " Usages
+"
 " -
-Plugin 'davidhalter/jedi-vim'
+" Plugin 'davidhalter/jedi-vim'
 
 " ##Autochmodx {{{2
 " If a current file looks like an executable script, make it executable by running
-" `chmod +x %`. It works perfectly with bash, perl, python scripts. It also detects 
+" `chmod +x %`. It works perfectly with bash, perl, python scripts. It also detects
 " the shebang.
 "
 " I notice a bug with vimairline when autochmodx add the flag
@@ -246,6 +257,22 @@ let g:ctrlp_custom_ignore = {
     \ 'file': '\v\.(contrib|keep|sbn|ovl|s|html|d|exe|so|dll|doj|bin|zip|tar|gz|iso|class|rar|swp|ldr|dpj|stk)$',
     \ 'link': 'some_bad_symbolic_links',
     \ }
+
+" Use AG to speed up indexing
+let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
+      \ --ignore .git
+      \ --ignore .svn
+      \ --ignore .hg
+      \ --ignore .DS_Store
+      \ --ignore "**/*.pyc"
+      \ -g ""'
+
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+
+" ##Ctrlp matcher {{{2
+" Fast CtrlP matcher based on python
+" Performance difference is up to x22, look at this perf
+Plugin 'FelikZ/ctrlp-py-matcher'
 
 " ##CtrlP Command Palette {{{2
 " This is an extension for the awesome vim CtrlP plugin.
@@ -296,7 +323,7 @@ Plugin 'junegunn/goyo.vim'
 " ##PCRE regex for Vim {{{2
 " Will remap the default `/` search with `:M/`
 "
-" I don't activate this plugin by default because otherwise I lose the instant highlight 
+" I don't activate this plugin by default because otherwise I lose the instant highlight
 " during the search.
 Plugin 'othree/eregex.vim'
 let g:eregex_default_enable = 0
@@ -306,7 +333,7 @@ let g:eregex_default_enable = 0
 "
 " The main supported format are:
 "
-" | Language | Description                                        
+" | Language | Description
 " |----------|----------------------------------------------------|
 " | rest     | reStructuredText section titles;                   |
 " | markdown | Markdown headers, both Setext-style and Atx-style; |
@@ -333,7 +360,7 @@ Plugin 'vim-scripts/VOoM'
 " | :Wall:      | Write every open window. Handy for kicking off tools like guard.     |
 " | :SudoWrite: | Write a privileged file with sudo.                                   |
 " | :SudoEdit:  | Edit a privileged file with sudo.                                    |
-" 
+"
 Plugin 'tpope/vim-eunuch'
 
 " ##Markdown conceal {{{2
@@ -345,9 +372,44 @@ Plugin 'tpope/vim-eunuch'
 "
 Plugin 'prurigro/vim-markdown-concealed'
 
+" ##YouCompleteMe {{{2
+Plugin 'Valloric/YouCompleteMe'
+
 " ##Vim GNUPG {{{2
 " A secure alternative to VimCrypt
 Plugin 'jamessan/vim-gnupg'
+
+" ##Vimproc (Shougo) {{{2
+Plugin 'Shougo/vimproc.vim'
+
+" ###NeoCOmplete {{{2
+Plugin 'Shougo/neocomplete.vim'
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+
+" ##Unite (Shougo) {{{2
+Plugin 'Shougo/unite.vim'
+
+" Use ag for search
+if executable('ag')
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  let g:unite_source_grep_recursive_opt = ''
+
+  " Using ag as recursive command.
+  let g:unite_source_rec_async_command =
+      \ 'ag --follow --nocolor --nogroup --hidden -g ""'
+endif
+
+" For ack.
+if executable('ack-grep')
+  let g:unite_source_grep_command = 'ack-grep'
+  let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
+  let g:unite_source_grep_recursive_opt = ''
+
+  " Using ack-grep as recursive command.
+  let g:unite_source_rec_async_command = 'ack -f --nofilter'
+endif
 
 " End of Bundle. We load all the plugins and re-enable the indentation
 call vundle#end()
@@ -551,7 +613,7 @@ set ttymouse=xterm2
 "
 
 " Use a more convenient leader key
-let mapleader = ","                    
+let mapleader = ","
 
 " Correct cursor movement for long lines
 noremap j gj
@@ -638,25 +700,25 @@ vmap <C-Up> xkP`[V`]
 vmap <C-Down> xp`[V`]
 
 " Delete words in insert mode
-inoremap dda <C-c>dv1bi
-inoremap ddb <C-c>dv2bi
-inoremap ddc <C-c>dv3bi
-inoremap ddd <C-c>dv4bi
-inoremap dde <C-c>dv5bi
-inoremap ddf <C-c>dv6bi
-inoremap ddg <C-c>dv7bi
-inoremap ddh <C-c>dv8bi
-inoremap ddi <C-c>dv9bi
+inoremap ddda <C-c>dv1bi
+inoremap dddb <C-c>dv2bi
+inoremap dddc <C-c>dv3bi
+inoremap dddd <C-c>dv4bi
+inoremap ddde <C-c>dv5bi
+inoremap dddf <C-c>dv6bi
+inoremap dddg <C-c>dv7bi
+inoremap dddh <C-c>dv8bi
+inoremap dddi <C-c>dv9bi
 
-inoremap dd1 <C-c>dv1bi
-inoremap dd2 <C-c>dv2bi
-inoremap dd3 <C-c>dv3bi
-inoremap dd4 <C-c>dv4bi
-inoremap dd5 <C-c>dv5bi
-inoremap dd6 <C-c>dv6bi
-inoremap dd7 <C-c>dv7bi
-inoremap dd8 <C-c>dv8bi
-inoremap dd9 <C-c>dv9bi
+inoremap ddd1 <C-c>dv1bi
+inoremap ddd2 <C-c>dv2bi
+inoremap ddd3 <C-c>dv3bi
+inoremap ddd4 <C-c>dv4bi
+inoremap ddd5 <C-c>dv5bi
+inoremap ddd6 <C-c>dv6bi
+inoremap ddd7 <C-c>dv7bi
+inoremap ddd8 <C-c>dv8bi
+inoremap ddd9 <C-c>dv9bi
 
 " ##`<C>` Control + key {{{2
 " ###`<C-Tab>` `<C-S-Tab>` Next/Previous buffer {{{3
@@ -851,8 +913,6 @@ nnoremap <silent> <c-y> :<c-u>call AddSubtract("\<c-a>", '')<CR>
 " ###`<C-Home>` Real start of a line {{{3
 inoremap <C-Home>   <C-c>0i
 nnoremap <C-Home>   0
-inoremap <C-End>    <C-c>$gea
-nnoremap <C-End>    $gel
 
 " ##`<A-?>` Alt + key {{{2
 
@@ -945,6 +1005,14 @@ command! -range=% FixWhitespace call <SID>FixWhitespace(<line1>,<line2>)
 
 " ##`<Leader>` Vim's prefix{{{2
 
+" ###`<Leader>d` Delete the current buffer
+noremap <leader>d :BD<cr>
+inoremap <leader>d <C-c>:BD<cr>
+
+"###`<Leader>a` Search with `ag` the current word
+noremap <leader>a  :Ag! -Q <C-r>=expand('<cword>')<CR><CR>
+inoremap <leader>a <esc>:Ag! -Q <C-r>=expand('<cword>')<CR><CR>
+
 " ###`<Leader>v` Edit .vimrc {{{3
 noremap <leader>v :edit ~/.vimrc<cr>
 
@@ -1006,6 +1074,7 @@ endfun
 " ##`xxdate` {{{2
 " Automatically insert the current date
 ab xxdate <C-R>=DateTime()<cr>
+ab xtodo <C-R>TODO: <YCH =DateTime()><cr>
 fun! DateTime()
     return strftime("%Y-%m-%d %a %I:%M %p")
 endfun
@@ -1057,7 +1126,8 @@ augroup configgroup
     autocmd BufEnter *.ldf setlocal filetype=ldf
     autocmd BufEnter *.tex map <leader>ll :Latexmk<cr>
     autocmd BufEnter *.ldf setlocal foldmethod=marker | set foldlevel=0
-    autocmd BufEnter *.c   setlocal foldmethod=syntax
+    autocmd BufEnter *.c   setlocal foldmethod=indent
+    autocmd BufWritePre * :%s/\s\+$//e
 augroup END
 
 " ##Vimrc {{{2
@@ -1072,18 +1142,30 @@ augroup END
 " Automatically add shebang to specific filetypes.
 "
 augroup shebang
-"  autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python\<nl># Author: Yves Chevallier<nl># Date:\".strftime("%d/%m/%y %H:%M:%S")|$
+"  autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python\<nl># Author: Yves Chevallier\<nl># Date:\".strftime("%d/%m/%y %H:%M:%S")|$
   autocmd BufNewFile *.rb 0put =\"#!/usr/bin/env ruby\<nl># Author: Yves Chevallier\<nl>Date: \<nl>\"|$
-  autocmd BufNewFile *.pl 0put =\"#!/usr/bin/env perl\<nl># Author: Yves Chevallier\<nl>Date: \<nl>\"|$
+  autocmd BufNewFile *.pl 0put =\"#!/usr/bin/env perl\<nl># Author: Yves Chevallier\<nl># Date: \<nl>\"|$
+  autocmd BufNewFile *.tex 0put =\"%&plain\<nl>\"|$
 augroup END
 
 
 
 " #Functions {{{1
 "
+" ##Tailing White Spaces {{{2
+function StripTrailingWhitespace()
+  if !&binary && &filetype != 'diff'
+    normal mz
+    normal Hmy
+    %s/\s\+$//e
+    normal 'yz<CR>
+    normal `z
+  endif
+endfunction
+
 " ##Get Visual Selection {{{2
 " Used in `<C-f>` and `<C-h>`, I get the current selection to put in into the search
-" bar. 
+" bar.
 fu! GetVisualSelection()
     let old_reg = @v
     normal! gv"vy
@@ -1153,7 +1235,7 @@ if has("folding")
   endfunction
   set foldtext=MyFoldText()
 
-endif  
+endif
 "
 "
 " #Keyboard mapping summary {{{1
@@ -1162,15 +1244,19 @@ endif
 "
 " |    Mapping     |     Description                                       |   Plugin   |
 " |:---------------|:------------------------------------------------------|:----------:|
+" | `<Leader>a`    | Search with `ag` the word under the cursor            |            |
 " | `<Leader>bb`   | Previous buffer (with cursor preserve position)       | bufkill    |
 " | `<Leader>bf`   | Next buffer (with cursor preserve position)           | bufkill    |
 " | `<Leader>bd`   | Delete a buffer                                       | bufkill    |
+" | `<Leader>d`    | Delete current buffer with no warning                 |            |
 " | `<Leader>bundo`| Undo kill buffer                                      | bufkill    |
 " | `<Leader>ba`   | Alternate buffer                                      | bufkill    |
 " | `<Leader>l`    | Toggle location list                                  | togglelist |
 " | `<Leader>m`    | Highlight current word/selection with new color group | mark       |
 " | `<Leader>n`    | Remove mark on word/selection                         | mark       |
 " | `<Leader>q`    | Toggle Quickfix list                                  | togglelist |
+" | ddda           | Delete a word                                         |            |
+" | dddb           | Delete two words                                      |            |
 "
 " ##Normal mode
 "
@@ -1197,3 +1283,9 @@ endif
 " |:---------------|:------------------------------------------------------|:----------:|
 " | <C-r>          | Regex search                                          | ctrlp      |
 " | <C-d>          | Search by filename enable/disable                     | ctrlp      |
+"
+" #Todo
+"
+" - Add a mapping to add spaces until the position of the above char `c`. Example in a
+"   table where you want to insert spaces until the next separator `|`. This can be done
+"   with a `<Leader>` mapping such as `ggo|` or `ggo=`
