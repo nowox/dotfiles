@@ -20,9 +20,8 @@ umask 022
 
 # History
 export HOSTCONTROL=ignoredups:ignorespace
-export HISTSIZE=1000
-export HISTFILESIZE=2000
-export HISTIGNORE='&:ls:ll:la:cd:exit:clear:history'
+export HISTSIZE=9999
+export HISTFILESIZE=9999
 
 # Shelloptions (shopt)
 shopt -s cdspell                 # Autocorrect mistyped directory
@@ -134,7 +133,6 @@ alias svim='sudo vim'
 alias root='sudo su'
 
 alias vi='vim'
-alias tree='tree -Csh' # Nice alternative to 'recursive ls'
 alias tmux="tmux -u"
 alias ..='cd ..'
 
