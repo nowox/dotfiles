@@ -1,6 +1,22 @@
+# .gitconfig
+# Yves Chevallier 2017
 [user]
     name  = Yves Chevallier
     email = nowox@x0x.ch
+
+[core]
+	editor = vim       # Because by default it's vi and vi is not always mapped to vim
+    ignorecase = false
+    autocrlf = false   # On cygwin I always work wtih LF
+    filemode = false
+    compression = 0    # Faster on Cygwin
+    whitespace = cr-at-eol
+
+[help]
+    autocorrect = 1 # 0.1 seconds to autocorrect mistypen commands.
+
+[color]
+    ui = auto
 
 [web]
     browser = google-chrome
@@ -9,13 +25,14 @@
     user  = nowox
     token = token
 
-[core]
-	editor = /usr/bin/vim
-    ignorecase = false
-    autocrlf = false
-    filemode = false
-    compression = 0
-	whitespace = cr-at-eol
+[log]
+    date = iso      
+
+[format]
+    pretty = "%C(bold blue)%h %C(bold green)%<|(20)% ar%C(reset) %C(white)% s\
+%C(dim white) -% an%C(reset)\
+%C(auto)% d\
+%C(bold red)% N"
 
 [advice]
   pushNonFastForward = false
@@ -25,119 +42,109 @@
   implicitIdentity = false
   detachedHead = false
 
-[color]
-    ui = true
-
 [color "grep"]
     linenumber = yellow bold
     match = red
-    filename = magenta
+    filename = green
+    function = magenta
+
+[color "status"]
+    untracked = blue
+    header = yellow bold
+    deleted = magenta
+
+[rerere]
+    enabled = true
+    autoUpdate = true
+
+
+[rebase] 
+    stat = true
+
+[pull] 
+    rebase = true
+
+[push]
+    default = simple
+
+[grep] 
+    patternType = perl
+    lineNumber = true
 
 [diff]
-	tool = vimdiff
+    tool = bc4
+
 [difftool]
-	prompt = false
+    prompt = false
+
 [difftool "bc4"]
     cmd = "\"/cygdrive/c/Program Files (x86)/Beyond Compare 4/Bcomp.exe\" \"$(cygpath -w \"$LOCAL\")\" \"$(cygpath -w \"$REMOTE\")\" /lefttitle=\"$(cygpath -w \"$LOCAL\")\" /righttitle=\"$(cygpath -w \"$REMOTE\")\""
 
 [merge]
     tool = bc4
+
+[log]
+    abbrevCommit = true
+    decorate = true
+
 [mergetool]
     prompt = false
-	keepBackup = false
+    keepBackup = false
+    keepTemporaries = true
+
 [mergetool "bc4"]
     cmd = "\"/cygdrive/c/Program Files (x86)/Beyond Compare 4/Bcomp.exe\" \"$(cygpath -w \"$LOCAL\")\" \"$(cygpath -w \"$REMOTE\")\" \"$(cygpath -w \"$BASE\")\" \"$(cygpath -w \"$MERGED\")\""
 
 [alias]
-    # Add files
-    a  = add --all          # Add all files to the git repository
-    ai = add -i             # Add files interactively
-
-    # Apply a patch
-    ap = apply              # Apply a patch
-    as = apply --stat
-    ac = apply --check
-
     # Checkout
     o  = checkout
     ob = checkout -b
 
-    # Move forward/Backward
+    # Move HEAD forward/Backward
     fw = "!git log --pretty=oneline --all | grep -B1 `git rev-parse HEAD` | head -n1 | egrep -o '[a-f0-9]{20,}' | xargs git checkout"
     bw = "!git checkout HEAD~1"
 
     # Branches
     b  = branch
-    ba = branch -a          # List local and remote branches
-    bd = branch -d          # Delete a branch
-    bD = branch -D          # Delete a branch
+    lb = "!for k in `git branch | perl -pe s/^..//`; do echo -e `git show --pretty=format:'%Cgreen%ci%x08%x08%x08%x08%x08%x08 %Cblue%cr%Creset' $k -- | head -n 1`\t$k; done | sort -r"
 
     # Commit
     c   = commit
     ca  = commit -a               # Stage all modified files
     cm  = commit -m               # Commit with message
-    cma  = commit -a -m               # Commit with message
-    cem = commit --allow-empty -m # Empty commit with a message
-    cd  = commit --amend          # Update the previous commit
+    cam = commit -a -m            # Commit all modified files with message
 
     # Status
-    s   = status
-    ss  = status -s -b            # Status in short format
-
+    s   = status -s -b            # Status in short format
+    su  = status -s -b -uno       # Doesn't show untracked files 
+ 
     # Diff
-    ddd = "!git diff -C --ignore-space-at-eol --ignore-space-change"
-	d = difftool
-    dc  = diff -C --cached        # Diff Staged     <-> HEAD
-
+    d   = diff
     dh  = diff HEAD               # Diff Filesystem <-> HEAD
+    dc  = diff -C --cached        # Diff Staged     <-> HEAD
+    ds  = diff -C --ignore-space-at-eol --ignore-space-change
     dt  = difftool
-    dtc = difftool --cached
-    dp  = diff --patience
 
     # Integrity
     fk = fsck                     # Verifies the connectivity and validity of the db
     fu = fsck --unreachable       # List commits unlinked to any reference nodes
 
     # Grep
-    g  = "!git --no-pager grep --perl-regexp -n -i"
+    g  = grep --show-function --heading --break -I
+    gh = "!f() { git g $2 $(git rev-list --max-count=$1 HEAD); }; f" 
+
+    # Replace
+    pie = "!sh -c 'echo \"$0\"; git ls-files -z | xargs -0 perl -pi -e \"$0\" && git ls-files | perl -ne '\"'\"'chomp $_; unlink \"$_.bak\" '\"'\"''"
 
     # Log / Tree
-    l = log \
-         -n30 \
-         --graph \
-         --abbrev-commit \
-         --decorate \
-        --format=format:'\
-%C(bold blue)%h\
-%C(bold green)%<|(20)% ar%C(reset)\
-%C(white)% s\
-%C(dim white) -% an%C(reset)\
-%C(bold yellow)% d\
-%C(bold red)% N'
-
-    l2 = log \
-         --all \
-         -n30 \
-         --graph \
-         --abbrev-commit \
-         --decorate \
-         --date=relative \
-        --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ai)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)'
-
-    l3 = log \
-         --all \
-         -n30 \
-         --graph \
-         --abbrev-commit \
-         --decorate \
-        --format=format:'%C(bold blue)%h%C(reset)\
- %C(green)%ai%x08%x08%x08%x08%x08%x08%C(reset) %C(dim white)%aN%C(reset) %C(white)%s%C(reset) %C(bold yellow)%d%C(reset)'
+    l = log -n30 --graph
 
     # Files
     ls = ls-files
-    lsf = "!git ls-files | grep --perl-regexp --line-number --heading --show-function -i"
 
-    flush = "!git reset HEAD && git checkout . && git clean -f"
+    # Clean
+    x = clean -xfd
+
     # Merge
     m = merge
     ma = merge --abort
@@ -145,42 +152,5 @@
     ms = merge --skip
 
     # Reset
-    re = reset
-    rh = reset HEAD
-    reh = reset --hard
-    rem = reset --mixed
-    res = reset --soft
-    rehh = reset --hard HEAD
-    remh = reset --mixed HEAD
-    resh = reset --soft HEAD
-
-    #############
-    sa = stash apply
-    sc = stash clear
-    sd = stash drop
-    sl = stash list
-    sp = stash pop
-    ss = stash save
-    sw = stash show
-
-    # My advanced tricks
-    forest = "!~/.scripts/git-forest --pretty=format:\"%C(red)%h %C(magenta)(%ar) %C(blue)%an %C(reset)%s\" --style=1 --reverse"
-    pie = "!sh -c 'echo \"$0\"; git ls-files -z | xargs -0 perl -pi -e \"$0\" && git ls-files | perl -ne '\"'\"'chomp $_; unlink \"$_.bak\" '\"'\"''"
-    lb = "!for k in `git branch | perl -pe s/^..//`; do echo -e `git show --pretty=format:'%Cgreen%ci%x08%x08%x08%x08%x08%x08 %Cblue%cr%Creset' $k -- | head -n 1`\t$k; done | sort -r"
-
-    import = "!sh -c 'git cat-file -e $0 && git ls-files | xargs rm -f && git checkout $0 $(git ls-tree --name-only -r $0)'"
-
-    # To underestand (Advanced)
-    assume = update-index --assume-unchanged
-    unassume = update-index --no-assume-unchanged
-    assumed = "!git ls-files -v | grep ^h | cut -c 3-"
-    unassumeall = !git assumed | xargs git update-index --no-assume-unchanged
-    assumeall = "!git st -s | awk {'print $2'} | xargs git assume"
-
-    ours = "!f() { git checkout --ours $@ && git add $@; }; f"
-    theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"
-
-    snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
-
-[push]
-	default = simple
+    r = reset HEAD
+    rh = reset --hard HEAD
