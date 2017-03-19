@@ -5,7 +5,7 @@
     email = nowox@x0x.ch
 
 [core]
-	editor = vim       # Because by default it's vi and vi is not always mapped to vim
+    editor = vim       # Because by default it's vi and vi is not always mapped to vim
     ignorecase = false
     autocrlf = false   # On cygwin I always work wtih LF
     filemode = false
