@@ -4,6 +4,10 @@
     name  = Yves Chevallier
     email = nowox@x0x.ch
 
+[github]
+    user  = nowox
+    token = token     
+
 [core]
     editor = vim       # Because by default it's vi and vi is not always mapped to vim
     ignorecase = false
@@ -21,12 +25,8 @@
 [web]
     browser = google-chrome
 
-[github]
-    user  = nowox
-    token = token
-
 [log]
-    date = iso      
+    date = iso
 
 [format]
     pretty = "%C(bold blue)%h %C(bold green)%<|(20)% ar%C(reset) %C(white)% s\
@@ -58,16 +58,16 @@
     autoUpdate = true
 
 
-[rebase] 
+[rebase]
     stat = true
 
-[pull] 
+[pull]
     rebase = true
 
 [push]
     default = simple
 
-[grep] 
+[grep]
     patternType = perl
     lineNumber = true
 
@@ -78,7 +78,7 @@
     prompt = false
 
 [difftool "bc4"]
-    cmd = "\"/cygdrive/c/Program Files (x86)/Beyond Compare 4/Bcomp.exe\" \"$(cygpath -w \"$LOCAL\")\" \"$(cygpath -w \"$REMOTE\")\" /lefttitle=\"$(cygpath -w \"$LOCAL\")\" /righttitle=\"$(cygpath -w \"$REMOTE\")\""
+    cmd = "\"/cygdrive/c/Program Files/Beyond Compare 4/Bcomp.exe\" \"$(cygpath -w \"$LOCAL\")\" \"$(cygpath -w \"$REMOTE\")\" /lefttitle=\"$(cygpath -w \"$LOCAL\")\" /righttitle=\"$(cygpath -w \"$REMOTE\")\""
 
 [merge]
     tool = bc4
@@ -93,7 +93,7 @@
     keepTemporaries = true
 
 [mergetool "bc4"]
-    cmd = "\"/cygdrive/c/Program Files (x86)/Beyond Compare 4/Bcomp.exe\" \"$(cygpath -w \"$LOCAL\")\" \"$(cygpath -w \"$REMOTE\")\" \"$(cygpath -w \"$BASE\")\" \"$(cygpath -w \"$MERGED\")\""
+    cmd = "\"/cygdrive/c/Program Files/Beyond Compare 4/Bcomp.exe\" \"$(cygpath -w \"$LOCAL\")\" \"$(cygpath -w \"$REMOTE\")\" \"$(cygpath -w \"$BASE\")\" \"$(cygpath -w \"$MERGED\")\""
 
 [alias]
     # Checkout
@@ -116,8 +116,8 @@
 
     # Status
     s   = status -s -b            # Status in short format
-    su  = status -s -b -uno       # Doesn't show untracked files 
- 
+    su  = status -s -b -uno       # Doesn't show untracked files
+
     # Diff
     d   = diff
     dh  = diff HEAD               # Diff Filesystem <-> HEAD
@@ -131,11 +131,26 @@
 
     # Grep
     g  = grep --show-function --heading --break -I
-    gh = "!f() { git g $2 $(git rev-list --max-count=$1 HEAD); }; f" 
+    gh = "!f() { git g $2 $(git rev-list --max-count=$1 HEAD); }; f"
 
     # Replace
-    pie = "!sh -c 'echo \"$0\"; git ls-files -z | xargs -0 perl -pi -e \"$0\" && git ls-files | perl -ne '\"'\"'chomp $_; unlink \"$_.bak\" '\"'\"''"
-
+    pie = "!f() {                                            \
+        git ls-files -z | xargs -0 perl -e '                 \
+            my $eval = shift @ARGV;                          \
+            foreach my $file (@ARGV) {                       \
+                next unless -f $file;                        \
+                open my $fd, \"<\", $file;                   \
+                my $content = do { local $/; <$fd>};         \
+                close $fd;                                   \
+                my $new = do { $_ = $content; eval $eval; }; \
+                if ($content ne $new) {                      \
+                    open my $fd, \">\", $file;               \
+                    print $fd $_;                            \
+                    close $fd;                               \
+                }                                            \
+            }                                                \
+        ' $1; }; f" 
+   
     # Log / Tree
     l = log -n30 --graph
 
@@ -144,6 +159,7 @@
 
     # Clean
     x = clean -xfd
+    X = !git clean -xfd && git reset --hard HEAD
 
     # Merge
     m = merge
