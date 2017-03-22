@@ -149,7 +149,7 @@
                     close $fd;                               \
                 }                                            \
             }                                                \
-        ' $1; }; f" 
+        ' \"$1\"; }; f" 
    
     # Log / Tree
     l = log -n30 --graph
