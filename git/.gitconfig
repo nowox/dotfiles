@@ -1,20 +1,24 @@
 # .gitconfig
 # Yves Chevallier 2017
 [user]
-    name  = Yves Chevallier
-    email = nowox@x0x.ch
+	name = Yves Chevallier
+	email = nowox@x0x.ch
 
 [github]
     user  = nowox
-    token = token     
+    token = token
+
+[credential]
+    helper=manager
 
 [core]
     editor = vim       # Because by default it's vi and vi is not always mapped to vim
-    ignorecase = false
-    autocrlf = false   # On cygwin I always work wtih LF
+	ignorecase = false
+    autocrlf = false
     filemode = false
     compression = 0    # Faster on Cygwin
     whitespace = cr-at-eol
+	excludesfile = \\\\strne01-a.csem.local\\data-e\\users\\Ycr\\Documents\\gitignore_global.txt
 
 [help]
     autocorrect = 1 # 0.1 seconds to autocorrect mistypen commands.
@@ -25,22 +29,13 @@
 [web]
     browser = google-chrome
 
-[log]
-    date = iso
-
-[format]
-    pretty = "%C(bold blue)%h %C(bold green)%<|(20)% ar%C(reset) %C(white)% s\
-%C(dim white) -% an%C(reset)\
-%C(auto)% d\
-%C(bold red)% N"
-
 [advice]
-  pushNonFastForward = false
-  statusHints = false
-  commitBeforeMerge = false
-  resolveConflict = false
-  implicitIdentity = false
-  detachedHead = false
+    pushNonFastForward = false
+    statusHints = false
+    commitBeforeMerge = false
+    resolveConflict = false
+    implicitIdentity = false
+    detachedHead = false
 
 [color "grep"]
     linenumber = yellow bold
@@ -50,13 +45,11 @@
 
 [color "status"]
     untracked = blue
-    header = yellow bold
     deleted = magenta
 
 [rerere]
     enabled = true
     autoUpdate = true
-
 
 [rebase]
     stat = true
@@ -86,6 +79,7 @@
 [log]
     abbrevCommit = true
     decorate = true
+    date = iso
 
 [mergetool]
     prompt = false
@@ -96,6 +90,9 @@
     cmd = "\"/cygdrive/c/Program Files/Beyond Compare 4/Bcomp.exe\" \"$(cygpath -w \"$LOCAL\")\" \"$(cygpath -w \"$REMOTE\")\" \"$(cygpath -w \"$BASE\")\" \"$(cygpath -w \"$MERGED\")\""
 
 [alias]
+    # In the case I write `git git git sha`
+    git = !exec git
+
     # Checkout
     o  = checkout
     ob = checkout -b
@@ -106,8 +103,8 @@
 
     # Branches
     b  = branch
-    lb = "!for k in `git branch | perl -pe s/^..//`; do echo -e `git show --pretty=format:'%Cgreen%ci%x08%x08%x08%x08%x08%x08 %Cblue%cr%Creset' $k -- | head -n 1`\t$k; done | sort -r"
-
+    lsb = "!git for-each-ref --sort=-committerdate refs/heads/ \
+        --format='%(color:blue)%(objectname:short)%(color:bold green) %(refname:short)%(color:reset) %(contents:subject)%(color:dim white) - %(authorname) %(color:reset)%(color:yellow)(%(color:green)%(committerdate:relative)%(color:reset)%(color:yellow))%(color:reset)'"
     # Commit
     c   = commit
     ca  = commit -a               # Stage all modified files
@@ -115,8 +112,8 @@
     cam = commit -a -m            # Commit all modified files with message
 
     # Status
-    s   = status -s -b            # Status in short format
-    su  = status -s -b -uno       # Doesn't show untracked files
+    s   = status -b            # Status in short format
+    su  = status -b -uno       # Doesn't show untracked files
 
     # Diff
     d   = diff
@@ -134,32 +131,33 @@
     gh = "!f() { git g $2 $(git rev-list --max-count=$1 HEAD); }; f"
 
     # Replace
-    pie = "!f() {                                            \
-        git ls-files -z | xargs -0 perl -e '                 \
-            my $eval = shift @ARGV;                          \
-            foreach my $file (@ARGV) {                       \
-                next unless -f $file;                        \
-                open my $fd, \"<\", $file;                   \
-                my $content = do { local $/; <$fd>};         \
-                close $fd;                                   \
-                my $new = do { $_ = $content; eval $eval; }; \
-                if ($content ne $new) {                      \
-                    open my $fd, \">\", $file;               \
-                    print $fd $_;                            \
-                    close $fd;                               \
-                }                                            \
-            }                                                \
-        ' \"$1\"; }; f" 
-   
+    pie = "!f() {                                    \
+        git ls-files -z | xargs -0 perl -e '         \
+        my $eval = shift @ARGV;                      \
+        foreach my $file (@ARGV) {                   \
+        next unless -f $file;                        \
+        open my $fd, $file;                          \
+        my $content = do { local $/; <$fd>};         \
+        close $fd;                                   \
+        my $new = do { $_ = $content; eval $eval; }; \
+        if ($content ne $new) {                      \
+        open my $fd, \">\", $file;                   \
+        print $fd $_;                                \
+        close $fd;                                   \
+        }                                            \
+        }                                            \
+        ' \"$1\"; }; f"
+
     # Log / Tree
-    l = log -n30 --graph
+    l = log -n30 --boundary --graph --pretty=format:'%C(bold blue)%h%C(bold green)%<|(20)% ar%C(reset)%C(white)% s %C(dim white)-% an%C(reset)%C(auto)% d%C(bold red)% N'
+    la = log -n30 --boundary --graph --pretty=format:'%C(bold blue)%h%C(bold green)%<|(20)% ai%C(reset)%C(white)% s %C(dim white)-% an%C(reset)%C(auto)% d%C(bold red)% N'
 
     # Files
     ls = ls-files
 
     # Clean
-    x = clean -xfd
-    X = !git clean -xfd && git reset --hard HEAD
+    x  = clean -xfd
+    xx = !git clean -xfd && git reset --hard HEAD
 
     # Merge
     m = merge
@@ -170,3 +168,15 @@
     # Reset
     r = reset HEAD
     rh = reset --hard HEAD
+[init]
+	templateDir = /usr/share/git-core/templates
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+[difftool "sourcetree"]
+	cmd = 'C:/Program Files/Beyond Compare 4/BComp.exe' \"$LOCAL\" \"$REMOTE\"
+[mergetool "sourcetree"]
+	cmd = 'C:/Program Files/Beyond Compare 4/BComp.exe' \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+	trustExitCode = true
