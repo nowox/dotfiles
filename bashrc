@@ -48,7 +48,6 @@ export HISTFILESIZE=200000
 export HISTIGNORE='&:ls:ll:la:cd:exit:clear:history'
 export PAGER=less
 export EDITOR=vim
-export VIMRUNTIME='/usr/share/vim/vim74'
 export PATH="~/bin:~/.scripts:$PATH"
 
 # Mintty

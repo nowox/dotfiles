@@ -25,6 +25,7 @@ filetype off
 call vundle#begin()
     Plugin 'VundleVim/Vundle.vim'
     Plugin 'ap/vim-buftabline'
+    Plugin 'tomasiser/vim-code-dark'
     Plugin 'terryma/vim-multiple-cursors'
     Plugin 'ervandew/supertab'
     Plugin 'junegunn/vim-easy-align'
@@ -106,7 +107,7 @@ let g:tagbar_iconchars = ['►', '▼'] " Set for consolas powerline
 
 let g:fakeclip_terminal_multiplexer_type="tmux"
 
-let g:airline_theme                      = 'zenburn' " With brighter split separators
+let g:airline_theme                      = 'codedark' " With brighter split separators
 let g:airline#extensions#tabline#enabled = 1      " Allows to view windows/tabs
 let g:airline_powerline_fonts            = 1      " Fancy fonts
 
@@ -237,12 +238,8 @@ set fillchars+=vert:│,stl:─
 " Use DirectX instead of GTK for rendering glyphs
 set rop=type:directx,gamma:1.0,contrast:0.5,level:1,geom:1,renmode:4,taamode:1
 
-" Highlight the current line and the current column
-set cursorline
-set cursorcolumn
-
 " Highlight the last good column (98 chars)
-set colorcolumn=98
+set colorcolumn=80
 
 " Edition
 " =======
@@ -347,7 +344,7 @@ filetype plugin on
 filetype indent on
 
 set background=dark
-colorscheme nowox
+colorscheme codedark
 syntax on
 
 " Mouse
