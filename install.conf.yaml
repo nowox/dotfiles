@@ -5,7 +5,7 @@
 - clean: ['~']
 
 - link: 
-    ~/.dotfiles: ''
+    ~/.editorconfig:
     ~/.tmux.conf: 
     ~/.vim: 
     ~/.vimrc: 
