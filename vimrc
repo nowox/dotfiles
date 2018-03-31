@@ -25,6 +25,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'jamessan/vim-gnupg'
 "    Plug 'vim-scripts/AnsiEsc.vim'
     Plug 'vim-airline/vim-airline-themes'
+    Plug 'tomasiser/vim-code-dark'
     Plug 'terryma/vim-multiple-cursors'
     Plug 'itchyny/vim-cursorword'
     Plug 'nowox/Nowox'
