@@ -126,6 +126,8 @@ p="${p}${c[2]}\w"       # Path
 p="${p}${rst}\n$( [[ $UID == 0 ]] && echo \# || echo \$ ) "
 export PS1="${p}"
 
+source ~/.bash_prompt
+
 # Aliases
 alias browse='explorer $(cygpath --windows $(pwd))'
 
@@ -197,59 +199,6 @@ extract () {
   fi
 }
 
-# Terminal colorschemes.
-# Quickly switch between a dark and a light theme for making presentation.
-colorscheme () {
-    if [ "$1" = "dark" ]; then
-        #base16
-        echo -ne    '\e]10;#d0d0d0\a' # ForegroundColour
-        echo -ne    '\e]11;#151515\a' # BackgroundColour
-        echo -ne    '\e]12;#FD9D4F\a' # CursorColour
-        echo -ne '\e]4;262;#FD9D4F\a' # IMECursorColour
-        echo -ne   '\e]4;0;#151515\a' # Black
-        echo -ne   '\e]4;8;#0a0a0a\a' # BoldBlack
-        echo -ne   '\e]4;1;#AC4142\a' # Red
-        echo -ne   '\e]4;9;#C25E5E\a' # BoldRed
-        echo -ne   '\e]4;2;#90A959\a' # Green
-        echo -ne  '\e]4;10;#A6BB7B\a' # BoldGreen
-        echo -ne   '\e]4;3;#F4BF75\a' # Yellow
-        echo -ne  '\e]4;11;#F8D5A5\a' # BoldYellow
-        echo -ne   '\e]4;4;#6A9FB5\a' # Blue
-        echo -ne  '\e]4;12;#8CB5C6\a' # BoldBlue
-        echo -ne   '\e]4;5;#AA759F\a' # Magenta
-        echo -ne  '\e]4;13;#BE95B5\a' # BoldMagenta
-        echo -ne   '\e]4;6;#75B5AA\a' # Cyan
-        echo -ne  '\e]4;14;#97C7BE\a' # BoldCyan
-        echo -ne   '\e]4;7;#D0D0D0\a' # White
-        echo -ne  '\e]4;15;#F5F5F5\a' # BoldWhite
-    fi
-
-    if [ "$1" = "light" ]; then
-        # present
-        echo -ne    '\e]10;#000000\a' # ForegroundColour
-        echo -ne    '\e]11;#FFFFFF\a' # BackgroundColour
-        echo -ne    '\e]12;#98FB98 \a' # CursorColour
-        echo -ne '\e]4;262;#98FB98 \a' # IMECursorColour
-        echo -ne   '\e]4;0;#000000\a' # Black
-        echo -ne   '\e]4;8;#2F4F4F\a' # BoldBlack
-        echo -ne   '\e]4;1;#800000\a' # Red
-        echo -ne   '\e]4;9;#8B4513\a' # BoldRed
-        echo -ne   '\e]4;2;#556B2F\a' # Green
-        echo -ne  '\e]4;10;#808000\a' # BoldGreen
-        echo -ne   '\e]4;3;#DAA520\a' # Yellow
-        echo -ne  '\e]4;11;#FFD700\a' # BoldYellow
-        echo -ne   '\e]4;4;#4682B4\a' # Blue
-        echo -ne  '\e]4;12;#5F9EA0\a' # BoldBlue
-        echo -ne   '\e]4;5;#C71585\a' # Magenta
-        echo -ne  '\e]4;13;#F08080\a' # BoldMagenta
-        echo -ne   '\e]4;6;#008080\a' # Cyan
-        echo -ne  '\e]4;14;#66CDAA\a' # BoldCyan
-        echo -ne   '\e]4;7;#FFFFFF\a' # White
-        echo -ne  '\e]4;15;#FFEBCD\a' # BoldWhite
-    fi
-}
-
-
 bcomp() {
     a="$1"
     b="$2"
@@ -260,14 +209,4 @@ bcomp() {
     "/cygdrive/c/Program Files (x86)/Beyond Compare 4/Bcomp.exe" $aw $bw /lefttitle=$a /righttitle=$b
 }
 
-colorscheme dark
-alias dark="colorscheme dark"
-alias light="colorscheme light"
-
-# Autoenv.
-# Magic per-project shell environments. Very pretentious.
-# If a directory contains a .env file, it will automatically be executed when you cd into it.
-# https://github.com/kennethreitz/autoenv
-source /usr/bin/activate.sh
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+mintheme dark

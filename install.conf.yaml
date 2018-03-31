@@ -10,12 +10,15 @@
     ~/.vim: 
     ~/.vimrc: 
     ~/.bashrc:
+    ~/.bash_prompt:
     ~/.ctags: 
-    ~/.dir_colors: 
+    ~/.dircolors: 
     ~/.gitconfig: 
     ~/.gitignore: 
     ~/.minttyrc: 
+    ~/.inputrc:
     ~/.Xresources: 
+    ~/.config/mintty: config/mintty
 
 - shell: 
     - [git submodule update --init --recursive, Installing submodules]
