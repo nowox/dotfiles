@@ -1,13 +1,16 @@
 - defaults:
     link:
-        relink: true
+      relink: true
+      create: true
 
 - clean: ['~']
 
+- shell: 
+    - [git submodule update --init --recursive, Installing submodules]
 - link: 
     ~/.editorconfig:
     ~/.tmux.conf: 
-    ~/.vim: 
+    ~/.vim/autoload/plug.vim: vim-plug/plug.vim
     ~/.vimrc: 
     ~/.bashrc:
     ~/.bash_prompt:
@@ -20,6 +23,4 @@
     ~/.Xresources: 
     ~/.config/mintty: config/mintty
 
-- shell: 
-    - [git submodule update --init --recursive, Installing submodules]
 

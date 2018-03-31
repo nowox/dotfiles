@@ -19,33 +19,37 @@ if s:is_windows
 endif
 
 " Initiate the plugin manager Vundle
-set runtimepath +=~/.vim/bundle/Vundle.vim
-
-filetype off
-call vundle#begin()
-    Plugin 'VundleVim/Vundle.vim'
-    Plugin 'ap/vim-buftabline'
-    Plugin 'tomasiser/vim-code-dark'
-    Plugin 'terryma/vim-multiple-cursors'
-    Plugin 'ervandew/supertab'
-    Plugin 'junegunn/vim-easy-align'
-    Plugin 'junegunn/limelight.vim'
-    Plugin 'skywind3000/asyncrun.vim'
-    Plugin 'mhinz/vim-grepper'
-    Plugin 'easymotion/vim-easymotion'
-    Plugin 'luochen1990/rainbow'
-    Plugin 'bufkill.vim'
-    Plugin 'ZoomWin'
-    Plugin 'majutsushi/tagbar'
-    Plugin 'Mark'
-    Plugin 'junegunn/goyo.vim'
-    Plugin 'ctrlpvim/ctrlp.vim'
-    Plugin 'kana/vim-fakeclip'
-    Plugin 'scrooloose/nerdtree'           " File explorer
-    Plugin 'kshenoy/vim-signature'
-    Plugin 'lilydjwg/colorizer'
-    Plugin 'jpalardy/vim-slime'
-call vundle#end()
+call plug#begin('~/.vim/plugged')
+    Plug 'VundleVim/Vundle.vim'
+    Plug 'vim-airline/vim-airline'
+    Plug 'jamessan/vim-gnupg'
+"    Plug 'vim-scripts/AnsiEsc.vim'
+    Plug 'vim-airline/vim-airline-themes'
+    Plug 'terryma/vim-multiple-cursors'
+    Plug 'itchyny/vim-cursorword'
+    Plug 'nowox/Nowox'
+"    Plug 'NLKNguyen/papercolor-theme'
+    Plug 'tyrannicaltoucan/vim-quantum'
+    Plug 'w0ng/vim-hybrid'
+    Plug 'icymind/NeoSolarized'
+    Plug 'ajh17/VimCompletesMe'
+    Plug 'junegunn/vim-easy-align'
+    Plug 'junegunn/limelight.vim'
+    Plug 'skywind3000/asyncrun.vim'
+    Plug 'mhinz/vim-grepper'
+    Plug 'easymotion/vim-easymotion'
+    Plug 'luochen1990/rainbow'
+    Plug 'vim-scripts/bufkill.vim'
+    Plug 'vim-scripts/ZoomWin'
+    Plug 'majutsushi/tagbar'
+    Plug 'vim-scripts/Mark'
+    Plug 'junegunn/goyo.vim'
+    Plug 'ctrlpvim/ctrlp.vim'
+    Plug 'scrooloose/nerdtree'           " File explorer
+    Plug 'scrooloose/nerdcommenter'
+    Plug 'kshenoy/vim-signature'
+    Plug 'jpalardy/vim-slime'
+call plug#end()
 
 let g:colorizer_startup=0
 
@@ -71,6 +75,9 @@ let g:rainbow_conf = {
 \       'css': 0,
 \   }
 \}
+
+let g:quantum_black=1
+let g:quantum_italics=1
 
 let g:slime_target = "tmux"
 let g:slime_dont_ask_default = 1
@@ -107,7 +114,8 @@ let g:tagbar_iconchars = ['►', '▼'] " Set for consolas powerline
 
 let g:fakeclip_terminal_multiplexer_type="tmux"
 
-let g:airline_theme                      = 'codedark' " With brighter split separators
+"let g:airline_theme = 'distinguished' " With brighter split separators
+let g:airline_theme = 'base16' " With brighter split separators
 let g:airline#extensions#tabline#enabled = 1      " Allows to view windows/tabs
 let g:airline_powerline_fonts            = 1      " Fancy fonts
 
@@ -115,6 +123,12 @@ let g:NERDTreeDirArrows  = 1           " Show nice arrows instead of |+
 let g:NERDTreeShowHidden = 1           " Show hidden files
 let g:NERDTreeWinPos     = "left"      " Window position
 let g:NERDTreeWinSize    = 50          " Width of the NERDTree sidebar
+
+" I don't like the fancy separatory. Too noisy for me.
+"let g:airline_right_alt_sep = ''
+"let g:airline_right_sep = ''
+"let g:airline_left_alt_sep= ''
+"let g:airline_left_sep = ''
 
 " Shell and workarounds for Windows
 " =================================
@@ -184,6 +198,14 @@ augroup resCur
   autocmd BufWinEnter * call ResCur()
 augroup END
 
+function! Present()
+  set background=light
+  colorscheme hybrid
+  set nocursorline
+  set nocursorcolumn
+  set colorcolumn=0
+endfunction
+
 " Presentation
 " ============
 " Dispaly the line numbers on the left side in relative mode and highlight
@@ -226,17 +248,23 @@ set guifont=Powerline_Consolas:h11:cANSI
 
 " Display the messages in english on the GUI (valid for French version of Windows)
 if has('gui')
-    language message en
+    if s:is_windows
+        language message en
+    end
     set guioptions=r
 endif
 
 " Increase the statusline size for lightline
 set laststatus=2
 
-set fillchars+=vert:│,stl:─
+set fillchars+=vert:│
 
 " Use DirectX instead of GTK for rendering glyphs
 set rop=type:directx,gamma:1.0,contrast:0.5,level:1,geom:1,renmode:4,taamode:1
+
+" Highlight the current line and the current column
+"set cursorline
+"set cursorcolumn
 
 " Highlight the last good column (98 chars)
 set colorcolumn=80
@@ -274,6 +302,7 @@ set formatoptions+=r " Insert comment leader on <Enter> in insert mode
 set formatoptions+=o " Insert comment leader after `o`
 set formatoptions+=q " Allow formatting comments with gq
 set formatoptions-=a " Automatically formatting paragraphs (comments only)
+set formatoptions-=t " Stupid code formatting
 set formatoptions+=n " Recognize numbered lists from 'formatlistpat'
 set formatoptions+=j " When it make sense, remove comment leader when joining lines
 set formatoptions+=w " Use trailing space for the `a` option.
@@ -340,11 +369,22 @@ if (has("termguicolors"))
     set termguicolors
 endif
 
-filetype plugin on
-filetype indent on
+let bash_background=$BACKGROUND
 
-set background=dark
-colorscheme codedark
+if bash_background == 'light'
+    set background=light
+    colorscheme PaperColor
+    set nocursorcolumn
+    set nocursorline
+    set colorcolumn=0
+else
+    set background=dark
+    "colorscheme nowox
+    let g:neosolarized_bold = 1
+    let g:neosolarized_underline = 1
+    let g:neosolarized_italic = 1
+    colorscheme codedark
+endif
 syntax on
 
 " Mouse
@@ -395,6 +435,15 @@ if &term =~ '256color' && exists('$TMUX')
     set t_ut=
 endif
 
+" Netrw
+" =====
+" Netrw is the native file explorer plugin that is shipped with Vim. I am using NERDtree because
+" I am used to it. However with some settings, I can give to Netrw a nice look.
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_winsize = 25
 
 " Shortcuts Mapping
 " =================
@@ -411,9 +460,6 @@ nmap <space> /
 inoremap <silent> jj <C-c>:stopinsert<cr>l
 
 noremap - :
-
-" Faster to reach with a Swiss keyboard:
-noremap '' ``
 
 " Use Q for formatting the current paragraph (or selection)
 vnoremap Q gq
@@ -506,6 +552,9 @@ xnoremap <S-Tab> <gv
 snoremap <Tab>   <C-g>>gv<C-g>
 snoremap <S-Tab> <C-g><gv<C-g>
 
+" Next cursor location (instead of Tab)
+nnoremap é <C-i>
+
 " Control + char mappings
 " =======================
 
@@ -540,6 +589,10 @@ nnoremap <C-d> ciw
 " I never used this mapping and I don't know where it can be useful.
 inoremap <C-e> <C-o>vwx
 nnoremap <C-e> vwx
+
+" <C-é> Next cursor location
+nnoremap <C-é> <C-i>
+inoremap <C-é> <C-c><C-i>
 
 " <C-f> Find word under cursor or selection
 " default: Scroll window forward (page-down button)
@@ -719,6 +772,19 @@ inoremap <silent> <leader>u <Esc>yyp<C-v>$r-A
 noremap <silent> :call <SID>StripTrailingWhitespaces()<CR>
 inoremap <silent> :call <Esc><SID>StripTrailingWhitespaces()<CR>a
 
+" <leader>* Search word under cursor
+nnoremap <leader>* :Grepper -tool git -open -switch -cword -noprompt<cr>
+
+" <leader>ag
+nnoremap <leader>ag :Grepper -tool ag -grepprg ag -S -U -G <CR>
+
+" <leader>git
+nnoremap <leader>git :Grepper -tool git -noswitch<CR>
+
+" <leader>gs Grepper Side
+nnoremap <leader>gs :Grepper -cword -noprompt -side
+
+"
 " Mouse binding
 " =============
 
@@ -742,7 +808,7 @@ endfun
 
 " xxdate
 " Automatically insert the current date
-ab xxdate <C-r>=DateTime(0)<CR>
+ab xxdate <C-r>=strftime("%Y-%M-%D %H:%M:%S%z")<CR>
 
 " xxtodo
 ab xxtodo <C-r>TODO: <YCH =DateTime(1)><CR>
@@ -784,13 +850,53 @@ augroup configgroup
     autocmd!
     autocmd BufEnter *.{asm,inc} setlocal filetype=asmsharc
     autocmd BufEnter *.{def,cseq} setlocal filetype=c
+    autocmd BufEnter *.{yml,yaml} setlocal tabstop=2
+    autocmd FileType python setlocal cindent
 augroup END
 
+function! GetPythonTextWidth()
+    if !exists('g:python_normal_text_width')
+        let normal_text_width = 79
+    else
+        let normal_text_width = g:python_normal_text_width
+    endif
+
+    if !exists('g:python_comment_text_width')
+        let comment_text_width = 72
+    else
+        let comment_text_width = g:python_comment_text_width
+    endif
+
+    let cur_syntax = synIDattr(synIDtrans(synID(line("."), col("."), 0)), "name")
+    if cur_syntax == "Comment"
+        return comment_text_width
+    elseif cur_syntax == "String"
+        " Check to see if we're in a docstring
+        let lnum = line(".")
+        while lnum >= 1 && (synIDattr(synIDtrans(synID(lnum, col([lnum, "$"]) - 1, 0)), "name") == "String" || match(getline(lnum), '\v^\s*$') > -1)
+            if match(getline(lnum), "\\('''\\|\"\"\"\\)") > -1
+                " Assume that any longstring is a docstring
+                return comment_text_width
+            endif
+            let lnum -= 1
+        endwhile
+    endif
+
+    return normal_text_width
+endfunction
+
+augroup pep8
+    au!
+    autocmd CursorMoved,CursorMovedI * :if &ft == 'python' | :exe 'setlocal textwidth='.GetPythonTextWidth() | :endif
+augroup END
+
+
 " Cusror change (block, line)
-let &t_ti.="\e[1 q"
-let &t_SI.="\e[5 q"
-let &t_EI.="\e[1 q"
-let &t_te.="\e[0 q"
+" /!\ When interrupting vim with <C-z> the cursor is not restored
+"let &t_ti.="\e[1 q"
+"let &t_SI.="\e[5 q"
+"let &t_EI.="\e[1 q"
+"let &t_te.="\e[0 q"
 
 " Improve escape time when using with mintty
 " /!\ The following causes some weird errors when exiting from some modes such as multiple cursor
