@@ -21,15 +21,13 @@ endif
 " Initiate the plugin manager Vundle
 call plug#begin('~/.vim/plugged')
     Plug 'VundleVim/Vundle.vim'
-    Plug 'vim-airline/vim-airline'
+"    Plug 'vim-airline/vim-airline'
     Plug 'jamessan/vim-gnupg'
-"    Plug 'vim-scripts/AnsiEsc.vim'
     Plug 'vim-airline/vim-airline-themes'
     Plug 'tomasiser/vim-code-dark'
     Plug 'terryma/vim-multiple-cursors'
     Plug 'itchyny/vim-cursorword'
     Plug 'nowox/Nowox'
-"    Plug 'NLKNguyen/papercolor-theme'
     Plug 'tyrannicaltoucan/vim-quantum'
     Plug 'w0ng/vim-hybrid'
     Plug 'icymind/NeoSolarized'
@@ -126,10 +124,10 @@ let g:NERDTreeWinPos     = "left"      " Window position
 let g:NERDTreeWinSize    = 50          " Width of the NERDTree sidebar
 
 " I don't like the fancy separatory. Too noisy for me.
-"let g:airline_right_alt_sep = ''
-"let g:airline_right_sep = ''
-"let g:airline_left_alt_sep= ''
-"let g:airline_left_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_left_alt_sep= ''
+let g:airline_left_sep = ''
 
 " Shell and workarounds for Windows
 " =================================
