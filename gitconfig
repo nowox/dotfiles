@@ -44,8 +44,12 @@
     function = magenta
 
 [color "status"]
-    untracked = blue
-    deleted = magenta
+    added = "#99cc99"
+    changed = "#f2777a"
+    untracked = "#ffcc66"
+    deleted = magenta bold
+    branch = "#6699cc" bold
+    nobranch = bold ul blink "#f99157"
 
 [rerere]
     enabled = true

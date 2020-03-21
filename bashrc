@@ -1,6 +1,4 @@
 # ~/.bashrc
-# Author: Yves Chevallier <nowox@x0x.ch>
-# Date:   2015-04-05 Sun 11:35 PM
 
 # If not running interactively, don't do anything
 [[ "$-" != *i* ]] && return
@@ -49,83 +47,16 @@ export HISTIGNORE='&:ls:ll:la:cd:exit:clear:history'
 export PAGER=less
 export EDITOR=vim
 export PATH="~/bin:~/.scripts:$PATH"
+export TIME_STYLE=long-iso
 
 # Mintty
 bind -r '\C-s'
 stty -ixon
 
-# Xorg
+# Xorg/X
 export DISPLAY=:0.0
 
 # Prompt
-short_pwd() {
-    # How many characters of the $PWD should be kept
-    local pwdmaxlen=40
-
-    # Indicate that there has been dir truncation
-    local trunc_symbol=".."
-
-    local dir=${PWD##*/}
-    pwdmaxlen=$(( ( pwdmaxlen < ${#dir} ) ? ${#dir} : pwdmaxlen ))
-    NEW_PWD=${PWD/#$HOME/\~}
-    local pwdoffset=$(( ${#NEW_PWD} - pwdmaxlen ))
-    if [ ${pwdoffset} -gt "0" ]
-    then
-        NEW_PWD=${NEW_PWD:$pwdoffset:$pwdmaxlen}
-        echo ${trunc_symbol}/${NEW_PWD#*/}
-    fi
-}
-
-title () {
-    echo -ne "\e]0;$1\a"
-}
-
-# Title Window
-ts='\033]0;'  # Start
-te='\007'     # End
-
-r0='\e[0;30m' # Black - Regular
-r2='\e[0;31m' # Red
-r5='\e[0;32m' # Green
-r4='\e[0;33m' # Yellow
-r6='\e[0;34m' # Blue
-r7='\e[0;35m' # Purple
-r8='\e[0;36m' # Cyan
-r9='\e[0;37m' # White
-
-b0='\e[1;30m' # Black - Bold
-b2='\e[1;31m' # Red
-b5='\e[1;32m' # Green
-b4='\e[1;33m' # Yellow
-b6='\e[1;34m' # Blue
-b7='\e[1;35m' # Purple
-b8='\e[1;36m' # Cyan
-b9='\e[1;37m' # White
-
-# Underline  [4;30m
-# Background [40m
-#
-rst='\e[0m'   # Text reset color
-
-# Prompt Colors
-c=($r6 $b6 $r8)
-[[ $_iscygwin -eq 1 ]] && c=($r5 $b5 $r4)
-[[ $_isroot   -eq 1 ]] && c=($r2 $b2 $r7)
-
-perl -e 'exit(qx{uname -a} =~ /x86_64/)'
-if [ $? -ne 0 ]
-then
-    c=($r6 $b6 $r8)
-fi
-# Prompt
-
-p="${rst}$( title '\W' )" # Title: basename
-p="${p}${c[0]}\u@"      # User
-p="${p}${c[1]}\h (\j) "      # Host
-p="${p}${c[2]}\w"       # Path
-p="${p}${rst}\n$( [[ $UID == 0 ]] && echo \# || echo \$ ) "
-export PS1="${p}"
-
 source ~/.bash_prompt
 
 # Aliases
@@ -176,6 +107,9 @@ alias chrome="'/cygdrive/c/Program Files (x86)/Google/Chrome/Application/chrome.
 alias todo="vim ~/.notes/todo.md"
 alias note="vim ~/.notes/notes.md"
 
+# WSL
+alias e='explorer.exe .'
+
 # Easily extract any kind of atchives.
 extract () {
   if [ -f $1 ] ; then
@@ -209,4 +143,5 @@ bcomp() {
     "/cygdrive/c/Program Files (x86)/Beyond Compare 4/Bcomp.exe" $aw $bw /lefttitle=$a /righttitle=$b
 }
 
-mintheme dark
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

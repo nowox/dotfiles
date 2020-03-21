@@ -7,3 +7,7 @@
 [submodule "tmux/plugins/tpm"]
 	path = tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
+[submodule "config/emojis/noto"]
+    depth = 1
+	path = emojis/noto
+	url = https://github.com/googlefonts/noto-emoji.git
