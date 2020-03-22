@@ -75,7 +75,7 @@
     prompt = false
 
 [difftool "bc4"]
-    cmd = "\"/cygdrive/c/Program Files/Beyond Compare 4/Bcomp.exe\" \"$(cygpath -w \"$LOCAL\")\" \"$(cygpath -w \"$REMOTE\")\" /lefttitle=\"$(cygpath -w \"$LOCAL\")\" /righttitle=\"$(cygpath -w \"$REMOTE\")\""
+    cmd = "\"/mnt/c/Program Files/Beyond Compare 4/BComp.exe\" \"$(wslpath -w \"$LOCAL\")\" \"$(wslpath -w \"$REMOTE\")\" /lefttitle=\"$(wslpath -w \"$LOCAL\")\" /righttitle=\"$(wslpath -w \"$REMOTE\")\""
 
 [merge]
     tool = bc4
@@ -91,12 +91,9 @@
     keepTemporaries = true
 
 [mergetool "bc4"]
-    cmd = "\"/cygdrive/c/Program Files/Beyond Compare 4/Bcomp.exe\" \"$(cygpath -w \"$LOCAL\")\" \"$(cygpath -w \"$REMOTE\")\" \"$(cygpath -w \"$BASE\")\" \"$(cygpath -w \"$MERGED\")\""
+    cmd = "\"/mnt/c/Program Files/Beyond Compare 4/Bcomp.exe\" \"$(wslpath -w \"$LOCAL\")\" \"$(wslpath -w \"$REMOTE\")\" \"$(wslpath -w \"$BASE\")\" \"$(wslpath -w \"$MERGED\")\""
 
 [alias]
-    # In the case I write `git git git sha`
-    git = !exec git
-
     # Checkout
     o  = checkout
     ob = checkout -b
@@ -116,8 +113,8 @@
     cam = commit -a -m            # Commit all modified files with message
 
     # Status
-    s   = status -b            # Status in short format
-    su  = status -b -uno       # Doesn't show untracked files
+    s   = status -s -b            # Status in short format
+    su  = status -s -b -uno       # Doesn't show untracked files
 
     # Diff
     d   = diff
@@ -172,15 +169,12 @@
     # Reset
     r = reset HEAD
     rh = reset --hard HEAD
+
 [init]
 	templateDir = /usr/share/git-core/templates
+
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
-[difftool "sourcetree"]
-	cmd = 'C:/Program Files/Beyond Compare 4/BComp.exe' \"$LOCAL\" \"$REMOTE\"
-[mergetool "sourcetree"]
-	cmd = 'C:/Program Files/Beyond Compare 4/BComp.exe' \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
-	trustExitCode = true

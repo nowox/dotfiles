@@ -16,6 +16,7 @@ The following lists what I usually install
 
 ```console
 choco upgrade chocolatey
+choco install git
 choco install vscode
 choco install wsltty
 choco install firacode
